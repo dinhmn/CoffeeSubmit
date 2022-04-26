@@ -16,7 +16,7 @@ public class ImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
     private String fileName;
@@ -31,7 +31,8 @@ public class ImageEntity {
         this.data = data;
     }
 
-    @OneToOne(mappedBy = "imageEntity")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "product_id")
     private ProductEntity productImg;
 
 }

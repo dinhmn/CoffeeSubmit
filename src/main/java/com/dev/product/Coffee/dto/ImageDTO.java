@@ -1,2 +1,23 @@
-package com.dev.product.Coffee.dto;public class ImageDTO {
+package com.dev.product.Coffee.dto;
+
+import com.dev.product.Coffee.Response.ResponseData;
+import com.dev.product.Coffee.entity.ImageEntity;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class ImageDTO {
+    private String fileName;
+    private String downloadURL;
+    private String fileType;
+    public static ImageDTO from(ImageEntity imageEntity){
+        ImageDTO img = new ImageDTO();
+        img.setFileName(imageEntity.getFileName());
+        img.setDownloadURL(imageEntity.getId());
+        img.setFileType(imageEntity.getFileType());
+        return img;
+    }
 }

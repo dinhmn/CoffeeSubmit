@@ -1,14 +1,15 @@
 package com.dev.product.Coffee.entity;
 
+import com.dev.product.Coffee.dto.ImageDTO;
+import com.dev.product.Coffee.dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Data
@@ -57,8 +58,23 @@ public class ProductEntity extends BaseEntity{
 //        productImg.setProductEntity(null);
 //    }
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "image_id")
-    private ImageEntity imageEntity;
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "productImg")
+    private List<ImageEntity> imageEntity = new ArrayList<ImageEntity>();
 
+    public static ProductEntity from(ProductDTO productDTO){
+        ProductEntity productEntity = new ProductEntity();
+        productEntity.setId(productDTO.getId());
+        productEntity.setTitle(productDTO.getTitle());
+        productEntity.setPrice(productDTO.getPrice());
+        productEntity.setPriceSale(productDTO.getPriceSale());
+        productEntity.setShortDescription(productDTO.getShortDescription());
+        productEntity.setDetailsDescription(productDTO.getDetailsDescription());
+        productEntity.setQuantity(productDTO.getQuantity());
+        productEntity.setSeo(productDTO.getSeo());
+        productEntity.setCreated_date(productDTO.getCreated_date());
+        productEntity.setUpdated_by(productDTO.getUpdated_by());
+        productEntity.setCreated_by(productDTO.getCreated_by());
+        productEntity.setUpdated_date(productDTO.getUpdated_date());
+        return productEntity;
+    }
 }

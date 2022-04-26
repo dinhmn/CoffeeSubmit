@@ -8,11 +8,13 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar) throws IOException;
+    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar) throws Exception;
 //    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, MultipartFile[] productPictures) throws IOException;
     List<ProductEntity> getAllProducts();
-//    boolean deleteProduct(Long id);
-//    Product getProductById(Long id);
+
+    ProductEntity getProductById(Long id);
+
+    boolean deleteProduct(Long id);
 //    Product updateProductById(Long id, Product product, MultipartFile productAvatar,MultipartFile[] productPictures) throws IOException;
 
 }
