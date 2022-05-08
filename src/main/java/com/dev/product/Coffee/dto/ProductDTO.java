@@ -22,8 +22,10 @@ public class ProductDTO extends BaseDTO{
     private String detailsDescription;
     private Long quantity;
     private String seo;
-//    private CategoryDTO categoryDTO;
-    private List<ImageDTO> imageDTOList = new ArrayList<>();
+    private Long categoryId;
+    private List<ImageDTO> imageDTOList = new ArrayList<ImageDTO>();
+    private List<ProductImagesDTO> productImagesDTOS = new ArrayList<ProductImagesDTO>();
+    private List<ReviewsDTO> reviewsDTOS = new ArrayList<ReviewsDTO>();
     public static ProductDTO from(ProductEntity product){
         ProductDTO productDTO = new ProductDTO();
 
@@ -39,9 +41,30 @@ public class ProductDTO extends BaseDTO{
         productDTO.setUpdated_by(product.getUpdated_by());
         productDTO.setCreated_by(product.getCreated_by());
         productDTO.setUpdated_date(product.getUpdated_date());
-//        productDTO.setCategoryDTO();
+        productDTO.setCategoryId(product.getCategoriesEntity().getId());
         productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
+        productDTO.setProductImagesDTOS(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
+        productDTO.setReviewsDTOS(product.getReviewsEntities().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
         return productDTO;
     }
+    public static ProductDTO fromTo(ProductEntity product){
+        ProductDTO productDTO = new ProductDTO();
 
+        productDTO.setId(product.getId());
+        productDTO.setTitle(product.getTitle());
+        productDTO.setPrice(product.getPrice());
+        productDTO.setPriceSale(product.getPriceSale());
+        productDTO.setShortDescription(product.getShortDescription());
+        productDTO.setDetailsDescription(product.getDetailsDescription());
+        productDTO.setQuantity(product.getQuantity());
+        productDTO.setSeo(product.getSeo());
+        productDTO.setCreated_date(product.getCreated_date());
+        productDTO.setUpdated_by(product.getUpdated_by());
+        productDTO.setCreated_by(product.getCreated_by());
+        productDTO.setUpdated_date(product.getUpdated_date());
+        productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
+        productDTO.setReviewsDTOS(product.getReviewsEntities().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
+
+        return productDTO;
+    }
 }

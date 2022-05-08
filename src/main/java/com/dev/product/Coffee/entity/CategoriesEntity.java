@@ -23,7 +23,7 @@ public class CategoriesEntity extends BaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "categoriesEntity")
 //    private Set<ProductEntity> productEntities = new HashSet<>();
-    private List<ProductEntity> productEntities = new ArrayList<>();
+    private List<ProductEntity> productEntities = new ArrayList<ProductEntity>();
 
     public void add(ProductEntity productEntity){
         productEntities.add(productEntity);

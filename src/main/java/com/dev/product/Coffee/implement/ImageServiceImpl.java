@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -25,7 +26,7 @@ public class ImageServiceImpl implements ImageService {
     private ProductRepository productRepository;
 
     @Override
-    public ImageEntity saveImage(MultipartFile file) throws Exception{
+    public ImageEntity saveImage(MultipartFile file, ProductEntity productEntity) throws Exception{
         String fileName = StringUtils.cleanPath(file.getOriginalFilename());
         try {
             if (fileName.contains("..")){
@@ -36,8 +37,8 @@ public class ImageServiceImpl implements ImageService {
                     file.getContentType(),
                     file.getBytes()
             );
-            ProductEntity p = productRepository.getById(1L);
-            imageEntity.setProductImg(p);
+
+            imageEntity.setProductImg(productEntity);
             return imageRepository.save(imageEntity);
         }catch (Exception e){
             throw new Exception("Could not save File: "+ fileName) ;
@@ -48,5 +49,29 @@ public class ImageServiceImpl implements ImageService {
     public ImageEntity getImage(String id) throws Exception {
         return imageRepository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
+    }
+
+    @Override
+    public ImageEntity updateImage(MultipartFile file, ProductEntity productEntity) throws Exception {
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+        List<ImageEntity> imgList = imageRepository.findAll();
+        ImageEntity imgGetId = new ImageEntity();
+        try {
+            if (fileName.contains("..")){
+                throw new Exception("Filename contains invalid path sequence"+ fileName) ;
+            }
+            for (ImageEntity img: imgList) {
+                if (img.getProductImg().getId() == productEntity.getId()){
+                    img.setFileName(fileName);
+                    img.setFileType(file.getContentType());
+                    img.setData(file.getBytes());
+                    imgGetId = img;
+                }
+            }
+            System.out.println(imgGetId.getFileName());
+            return imageRepository.save(imgGetId);
+        }catch (Exception e){
+            throw new Exception("Could not save File: "+ fileName) ;
+        }
     }
 }

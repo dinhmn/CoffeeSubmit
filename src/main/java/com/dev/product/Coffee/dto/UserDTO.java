@@ -1,2 +1,4 @@
-package com.dev.product.Coffee.dto;public class UserDTO {
+package com.dev.product.Coffee.dto;
+
+public class UserDTO {
 }

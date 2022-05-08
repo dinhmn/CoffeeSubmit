@@ -45,9 +45,9 @@ public class ProductEntity extends BaseEntity{
     @JoinColumn(name = "category_id")
     private CategoriesEntity categoriesEntity;
 
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
-//    private Set<ProductImagesEntity> productImageEntities = new HashSet<ProductImagesEntity>();
-//
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    private List<ProductImagesEntity> productImageEntities = new ArrayList<ProductImagesEntity>();
+
 //    public void addProductImage(ProductImagesEntity productImg) {
 //        this.productImageEntities.add(productImg);
 //        productImg.setProductEntity(this);
@@ -60,6 +60,12 @@ public class ProductEntity extends BaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "productImg")
     private List<ImageEntity> imageEntity = new ArrayList<ImageEntity>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCmt")
+    private List<ReviewsEntity> reviewsEntities = new ArrayList<ReviewsEntity>();
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
+    private List<SaleOrderProductsEntity> saleOrderProductsEntities = new ArrayList<>();
 
     public static ProductEntity from(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();
@@ -75,6 +81,8 @@ public class ProductEntity extends BaseEntity{
         productEntity.setUpdated_by(productDTO.getUpdated_by());
         productEntity.setCreated_by(productDTO.getCreated_by());
         productEntity.setUpdated_date(productDTO.getUpdated_date());
+//        productEntity.setCategoriesEntity(CategoriesEntity.from(productDTO.getCategoryDTO()));
         return productEntity;
     }
+
 }
