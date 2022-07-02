@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.ProductImagesEntity;
 import lombok.AllArgsConstructor;
@@ -25,8 +25,8 @@ public class ProductImagesDTO {
         img.setFileName(productImagesEntity.getFileName());
         img.setId(productImagesEntity.getId());
         img.setFileType(productImagesEntity.getFileType());
-        img.setCreatedDate(productImagesEntity.getCreated_date());
-        img.setUpdatedDate(productImagesEntity.getUpdated_date());
+        img.setCreatedDate(productImagesEntity.getCreatedDate());
+        img.setUpdatedDate(productImagesEntity.getUpdatedDate());
         return img;
     }
 }

@@ -14,8 +14,6 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
-@AllArgsConstructor
 public class SaleOrderProductsEntity extends BaseEntity {
 
     private String title;
@@ -36,10 +34,10 @@ public class SaleOrderProductsEntity extends BaseEntity {
         saleOrderEntity.setTitle(saleOrderProductsDTO.getTitle());
         saleOrderEntity.setPrice(saleOrderProductsDTO.getPrice());
         saleOrderEntity.setQuantity(saleOrderProductsDTO.getQuantity());
-        saleOrderEntity.setCreated_date(saleOrderProductsDTO.getCreated_date());
-        saleOrderEntity.setCreated_by(saleOrderProductsDTO.getCreated_by());
-        saleOrderEntity.setUpdated_date(saleOrderProductsDTO.getUpdated_date());
-        saleOrderEntity.setUpdated_by(saleOrderProductsDTO.getCreated_by());
+        saleOrderEntity.setCreatedDate(saleOrderProductsDTO.getCreatedDate());
+        saleOrderEntity.setCreatedBy(saleOrderProductsDTO.getCreatedBy());
+        saleOrderEntity.setUpdatedDate(saleOrderProductsDTO.getUpdatedDate());
+        saleOrderEntity.setUpdatedBy(saleOrderProductsDTO.getUpdatedBy());
 
         return saleOrderEntity;
     }

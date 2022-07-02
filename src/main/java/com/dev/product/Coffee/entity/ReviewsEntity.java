@@ -12,8 +12,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_reviews")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ReviewsEntity extends BaseEntity {
 
     private String comment;

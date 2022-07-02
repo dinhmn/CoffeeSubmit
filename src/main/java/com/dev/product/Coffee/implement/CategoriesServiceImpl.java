@@ -6,16 +6,12 @@ import com.dev.product.Coffee.exception.ProductIsAlrealdyAssignedException;
 import com.dev.product.Coffee.repository.CategoriesRepository;
 import com.dev.product.Coffee.repository.ProductRepository;
 import com.dev.product.Coffee.service.CategoriesService;
-import com.dev.product.Coffee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 import com.github.slugify.Slugify;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
@@ -31,7 +27,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public CategoriesEntity createCategories(CategoriesEntity categories) {
-        categories.setCreated_date(new Date());
+        categories.setCreatedDate(new Date());
         categories.setSeo(new Slugify().slugify(categories.getTitle()));
         categoriesRepository.save(categories);
         return categories;
@@ -45,27 +41,41 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public boolean deleteCategories(Long id) {
-        CategoriesEntity categoriesEntity = categoriesRepository.findById(id).get();
-        categoriesRepository.delete(categoriesEntity);
-        return true;
+        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+        CategoriesEntity categoriesEntity;
+        if (categoriesEntityOptional.isPresent()) {
+            categoriesEntity = categoriesEntityOptional.get();
+            categoriesRepository.delete(categoriesEntity);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public CategoriesEntity getCategories(Long id) {
-        CategoriesEntity categoriesEntity = categoriesRepository.findById(id).get();
+        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+        CategoriesEntity categoriesEntity = null;
+        if (categoriesEntityOptional.isPresent()) {
+            categoriesEntity = categoriesEntityOptional.get();
+        }
         return categoriesEntity;
     }
 
     @Override
     public CategoriesEntity updateCategories(Long id, CategoriesEntity categories) {
-        CategoriesEntity cat = categoriesRepository.findById(id).get();
-        cat.setCategoriesName(categories.getCategoriesName());
-        cat.setDescription(categories.getDescription());
-        cat.setTitle(categories.getTitle());
-        cat.setSeo(categories.getSeo());
-        cat.setStatus(categories.getStatus());
-        cat.setUpdated_date(categories.getCreated_date());
-        cat.setCreated_date(new Date());
+        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+        CategoriesEntity categoriesEntity = null;
+        if (categoriesEntityOptional.isPresent()) {
+            categoriesEntity = categoriesEntityOptional.get();
+            categoriesEntity.setCategoriesName(categories.getCategoriesName());
+            categoriesEntity.setDescription(categories.getDescription());
+            categoriesEntity.setTitle(categories.getTitle());
+            categoriesEntity.setSeo(categories.getSeo());
+            categoriesEntity.setStatus(categories.getStatus());
+            categoriesEntity.setUpdatedDate(categories.getCreatedDate());
+            categoriesEntity.setCreatedDate(new Date());
+        }
+
         categoriesRepository.save(categories);
         return categories;
     }
@@ -75,7 +85,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         CategoriesEntity categoriesEntity = categoriesRepository.getById(categoryId);
         ProductEntity productEntity = productRepository.getById(productId);
 
-        if (Objects.nonNull(productEntity.getCategoriesEntity())){
+        if (Objects.nonNull(productEntity.getCategoriesEntity())) {
             throw new ProductIsAlrealdyAssignedException(productId, productEntity.getCategoriesEntity().getId());
         }
         categoriesEntity.add(productEntity);

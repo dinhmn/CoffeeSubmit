@@ -7,12 +7,14 @@ import com.dev.product.Coffee.repository.ProductRepository;
 import com.dev.product.Coffee.service.ProductImagesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
+import static org.springframework.util.StringUtils.cleanPath;
 
 @Service
 public class ProductImagesServiceImpl implements ProductImagesService {
@@ -26,25 +28,22 @@ public class ProductImagesServiceImpl implements ProductImagesService {
         if (images == null || images.length <= 0)
             return true;
 
-        if (images.length == 1 && images[0].getOriginalFilename().isEmpty())
-            return true;
-
-        return false;
+        return images.length == 1 && Objects.requireNonNull(images[0].getOriginalFilename()).isEmpty();
     }
 
     public boolean isEmptyUploadFile(MultipartFile image) {
-        return image == null || image.getOriginalFilename().isEmpty();
+        return !(image != null && !Objects.requireNonNull(image.getOriginalFilename()).isEmpty());
     }
 
     @Override
     public List<ProductImagesEntity> saveImage(MultipartFile[] files, ProductEntity productEntity) throws Exception {
-        List<ProductImagesEntity> pr = new ArrayList<ProductImagesEntity>();
+        List<ProductImagesEntity> pr = new ArrayList<>();
         for (MultipartFile file :
                 files) {
-            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             try {
                 if (fileName.contains("..")) {
-                    throw new Exception("Filename contains invalid path sequense " + fileName);
+                    throw new Exception(String.format("Filename contains invalid path sequence %s", fileName));
                 }
                 ProductImagesEntity productImagesEntity = new ProductImagesEntity(
                         fileName,
@@ -57,7 +56,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                 pr.add(productImagesEntity);
                 productImageRepository.save(productImagesEntity);
             } catch (Exception e) {
-                throw new Exception("Could not save file: " + file);
+                throw new Exception(String.format("Could not save file: %s", file));
             }
         }
 
@@ -72,27 +71,33 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
 
+    /**
+     * @param files
+     * @param productEntity
+     * @return
+     * @throws Exception
+     */
     @Override
     public List<ProductImagesEntity> updateImage(MultipartFile[] files, ProductEntity productEntity) throws Exception {
-        List<ProductImagesEntity> pr = new ArrayList<ProductImagesEntity>();
+        List<ProductImagesEntity> pr = new ArrayList<>();
         List<ProductImagesEntity> getPro = new ArrayList<>();
         List<ProductImagesEntity> post = productImageRepository.findAll();
         for (ProductImagesEntity p: post) {
-            if (p.getProductEntity().getId() == productEntity.getId()) {
+            if (p.getProductEntity().getId().equals(productEntity.getId())) {
                 getPro.add(p);
             }
         }
         if (getPro.size() == files.length){
             for (int i = 0; i < files.length; i++) {
-                String fileName = StringUtils.cleanPath(files[i].getOriginalFilename());
+                String fileName = cleanPath(Objects.requireNonNull(files[i].getOriginalFilename()));
                 try {
                     if (fileName.contains("..")) {
-                        throw new Exception("Filename contains invalid path sequense " + fileName);
+                        throw new Exception("Filename contains invalid path sequence " + fileName);
                     }
                     getPro.get(i).setFileName(fileName);
                     getPro.get(i).setFileType(files[i].getContentType());
                     getPro.get(i).setData(files[i].getBytes());
-                    getPro.get(i).setUpdated_date(new Date());
+                    getPro.get(i).setUpdatedDate(new Date());
                     pr.add(getPro.get(i));
                     productImageRepository.save(getPro.get(i));
                 } catch (Exception e) {
@@ -101,16 +106,16 @@ public class ProductImagesServiceImpl implements ProductImagesService {
             }
         } else {
             for (ProductImagesEntity p: post) {
-                if (p.getProductEntity().getId() == productEntity.getId()) {
+                if (p.getProductEntity().getId().equals(productEntity.getId())) {
                     productImageRepository.delete(p);
                 }
             }
             for (MultipartFile file :
                     files) {
-                String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+                String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
                 try {
                     if (fileName.contains("..")) {
-                        throw new Exception("Filename contains invalid path sequense " + fileName);
+                        throw new Exception("Filename contains invalid path sequence " + fileName);
                     }
                     ProductImagesEntity productImagesEntity = new ProductImagesEntity(
                             fileName,

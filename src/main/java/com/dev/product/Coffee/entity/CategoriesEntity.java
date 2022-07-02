@@ -1,12 +1,10 @@
 package com.dev.product.Coffee.entity;
 
 
-import com.dev.product.Coffee.dto.CategoryDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
-import com.dev.product.Coffee.Dto.CategoryDTO;
+import com.dev.product.Coffee.dto.CategoryDTO;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -20,8 +18,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_category")
-@NoArgsConstructor
-@AllArgsConstructor
 public class CategoriesEntity extends BaseEntity {
 
     private String categoriesName;
@@ -48,10 +44,10 @@ public class CategoriesEntity extends BaseEntity {
         cat.setDescription(categoryDTO.getDescription());
         cat.setTitle(categoryDTO.getTitle());
         cat.setSeo(categoryDTO.getSeo());
-        cat.setCreated_by(categoryDTO.getCreated_by());
-        cat.setCreated_date(categoryDTO.getCreated_date());
-        cat.setUpdated_by(categoryDTO.getUpdated_by());
-        cat.setUpdated_date(categoryDTO.getUpdated_date());
+        cat.setCreatedBy(categoryDTO.getCreatedBy());
+        cat.setCreatedDate(categoryDTO.getCreatedDate());
+        cat.setUpdatedBy(categoryDTO.getUpdatedBy());
+        cat.setUpdatedDate(categoryDTO.getUpdatedDate());
         cat.setStatus(categoryDTO.getStatus());
         return cat;
     }

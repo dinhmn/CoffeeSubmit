@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class ReviewsServiceImpl implements ReviewsService {
 
     @Override
     public ReviewsEntity createReviews(ReviewsEntity reviewsEntity) {
-        reviewsEntity.setCreated_date(new Date());
+        reviewsEntity.setCreatedDate(new Date());
         reviewsRepository.save(reviewsEntity);
         return reviewsEntity;
     }
@@ -33,26 +34,39 @@ public class ReviewsServiceImpl implements ReviewsService {
 
     @Override
     public ReviewsEntity getReviewsById(Long id) {
-        ReviewsEntity reviewsEntity = reviewsRepository.findById(id).get();
+        Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
+        ReviewsEntity reviewsEntity = null;
+        if (reviewsEntityOptional.isPresent()){
+            reviewsEntity = reviewsEntityOptional.get();
+        }
         return reviewsEntity;
     }
 
     @Override
     public boolean deleteReviews(Long id) {
-        ReviewsEntity reviewsEntity = reviewsRepository.findById(id).get();
-        reviewsRepository.delete(reviewsEntity);
-        return true;
+        Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
+        ReviewsEntity reviewsEntity = null;
+        if (reviewsEntityOptional.isPresent()){
+            reviewsEntity = reviewsEntityOptional.get();
+            reviewsRepository.delete(reviewsEntity);
+            return true;
+        }
+        return false;
     }
 
     @Override
     public ReviewsEntity updateReviewsById(Long id, ReviewsEntity reviewsEntity) {
-        ReviewsEntity reviews = reviewsRepository.findById(id).get();
-        reviews.setComment(reviewsEntity.getComment());
-        reviews.setEmail(reviewsEntity.getEmail());
-        reviews.setName(reviewsEntity.getName());
-        reviews.setStatus(reviewsEntity.getStatus());
-        reviews.setUpdated_date(new Date());
-        reviewsRepository.save(reviews);
+        Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
+        ReviewsEntity reviews = null;
+        if (reviewsEntityOptional.isPresent()){
+            reviews = reviewsEntityOptional.get();
+            reviews.setComment(reviewsEntity.getComment());
+            reviews.setEmail(reviewsEntity.getEmail());
+            reviews.setName(reviewsEntity.getName());
+            reviews.setStatus(reviewsEntity.getStatus());
+            reviews.setUpdatedDate(new Date());
+            reviewsRepository.save(reviews);
+        }
         return reviews;
     }
 }

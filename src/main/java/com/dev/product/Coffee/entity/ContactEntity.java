@@ -13,8 +13,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_contact")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ContactEntity extends BaseEntity {
 
     private String name;

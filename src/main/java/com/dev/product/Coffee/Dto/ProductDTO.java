@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.ProductEntity;
 import lombok.AllArgsConstructor;
@@ -39,10 +39,10 @@ public class ProductDTO extends BaseDTO {
         productDTO.setDetailsDescription(product.getDetailsDescription());
         productDTO.setQuantity(product.getQuantity());
         productDTO.setSeo(product.getSeo());
-        productDTO.setCreated_date(product.getCreated_date());
-        productDTO.setUpdated_by(product.getUpdated_by());
-        productDTO.setCreated_by(product.getCreated_by());
-        productDTO.setUpdated_date(product.getUpdated_date());
+        productDTO.setCreatedDate(product.getCreatedDate());
+        productDTO.setUpdatedBy(product.getUpdatedBy());
+        productDTO.setCreatedBy(product.getCreatedBy());
+        productDTO.setUpdatedDate(product.getUpdatedDate());
         productDTO.setCategoryId(product.getCategoriesEntity().getId());
         productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
         productDTO.setProductImagesDTOS(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
@@ -61,10 +61,10 @@ public class ProductDTO extends BaseDTO {
         productDTO.setDetailsDescription(product.getDetailsDescription());
         productDTO.setQuantity(product.getQuantity());
         productDTO.setSeo(product.getSeo());
-        productDTO.setCreated_date(product.getCreated_date());
-        productDTO.setUpdated_by(product.getUpdated_by());
-        productDTO.setCreated_by(product.getCreated_by());
-        productDTO.setUpdated_date(product.getUpdated_date());
+        productDTO.setCreatedDate(product.getCreatedDate());
+        productDTO.setUpdatedBy(product.getUpdatedBy());
+        productDTO.setCreatedBy(product.getCreatedBy());
+        productDTO.setUpdatedDate(product.getUpdatedDate());
         productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
         productDTO.setReviewsDTOS(product.getReviewsEntities().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
 

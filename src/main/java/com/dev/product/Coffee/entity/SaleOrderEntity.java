@@ -16,8 +16,6 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@NoArgsConstructor
-@AllArgsConstructor
 public class SaleOrderEntity extends BaseEntity{
     private String code;
     private BigDecimal total;
@@ -35,7 +33,7 @@ public class SaleOrderEntity extends BaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "saleOrder")
     @ToString.Exclude
-    private List<SaleOrderProductsEntity> saleOrderProducts = new ArrayList<SaleOrderProductsEntity>();
+    private List<SaleOrderProductsEntity> saleOrderProducts = new ArrayList<>();
 
     public static SaleOrderEntity from(SaleOrderDTO saleOrderDTO){
         SaleOrderEntity saleOrderEntity = new SaleOrderEntity();
@@ -49,10 +47,10 @@ public class SaleOrderEntity extends BaseEntity{
         saleOrderEntity.setCustomerMessage(saleOrderDTO.getCustomerMessage());
         saleOrderEntity.setSeo(saleOrderDTO.getSeo());
         saleOrderEntity.setDelivery(saleOrderDTO.getDelivery());
-        saleOrderEntity.setCreated_by(saleOrderDTO.getCreated_by());
-        saleOrderEntity.setCreated_date(saleOrderDTO.getCreated_date());
-        saleOrderEntity.setUpdated_by(saleOrderDTO.getUpdated_by());
-        saleOrderEntity.setUpdated_date(saleOrderDTO.getUpdated_date());
+        saleOrderEntity.setCreatedBy(saleOrderDTO.getCreatedBy());
+        saleOrderEntity.setCreatedDate(saleOrderDTO.getCreatedDate());
+        saleOrderEntity.setUpdatedBy(saleOrderDTO.getUpdatedBy());
+        saleOrderEntity.setUpdatedDate(saleOrderDTO.getUpdatedDate());
 //        saleOrderEntity.setSaleOrderProducts(saleOrderDTO.getSaleOrderProductsDTOList().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
 
         return saleOrderEntity;
@@ -69,6 +67,6 @@ public class SaleOrderEntity extends BaseEntity{
 
     @Override
     public int hashCode() {
-        return Integer.parseInt(code);
+        return 1069937621;
     }
 }

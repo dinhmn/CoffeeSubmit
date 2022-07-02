@@ -13,8 +13,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_image_avt")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ImageEntity {
 
     @Id

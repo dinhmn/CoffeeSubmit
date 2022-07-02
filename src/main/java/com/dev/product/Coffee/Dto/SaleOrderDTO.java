@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.SaleOrderEntity;
 import lombok.AllArgsConstructor;
@@ -39,10 +39,10 @@ public class SaleOrderDTO extends BaseDTO {
         saleOrderDTO.setCustomerMessage(saleOrderEntity.getCustomerMessage());
         saleOrderDTO.setSeo(saleOrderEntity.getSeo());
         saleOrderDTO.setDelivery(saleOrderEntity.getDelivery());
-        saleOrderDTO.setCreated_by(saleOrderEntity.getCreated_by());
-        saleOrderDTO.setCreated_date(saleOrderEntity.getCreated_date());
-        saleOrderDTO.setUpdated_by(saleOrderEntity.getUpdated_by());
-        saleOrderDTO.setUpdated_date(saleOrderEntity.getUpdated_date());
+        saleOrderDTO.setCreatedBy(saleOrderEntity.getCreatedBy());
+        saleOrderDTO.setCreatedDate(saleOrderEntity.getCreatedDate());
+        saleOrderDTO.setUpdatedBy(saleOrderEntity.getUpdatedBy());
+        saleOrderDTO.setUpdatedDate(saleOrderEntity.getUpdatedDate());
         saleOrderDTO.setSaleOrderProductsDTOList(saleOrderEntity.getSaleOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
 
         return saleOrderDTO;

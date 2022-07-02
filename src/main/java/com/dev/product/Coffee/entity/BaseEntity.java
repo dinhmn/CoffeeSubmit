@@ -1,19 +1,21 @@
 package com.dev.product.Coffee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
 @MappedSuperclass
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public abstract class BaseEntity {
 
-    @Id // primary key
+    // primary key
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
@@ -22,14 +24,28 @@ public abstract class BaseEntity {
     private Boolean status = Boolean.TRUE;
 
     @Column(name = "created_by", nullable = true)
-    private Integer created_by;
+    private Integer createdBy;
 
     @Column(name = "updated_by", nullable = true)
-    private Integer updated_by;
+    private Integer updatedBy;
 
     @Column(name = "created_date", nullable = true)
-    private Date created_date;
+    private Date createdDate;
 
     @Column(name = "updated_date", nullable = true)
-    private Date updated_date;
+    private Date updatedDate;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        BaseEntity that = (BaseEntity) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 699169739;
+    }
 }

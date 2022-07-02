@@ -18,8 +18,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_products")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductEntity extends BaseEntity{
 
     private String title;
@@ -42,11 +40,11 @@ public class ProductEntity extends BaseEntity{
 
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "productImg")
     @ToString.Exclude
-    private List<ImageEntity> imageEntity = new ArrayList<ImageEntity>();
+    private List<ImageEntity> imageEntity = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCmt")
     @ToString.Exclude
-    private List<ReviewsEntity> reviewsEntities = new ArrayList<ReviewsEntity>();
+    private List<ReviewsEntity> reviewsEntities = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @ToString.Exclude
@@ -62,10 +60,10 @@ public class ProductEntity extends BaseEntity{
         productEntity.setDetailsDescription(productDTO.getDetailsDescription());
         productEntity.setQuantity(productDTO.getQuantity());
         productEntity.setSeo(productDTO.getSeo());
-        productEntity.setCreated_date(productDTO.getCreated_date());
-        productEntity.setUpdated_by(productDTO.getUpdated_by());
-        productEntity.setCreated_by(productDTO.getCreated_by());
-        productEntity.setUpdated_date(productDTO.getUpdated_date());
+        productEntity.setCreatedDate(productDTO.getCreatedDate());
+        productEntity.setUpdatedBy(productDTO.getUpdatedBy());
+        productEntity.setCreatedBy(productDTO.getCreatedBy());
+        productEntity.setUpdatedDate(productDTO.getUpdatedDate());
         return productEntity;
     }
 

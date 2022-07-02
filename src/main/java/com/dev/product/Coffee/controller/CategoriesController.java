@@ -1,7 +1,7 @@
 package com.dev.product.Coffee.controller;
 
 
-import com.dev.product.Coffee.Dto.CategoryDTO;
+import com.dev.product.Coffee.dto.CategoryDTO;
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.service.CategoriesService;
 import com.dev.product.Coffee.service.ProductService;
@@ -74,6 +74,12 @@ public class CategoriesController {
         CategoriesEntity categoriesEntity = categoriesService.addProductToCategory(id, productId);
         return new ResponseEntity<>(CategoryDTO.from(categoriesEntity), HttpStatus.OK);
     }
+
+    /**
+     * @param id            get id from url
+     * @param productId     get productId from url
+     * @return              Status Ok
+     */
     @DeleteMapping("/category/{id}/product/{productId}/add")
     public ResponseEntity<CategoryDTO> removeProductToCategory(@PathVariable final Long id,
                                                                @PathVariable final Long productId){

@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -33,6 +34,7 @@ public class ProductServiceImpl implements ProductService {
     private ProductImagesService productImagesService;
     @Autowired
     private ImageService imageService;
+
     public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository) {
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
@@ -73,9 +75,8 @@ public class ProductServiceImpl implements ProductService {
 //
 //        }
 
-        product.setCreated_date(new Date());
+        product.setCreatedDate(new Date());
         product.setSeo(new Slugify().slugify(product.getTitle()));
-//        product.setC
 
         productRepository.save(product);
 
@@ -84,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity create(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
-        productEntity.setCreated_date(new Date());
+        productEntity.setCreatedDate(new Date());
         productEntity.setSeo(new Slugify().slugify(productEntity.getTitle()));
         productEntity.setCategoriesEntity(categoriesEntity);
         productRepository.save(productEntity);
@@ -98,37 +99,49 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductEntity getProductById(Long id) {
-        ProductEntity productEntity = productRepository.findById(id).get();
+        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
+        ProductEntity productEntity = null;
+        if (productEntityOptional.isPresent()) {
+            productEntity = productEntityOptional.get();
+        }
         return productEntity;
     }
 
     @Override
     public boolean deleteProduct(Long id) {
-        ProductEntity productEntity = productRepository.findById(id).get();
-        productRepository.delete(productEntity);
-        return true;
+        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
+        ProductEntity productEntity = null;
+        if (productEntityOptional.isPresent()) {
+            productEntity = productEntityOptional.get();
+            productRepository.delete(productEntity);
+            return true;
+        }
+
+        return false;
     }
 
     @Override
     public ProductEntity updateProductById(Long id, ProductEntity product) {
-        ProductEntity productEntity = productRepository.findById(id).get();
-        productEntity.setTitle(product.getTitle());
-        productEntity.setDetailsDescription(product.getDetailsDescription());
-        productEntity.setSeo(product.getSeo());
-        productEntity.setCreated_date(product.getCreated_date());
-        productEntity.setPrice(product.getPrice());
-        productEntity.setPriceSale(product.getPriceSale());
-        productEntity.setQuantity(product.getQuantity());
-        productEntity.setShortDescription(product.getShortDescription());
-        productEntity.setCreated_by(product.getCreated_by());
-        productEntity.setUpdated_by(product.getUpdated_by());
-        productEntity.setUpdated_date(new Date());
-        productEntity.setStatus(product.getStatus());
-        productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
+        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
+        ProductEntity productEntity = null;
+        if (productEntityOptional.isPresent()) {
+            productEntity = productEntityOptional.get();
+            productEntity.setTitle(product.getTitle());
+            productEntity.setDetailsDescription(product.getDetailsDescription());
+            productEntity.setSeo(product.getSeo());
+            productEntity.setCreatedDate(product.getCreatedDate());
+            productEntity.setPrice(product.getPrice());
+            productEntity.setPriceSale(product.getPriceSale());
+            productEntity.setQuantity(product.getQuantity());
+            productEntity.setShortDescription(product.getShortDescription());
+            productEntity.setCreatedBy(product.getCreatedBy());
+            productEntity.setUpdatedBy(product.getUpdatedBy());
+            productEntity.setUpdatedDate(new Date());
+            productEntity.setStatus(product.getStatus());
+            productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
+            productRepository.save(productEntity);
+        }
 
-        productRepository.save(productEntity);
         return productEntity;
     }
-
-
 }

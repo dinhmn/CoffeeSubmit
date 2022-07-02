@@ -13,8 +13,6 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Entity
 @Table(name = "tbl_product_images")
-@NoArgsConstructor
-@AllArgsConstructor
 public class ProductImagesEntity {
 
     @Id
@@ -28,17 +26,17 @@ public class ProductImagesEntity {
     private byte[] data;
 
     @Column(name = "created_date", nullable = true)
-    private Date created_date;
+    private Date createdDate;
 
     @Column(name = "updated_date", nullable = true)
-    private Date updated_date;
+    private Date updatedDate;
 
-    public ProductImagesEntity(String fileName, String fileType, byte[] data, Date created_date, Date updated_date) {
+    public ProductImagesEntity(String fileName, String fileType, byte[] data, Date createdDate, Date updatedDate) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
-        this.created_date = created_date;
-        this.updated_date = updated_date;
+        this.createdDate = createdDate;
+        this.updatedDate = updatedDate;
     }
 
     @ManyToOne(fetch = FetchType.EAGER)

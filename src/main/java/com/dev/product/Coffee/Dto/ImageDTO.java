@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.ImageEntity;
 import lombok.AllArgsConstructor;

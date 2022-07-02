@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.controller;
 
-import com.dev.product.Coffee.Dto.ProductDTO;
+import com.dev.product.Coffee.dto.ProductDTO;
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.service.CategoriesService;

@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import lombok.AllArgsConstructor;
@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO extends BaseDTO{
+public class CategoryDTO extends com.dev.product.Coffee.dto.BaseDTO {
     private String categoriesName;
     private String title;
     private String seo;
@@ -22,7 +22,7 @@ public class CategoryDTO extends BaseDTO{
 
     private List<ProductDTO> productDTOList = new ArrayList<>();
 
-    public static CategoryDTO from(CategoriesEntity category){
+    public static CategoryDTO from(CategoriesEntity category) {
         CategoryDTO categoryDTO = new CategoryDTO();
 
         categoryDTO.setId(category.getId());
@@ -30,12 +30,12 @@ public class CategoryDTO extends BaseDTO{
         categoryDTO.setDescription(category.getDescription());
         categoryDTO.setTitle(category.getTitle());
         categoryDTO.setSeo(category.getSeo());
-        categoryDTO.setCreated_by(category.getCreated_by());
-        categoryDTO.setCreated_date(category.getCreated_date());
-        categoryDTO.setUpdated_by(category.getUpdated_by());
-        categoryDTO.setUpdated_date(category.getUpdated_date());
+        categoryDTO.setCreatedBy(category.getCreatedBy());
+        categoryDTO.setCreatedDate(category.getCreatedDate());
+        categoryDTO.setUpdatedBy(category.getUpdatedBy());
+        categoryDTO.setUpdatedDate(category.getUpdatedDate());
         categoryDTO.setStatus(category.getStatus());
         categoryDTO.setProductDTOList(category.getProductEntities().stream().map(ProductDTO::from).collect(Collectors.toList()));
-        return  categoryDTO;
+        return categoryDTO;
     }
 }

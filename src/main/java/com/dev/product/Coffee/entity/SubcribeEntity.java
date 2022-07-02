@@ -13,8 +13,6 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_subcribe")
-@NoArgsConstructor
-@AllArgsConstructor
 public class SubcribeEntity extends BaseEntity {
     private String email;
 

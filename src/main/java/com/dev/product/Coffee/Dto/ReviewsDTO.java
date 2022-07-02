@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.Dto;
+package com.dev.product.Coffee.dto;
 
 import com.dev.product.Coffee.entity.ReviewsEntity;
 import lombok.AllArgsConstructor;
@@ -20,10 +20,10 @@ public class ReviewsDTO extends BaseDTO{
         revi.setComment(reviewsEntity.getComment());
         revi.setEmail(reviewsEntity.getEmail());
         revi.setName(reviewsEntity.getName());
-        revi.setCreated_by(reviewsEntity.getCreated_by());
-        revi.setCreated_date(reviewsEntity.getCreated_date());
-        revi.setUpdated_date(reviewsEntity.getUpdated_date());
-        revi.setUpdated_by(reviewsEntity.getUpdated_by());
+        revi.setCreatedBy(reviewsEntity.getCreatedBy());
+        revi.setCreatedDate(reviewsEntity.getCreatedDate());
+        revi.setUpdatedDate(reviewsEntity.getUpdatedDate());
+        revi.setUpdatedBy(reviewsEntity.getUpdatedBy());
         revi.setStatus(reviewsEntity.getStatus());
         revi.setId(reviewsEntity.getId());
         return revi;
