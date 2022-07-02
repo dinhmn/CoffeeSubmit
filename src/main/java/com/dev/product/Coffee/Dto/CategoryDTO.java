@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.dto;
+package com.dev.product.Coffee.Dto;
 
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import lombok.AllArgsConstructor;

@@ -1,6 +1,5 @@
-package com.dev.product.Coffee.dto;
+package com.dev.product.Coffee.Dto;
 
-import com.dev.product.Coffee.Response.ResponseData;
 import com.dev.product.Coffee.entity.ProductEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +15,7 @@ import java.util.stream.Collectors;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductDTO extends BaseDTO{
+public class ProductDTO extends BaseDTO {
     private String title;
     private BigDecimal price;
     private BigDecimal priceSale;
@@ -25,10 +24,11 @@ public class ProductDTO extends BaseDTO{
     private Long quantity;
     private String seo;
     private Long categoryId;
-    private List<ImageDTO> imageDTOList = new ArrayList<ImageDTO>();
-    private List<ProductImagesDTO> productImagesDTOS = new ArrayList<ProductImagesDTO>();
-    private List<ReviewsDTO> reviewsDTOS = new ArrayList<ReviewsDTO>();
-    public static ProductDTO from(ProductEntity product){
+    private List<ImageDTO> imageDTOList = new ArrayList<>();
+    private List<ProductImagesDTO> productImagesDTOS = new ArrayList<>();
+    private List<ReviewsDTO> reviewsDTOS = new ArrayList<>();
+
+    public static ProductDTO from(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());
@@ -49,7 +49,8 @@ public class ProductDTO extends BaseDTO{
         productDTO.setReviewsDTOS(product.getReviewsEntities().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
         return productDTO;
     }
-    public static ProductDTO fromTo(ProductEntity product){
+
+    public static ProductDTO fromTo(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 
         productDTO.setId(product.getId());

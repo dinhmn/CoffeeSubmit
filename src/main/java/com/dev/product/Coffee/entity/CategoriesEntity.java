@@ -4,6 +4,10 @@ package com.dev.product.Coffee.entity;
 import com.dev.product.Coffee.dto.CategoryDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
+import com.dev.product.Coffee.Dto.CategoryDTO;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;

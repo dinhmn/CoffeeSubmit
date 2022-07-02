@@ -3,6 +3,8 @@ package com.dev.product.Coffee.entity;
 import com.dev.product.Coffee.dto.ProductDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
