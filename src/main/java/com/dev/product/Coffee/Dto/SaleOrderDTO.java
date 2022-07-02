@@ -1,8 +1,9 @@
-package com.dev.product.Coffee.dto;
+package com.dev.product.Coffee.Dto;
 
 import com.dev.product.Coffee.entity.SaleOrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
@@ -10,10 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class SaleOrderDTO extends BaseDTO{
+public class SaleOrderDTO extends BaseDTO {
     private String code;
     private BigDecimal total;
     private String customerName;
@@ -23,9 +25,9 @@ public class SaleOrderDTO extends BaseDTO{
     private String customerMessage;
     private String seo;
     private String delivery;
-    private List<SaleOrderProductsDTO> saleOrderProductsDTOList = new ArrayList<SaleOrderProductsDTO>();
+    private List<SaleOrderProductsDTO> saleOrderProductsDTOList = new ArrayList<>();
 
-    public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity){
+    public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity) {
         SaleOrderDTO saleOrderDTO = new SaleOrderDTO();
         saleOrderDTO.setId(saleOrderEntity.getId());
         saleOrderDTO.setCode(saleOrderEntity.getCode());

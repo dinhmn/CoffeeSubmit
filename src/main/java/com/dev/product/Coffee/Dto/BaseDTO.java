@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.dto;
+package com.dev.product.Coffee.Dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

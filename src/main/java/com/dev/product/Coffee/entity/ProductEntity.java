@@ -1,7 +1,6 @@
 package com.dev.product.Coffee.entity;
 
-import com.dev.product.Coffee.dto.ImageDTO;
-import com.dev.product.Coffee.dto.ProductDTO;
+import com.dev.product.Coffee.Dto.ProductDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Entity
 @Data

@@ -1,6 +1,5 @@
-package com.dev.product.Coffee.dto;
+package com.dev.product.Coffee.Dto;
 
-import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.ProductImagesEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
