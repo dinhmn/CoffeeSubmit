@@ -4,10 +4,12 @@ import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.ProductImagesEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@EqualsAndHashCode()
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

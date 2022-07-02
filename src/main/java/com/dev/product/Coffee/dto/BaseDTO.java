@@ -1,14 +1,15 @@
 package com.dev.product.Coffee.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 @MappedSuperclass
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class BaseDTO {

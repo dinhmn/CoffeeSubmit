@@ -1,20 +1,21 @@
 package com.dev.product.Coffee.entity;
 
 import com.dev.product.Coffee.dto.SaleOrderDTO;
-import com.dev.product.Coffee.dto.SaleOrderProductsDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_saleorder")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 public class SaleOrderEntity extends BaseEntity{
@@ -33,6 +34,7 @@ public class SaleOrderEntity extends BaseEntity{
     private UsersEntity user;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "saleOrder")
+    @ToString.Exclude
     private List<SaleOrderProductsEntity> saleOrderProducts = new ArrayList<SaleOrderProductsEntity>();
 
     public static SaleOrderEntity from(SaleOrderDTO saleOrderDTO){
@@ -54,5 +56,19 @@ public class SaleOrderEntity extends BaseEntity{
 //        saleOrderEntity.setSaleOrderProducts(saleOrderDTO.getSaleOrderProductsDTOList().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
 
         return saleOrderEntity;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SaleOrderEntity that = (SaleOrderEntity) o;
+
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(code);
     }
 }

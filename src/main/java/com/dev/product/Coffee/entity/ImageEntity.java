@@ -1,14 +1,17 @@
 package com.dev.product.Coffee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "tbl_image_avt")
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,4 +38,17 @@ public class ImageEntity {
     @JoinColumn(name = "product_id")
     private ProductEntity productImg;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ImageEntity that = (ImageEntity) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1702298505;
+    }
 }

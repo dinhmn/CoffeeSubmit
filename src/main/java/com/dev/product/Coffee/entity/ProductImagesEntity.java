@@ -1,19 +1,21 @@
 package com.dev.product.Coffee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Entity
 @Table(name = "tbl_product_images")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductImagesEntity{
+public class ProductImagesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,4 +44,18 @@ public class ProductImagesEntity{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ProductImagesEntity that = (ProductImagesEntity) o;
+
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return 1978343741;
+    }
 }

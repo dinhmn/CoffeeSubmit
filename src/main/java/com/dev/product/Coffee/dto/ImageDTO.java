@@ -4,8 +4,10 @@ import com.dev.product.Coffee.Response.ResponseData;
 import com.dev.product.Coffee.entity.ImageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+@EqualsAndHashCode()
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

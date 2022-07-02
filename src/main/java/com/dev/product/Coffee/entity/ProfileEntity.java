@@ -1,17 +1,20 @@
 package com.dev.product.Coffee.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "tbl_profile")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProfileEntity extends BaseEntity{
+public class ProfileEntity extends BaseEntity {
 
     private String firstName;
     private String lastName;
@@ -31,5 +34,17 @@ public class ProfileEntity extends BaseEntity{
     @JoinColumn(name = "user_id")
     private UsersEntity user;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ProfileEntity that = (ProfileEntity) o;
 
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 772697742;
+    }
 }

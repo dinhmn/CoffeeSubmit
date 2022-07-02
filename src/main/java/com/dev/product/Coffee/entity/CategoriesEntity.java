@@ -2,19 +2,23 @@ package com.dev.product.Coffee.entity;
 
 
 import com.dev.product.Coffee.dto.CategoryDTO;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table(name = "tbl_category")
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoriesEntity extends BaseEntity{
+public class CategoriesEntity extends BaseEntity {
 
     private String categoriesName;
     private String title;
@@ -22,16 +26,18 @@ public class CategoriesEntity extends BaseEntity{
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "categoriesEntity")
-//    private Set<ProductEntity> productEntities = new HashSet<>();
-    private List<ProductEntity> productEntities = new ArrayList<ProductEntity>();
+    @ToString.Exclude
+    private List<ProductEntity> productEntities = new ArrayList<>();
 
-    public void add(ProductEntity productEntity){
+    public void add(ProductEntity productEntity) {
         productEntities.add(productEntity);
     }
-    public void remove(ProductEntity productEntity){
+
+    public void remove(ProductEntity productEntity) {
         productEntities.remove(productEntity);
     }
-    public static CategoriesEntity from(CategoryDTO categoryDTO){
+
+    public static CategoriesEntity from(CategoryDTO categoryDTO) {
         CategoriesEntity cat = new CategoriesEntity();
         cat.setId(categoryDTO.getId());
         cat.setCategoriesName(categoryDTO.getCategoriesName());
@@ -44,5 +50,19 @@ public class CategoriesEntity extends BaseEntity{
         cat.setUpdated_date(categoryDTO.getUpdated_date());
         cat.setStatus(categoryDTO.getStatus());
         return cat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        CategoriesEntity that = (CategoriesEntity) o;
+
+        return Objects.equals(getId(), that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return 1285280852;
     }
 }
