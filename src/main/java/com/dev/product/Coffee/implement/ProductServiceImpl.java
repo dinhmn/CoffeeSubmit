@@ -23,9 +23,9 @@ import java.util.Optional;
 
 @Service
 public class ProductServiceImpl implements ProductService {
-
+    
     public String UPLOAD_FOLDER_ROOT = "D:/apiImage/";
-
+    
     @Autowired
     private final ProductRepository productRepository;
     @Autowired
@@ -34,55 +34,27 @@ public class ProductServiceImpl implements ProductService {
     private ProductImagesService productImagesService;
     @Autowired
     private ImageService imageService;
-
+    
     public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository) {
         this.productRepository = productRepository;
         this.imageRepository = imageRepository;
     }
-
-
+    
+    
     @Override
-    public ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar) throws Exception {
-//        List<ImageEntity> img = new ArrayList<ImageEntity>();
-//        ImageEntity imageEntity = null;
-//        String downloadURI = "";
-//        if(!productImagesService.isEmptyUploadFile(productAvatar)){
-//            String pathToFile = UPLOAD_FOLDER_ROOT + "product/avatar/" + productAvatar.getOriginalFilename();
-//            productAvatar.transferTo(new File(pathToFile));
-//            imageEntity = imageService.saveImage(productAvatar);
-//            downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                    .path("/download/")
-//                    .path(imageEntity.getId())
-//                    .toUriString();
-//            img.add(imageEntity);
-//            product.setImageEntity(img);
-//            product.setFileImage("product/avatar/" + productAvatar.getOriginalFilename());
-//        }
-
-//        if(!productImagesService.isEmptyUploadFile(productPictures)){
-//
-//            for (MultipartFile pic:
-//                    productPictures) {
-//                pic.transferTo(new File(UPLOAD_FOLDER_ROOT + "product/pictures" + pic.getOriginalFilename()));
-//
-//                ProductImagesEntity pi = new ProductImagesEntity();
-//                pi.setDownloadURL("product/pictures/" + pic.getOriginalFilename());
-//                pi.setPathName(pic.getOriginalFilename());
-//
-//
-//                product.addProductImage(pi);
-//            }
-//
-//        }
-
+    public ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception {
+        
+        
+        imageService.saveImage(productAvatar, product);
+        product.setCategoriesEntity(categoriesEntity);
         product.setCreatedDate(new Date());
         product.setSeo(new Slugify().slugify(product.getTitle()));
-
+        
         productRepository.save(product);
-
+        
         return product;
     }
-
+    
     @Override
     public ProductEntity create(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
         productEntity.setCreatedDate(new Date());
@@ -91,12 +63,12 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productEntity);
         return productEntity;
     }
-
+    
     @Override
     public List<ProductEntity> getAllProducts() {
         return productRepository.findAll();
     }
-
+    
     @Override
     public ProductEntity getProductById(Long id) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
@@ -106,7 +78,7 @@ public class ProductServiceImpl implements ProductService {
         }
         return productEntity;
     }
-
+    
     @Override
     public boolean deleteProduct(Long id) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
@@ -116,10 +88,10 @@ public class ProductServiceImpl implements ProductService {
             productRepository.delete(productEntity);
             return true;
         }
-
+        
         return false;
     }
-
+    
     @Override
     public ProductEntity updateProductById(Long id, ProductEntity product) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
@@ -141,7 +113,7 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
             productRepository.save(productEntity);
         }
-
+        
         return productEntity;
     }
 }

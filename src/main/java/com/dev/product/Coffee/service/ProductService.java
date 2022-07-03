@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar) throws Exception;
+    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception;
     ProductEntity create(ProductEntity productEntity, CategoriesEntity categoriesEntity);
 //    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, MultipartFile[] productPictures) throws IOException;
     List<ProductEntity> getAllProducts();

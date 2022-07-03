@@ -43,13 +43,12 @@ public class AttachmentController {
                 .path("/download/")
                 .path(imageEntity.getId())
                 .toUriString();
-
-
         return new ResponseData(imageEntity.getFileName(),
                 downloadURI,
                 file.getContentType(),
                 file.getSize());
     }
+
     @PutMapping("/upload/{id}")
     public ResponseData updateUploadFile(@RequestParam("file") MultipartFile file,
                                          @RequestParam("files") MultipartFile[] files,
@@ -62,13 +61,12 @@ public class AttachmentController {
                 .path("/download/")
                 .path(imageEntity.getId())
                 .toUriString();
-
-
         return new ResponseData(imageEntity.getFileName(),
                 downloadURI,
                 file.getContentType(),
                 file.getSize());
     }
+
     @GetMapping("/download/{id}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String id) throws Exception {
         ImageEntity imageEntity = imageService.getImage(id);
