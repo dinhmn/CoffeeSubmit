@@ -5,6 +5,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -22,7 +23,19 @@ public class ImageEntity {
 
     private String fileName;
     private String fileType;
-
+    
+    @Column(name = "created_by", nullable = true)
+    private Integer createdBy;
+    
+    @Column(name = "updated_by", nullable = true)
+    private Integer updatedBy;
+    
+    @Column(name = "created_date", nullable = true)
+    private Date createdDate;
+    
+    @Column(name = "updated_date", nullable = true)
+    private Date updatedDate;
+    
     @Lob
     private byte[] data;
 
@@ -47,6 +60,6 @@ public class ImageEntity {
 
     @Override
     public int hashCode() {
-        return 1702298505;
+        return id.hashCode();
     }
 }

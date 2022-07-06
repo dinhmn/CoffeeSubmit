@@ -21,16 +21,22 @@ public class ProductImagesEntity {
 
     private String fileName;
     private String fileType;
-
+    
     @Lob
     private byte[] data;
-
+    
+    @Column(name = "created_by", nullable = true)
+    private Integer createdBy;
+    
+    @Column(name = "updated_by", nullable = true)
+    private Integer updatedBy;
+    
     @Column(name = "created_date", nullable = true)
     private Date createdDate;
-
+    
     @Column(name = "updated_date", nullable = true)
     private Date updatedDate;
-
+    
     public ProductImagesEntity(String fileName, String fileType, byte[] data, Date createdDate, Date updatedDate) {
         this.fileName = fileName;
         this.fileType = fileType;
@@ -54,6 +60,6 @@ public class ProductImagesEntity {
 
     @Override
     public int hashCode() {
-        return 1978343741;
+        return id.hashCode();
     }
 }

@@ -10,10 +10,10 @@ public interface ProductImagesService {
 
     public boolean isEmptyUploadFile(MultipartFile[] images);
     public boolean isEmptyUploadFile(MultipartFile image);
-    List<ProductImagesEntity> saveImage(MultipartFile[] files, ProductEntity productEntity
+    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity
     ) throws Exception;
 
-    ProductImagesEntity getImage(String id) throws Exception;
+    ProductImagesEntity selectImageById(String id) throws Exception;
 
-    List<ProductImagesEntity> updateImage(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception;
 }

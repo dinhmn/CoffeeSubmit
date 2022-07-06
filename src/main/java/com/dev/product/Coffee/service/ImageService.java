@@ -5,11 +5,12 @@ import com.dev.product.Coffee.entity.ProductEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface ImageService {
-    ImageEntity saveImage(MultipartFile file,  ProductEntity productEntity
+    ImageEntity insert(MultipartFile file,  ProductEntity productEntity
     ) throws Exception;
 
-    ImageEntity getImage(String id) throws Exception;
+    ImageEntity selectImageById(String id) throws Exception;
 
-    ImageEntity updateImage(MultipartFile file, ProductEntity productEntity) throws Exception;
-//    ImageEntity createImage(MultipartFile file);
+    ImageEntity update(MultipartFile file, ProductEntity productEntity) throws Exception;
+
+    void delete(MultipartFile file, Long productId) throws Exception;
 }

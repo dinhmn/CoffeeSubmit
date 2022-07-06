@@ -11,8 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static org.springframework.util.StringUtils.cleanPath;
 
@@ -26,7 +28,7 @@ public class ImageServiceImpl implements ImageService {
     private ProductRepository productRepository;
     
     @Override
-    public ImageEntity saveImage(MultipartFile file, ProductEntity productEntity) throws Exception {
+    public ImageEntity insert(MultipartFile file, ProductEntity productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             if (fileName.contains("..")) {
@@ -37,8 +39,8 @@ public class ImageServiceImpl implements ImageService {
                     file.getContentType(),
                     file.getBytes()
             );
-            
             imageEntity.setProductImg(productEntity);
+            imageEntity.setCreatedDate(new Date());
             return imageRepository.save(imageEntity);
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
@@ -46,13 +48,13 @@ public class ImageServiceImpl implements ImageService {
     }
     
     @Override
-    public ImageEntity getImage(String id) throws Exception {
+    public ImageEntity selectImageById(String id) throws Exception {
         return imageRepository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
     
     @Override
-    public ImageEntity updateImage(MultipartFile file, ProductEntity productEntity) throws Exception {
+    public ImageEntity update(MultipartFile file, ProductEntity productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         List<ImageEntity> imgList = imageRepository.findAll();
         ImageEntity imgGetId = new ImageEntity();
@@ -65,12 +67,28 @@ public class ImageServiceImpl implements ImageService {
                     img.setFileName(fileName);
                     img.setFileType(file.getContentType());
                     img.setData(file.getBytes());
+                    img.setUpdatedDate(new Date());
                     imgGetId = img;
                 }
             }
             return imageRepository.save(imgGetId);
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
+        }
+    }
+    
+    @Override
+    public void delete(MultipartFile file, Long productId) throws Exception {
+        String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+        try {
+            List<ImageEntity> imageEntityList = imageRepository.findAll();
+            Optional<ImageEntity> imageEntity = imageEntityList.stream()
+                    .filter(e -> e.getProductImg().getId().equals(productId))
+                    .findFirst();
+            imageEntity.ifPresent(imageRepository::delete);
+           
+        } catch (Exception e) {
+            throw new Exception("Could not delete file: " + fileName);
         }
     }
 }

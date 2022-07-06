@@ -36,8 +36,8 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     }
 
     @Override
-    public List<ProductImagesEntity> saveImage(MultipartFile[] files, ProductEntity productEntity) throws Exception {
-        List<ProductImagesEntity> pr = new ArrayList<>();
+    public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception {
+        List<ProductImagesEntity> multipleImage = new ArrayList<>();
         for (MultipartFile file :
                 files) {
             String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
@@ -52,33 +52,34 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                         new Date(),
                         null
                 );
+                productImagesEntity.setCreatedDate(new Date());
                 productImagesEntity.setProductEntity(productEntity);
-                pr.add(productImagesEntity);
+                multipleImage.add(productImagesEntity);
                 productImageRepository.save(productImagesEntity);
             } catch (Exception e) {
                 throw new Exception(String.format("Could not save file: %s", file));
             }
         }
 
-        return productImageRepository.saveAll(pr);
+        return productImageRepository.saveAll(multipleImage);
     }
 
 
 
     @Override
-    public ProductImagesEntity getImage(String id) throws Exception {
+    public ProductImagesEntity selectImageById(String id) throws Exception {
         return productImageRepository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
 
     /**
-     * @param files
-     * @param productEntity
-     * @return
+     * @param files             is not NUll
+     * @param productEntity     is not NUll
+     * @return list product images
      * @throws Exception
      */
     @Override
-    public List<ProductImagesEntity> updateImage(MultipartFile[] files, ProductEntity productEntity) throws Exception {
+    public List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception {
         List<ProductImagesEntity> pr = new ArrayList<>();
         List<ProductImagesEntity> getPro = new ArrayList<>();
         List<ProductImagesEntity> post = productImageRepository.findAll();

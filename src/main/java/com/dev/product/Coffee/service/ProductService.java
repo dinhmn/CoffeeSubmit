@@ -9,14 +9,14 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception;
-    ProductEntity create(ProductEntity productEntity, CategoriesEntity categoriesEntity);
+    ProductEntity insert(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception;
+    ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity);
 //    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, MultipartFile[] productPictures) throws IOException;
-    List<ProductEntity> getAllProducts();
+    List<ProductEntity> selectAll();
 
-    ProductEntity getProductById(Long id);
+    ProductEntity selectProductById(Long id);
 
-    boolean deleteProduct(Long id);
-    ProductEntity updateProductById(Long id, ProductEntity product);
+    boolean deleteProductById(Long id);
+    ProductEntity update(Long id, ProductEntity product);
 
 }

@@ -36,9 +36,9 @@ public class AttachmentController {
                                    @RequestParam("id") Long id
     ) throws Exception {
         String downloadURI = "";
-        ProductEntity product = productService.getProductById(id);
-        ImageEntity imageEntity = imageService.saveImage(file, product);
-        List<ProductImagesEntity> productImagesEntity = productImagesService.saveImage(files, product);
+        ProductEntity product = productService.selectProductById(id);
+        ImageEntity imageEntity = imageService.insert(file, product);
+        List<ProductImagesEntity> productImagesEntity = productImagesService.insertMultiple(files, product);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(imageEntity.getId())
@@ -54,9 +54,9 @@ public class AttachmentController {
                                          @RequestParam("files") MultipartFile[] files,
                                          @PathVariable Long id) throws Exception {
         String downloadURI = "";
-        ProductEntity productEntity = productService.getProductById(id);
-        ImageEntity imageEntity = imageService.updateImage(file, productEntity);
-        List<ProductImagesEntity> productImagesEntity = productImagesService.updateImage(files, productEntity);
+        ProductEntity productEntity = productService.selectProductById(id);
+        ImageEntity imageEntity = imageService.update(file, productEntity);
+        List<ProductImagesEntity> productImagesEntity = productImagesService.update(files, productEntity);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(imageEntity.getId())
@@ -69,7 +69,7 @@ public class AttachmentController {
 
     @GetMapping("/download/{id}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String id) throws Exception {
-        ImageEntity imageEntity = imageService.getImage(id);
+        ImageEntity imageEntity = imageService.selectImageById(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(imageEntity.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION,

@@ -30,10 +30,7 @@ public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     @Autowired
     private final ImageRepository imageRepository;
-    @Autowired
-    private ProductImagesService productImagesService;
-    @Autowired
-    private ImageService imageService;
+
     
     public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository) {
         this.productRepository = productRepository;
@@ -42,21 +39,18 @@ public class ProductServiceImpl implements ProductService {
     
     
     @Override
-    public ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception {
+    public ProductEntity insert(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception {
         
-        
-        imageService.saveImage(productAvatar, product);
         product.setCategoriesEntity(categoriesEntity);
         product.setCreatedDate(new Date());
         product.setSeo(new Slugify().slugify(product.getTitle()));
         
         productRepository.save(product);
-        
         return product;
     }
     
     @Override
-    public ProductEntity create(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
+    public ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
         productEntity.setCreatedDate(new Date());
         productEntity.setSeo(new Slugify().slugify(productEntity.getTitle()));
         productEntity.setCategoriesEntity(categoriesEntity);
@@ -65,12 +59,12 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public List<ProductEntity> getAllProducts() {
+    public List<ProductEntity> selectAll() {
         return productRepository.findAll();
     }
     
     @Override
-    public ProductEntity getProductById(Long id) {
+    public ProductEntity selectProductById(Long id) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
         ProductEntity productEntity = null;
         if (productEntityOptional.isPresent()) {
@@ -80,7 +74,7 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public boolean deleteProduct(Long id) {
+    public boolean deleteProductById(Long id) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
         ProductEntity productEntity = null;
         if (productEntityOptional.isPresent()) {
@@ -93,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public ProductEntity updateProductById(Long id, ProductEntity product) {
+    public ProductEntity update(Long id, ProductEntity product) {
         Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
         ProductEntity productEntity = null;
         if (productEntityOptional.isPresent()) {
