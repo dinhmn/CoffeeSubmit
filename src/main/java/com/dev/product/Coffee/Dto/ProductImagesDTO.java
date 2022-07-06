@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.Date;
 
 @EqualsAndHashCode()
@@ -19,14 +20,18 @@ public class ProductImagesDTO {
     private String id;
     private Date createdDate;
     private Date updatedDate;
-
+    private Integer createdBy;
+    private Integer updatedBy;
+    
     public static ProductImagesDTO from(ProductImagesEntity productImagesEntity){
         ProductImagesDTO img = new ProductImagesDTO();
         img.setFileName(productImagesEntity.getFileName());
         img.setId(productImagesEntity.getId());
         img.setFileType(productImagesEntity.getFileType());
+        img.setCreatedBy(productImagesEntity.getCreatedBy());
         img.setCreatedDate(productImagesEntity.getCreatedDate());
         img.setUpdatedDate(productImagesEntity.getUpdatedDate());
+        img.setUpdatedBy(productImagesEntity.getUpdatedBy());
         return img;
     }
 }

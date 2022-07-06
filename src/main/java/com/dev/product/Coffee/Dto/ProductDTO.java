@@ -66,6 +66,7 @@ public class ProductDTO extends BaseDTO {
         productDTO.setCreatedBy(product.getCreatedBy());
         productDTO.setUpdatedDate(product.getUpdatedDate());
         productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
+        productDTO.setProductImagesDTOS(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
         productDTO.setReviewsDTOS(product.getReviewsEntities().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
 
         return productDTO;
