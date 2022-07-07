@@ -38,9 +38,9 @@ public class ProductController {
     @Autowired
     private final CategoriesService categoriesService;
     @Autowired
-    private ProductImagesService productImagesService;
+    private final ProductImagesService productImagesService;
     @Autowired
-    private ImageService imageService;
+    private final ImageService imageService;
     
     // Post mapping, user sent request to server
     @PostMapping("/product")
@@ -99,21 +99,20 @@ public class ProductController {
     public ResponseEntity<ProductDTO> updateProductById(@PathVariable Long id,
                                                         @RequestPart("product") String product,
                                                         @RequestParam("file") MultipartFile file,
-                                                        @RequestParam("files") MultipartFile[] files) throws JsonProcessingException {
+                                                        @RequestParam("files") MultipartFile[] files) {
         // pre-variables
-        ProductDTO productDTO = null;
         ProductEntity productEntity = null;
-        ImageEntity imageEntity = null;
         AtomicReference<List<ProductImagesEntity>> productImagesEntity = new AtomicReference<>(Collections.emptyList());
+        
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             // convert String -> Object
-            productDTO = objectMapper.readValue(product, ProductDTO.class);
+            ProductDTO productDTO = objectMapper.readValue(product, ProductDTO.class);
     
             productEntity = productService.update(id, ProductEntity.from(productDTO));
             if (!file.isEmpty()) {
                 imageService.delete(file, productEntity.getId());
-                imageEntity = imageService.update(file, productEntity);
+                imageService.update(file, productEntity);
             }
             
             productImagesEntity.set(productImagesService.update(files, productEntity));
@@ -121,15 +120,13 @@ public class ProductController {
             out.println("Error: " + err.toString());
         }
         
-        
-       
-        assert productDTO != null;
+        assert productEntity != null;
         return new ResponseEntity<>(ProductDTO.from(productEntity), HttpStatus.OK);
     }
     
     @DeleteMapping("/product/{id}")
     public ResponseEntity<Map<String, Boolean>> deleteProductById(@PathVariable Long id) {
-        boolean deleted = false;
+        boolean deleted;
         deleted = productService.deleteProductById(id);
         Map<String, Boolean> response = new HashMap<>();
         response.put("Deleted", deleted);

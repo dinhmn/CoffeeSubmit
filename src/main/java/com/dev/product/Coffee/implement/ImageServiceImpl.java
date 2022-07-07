@@ -56,22 +56,22 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageEntity update(MultipartFile file, ProductEntity productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-        List<ImageEntity> imgList = imageRepository.findAll();
-        ImageEntity imgGetId = new ImageEntity();
+        List<ImageEntity> imageEntityList = imageRepository.findAll();
+        ImageEntity imageEntity = new ImageEntity();
         try {
             if (fileName.contains("..")) {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
-            for (ImageEntity img : imgList) {
+            for (ImageEntity img : imageEntityList) {
                 if (Objects.equals(img.getProductImg().getId(), productEntity.getId())) {
                     img.setFileName(fileName);
                     img.setFileType(file.getContentType());
                     img.setData(file.getBytes());
                     img.setUpdatedDate(new Date());
-                    imgGetId = img;
+                    imageEntity = img;
                 }
             }
-            return imageRepository.save(imgGetId);
+            return imageRepository.save(imageEntity);
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
         }
