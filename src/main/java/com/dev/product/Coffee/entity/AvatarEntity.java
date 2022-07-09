@@ -1,28 +1,32 @@
 package com.dev.product.Coffee.entity;
 
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
+
 
 @Entity
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "tbl_image_avt")
-public class ImageEntity {
-
+@Table(name = "tbl_avatar")
+public class AvatarEntity{
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-
     private String fileName;
     private String fileType;
+    
+    @Lob
+    private byte[] data;
     
     @Column(name = "created_by", nullable = true)
     private Integer createdBy;
@@ -36,30 +40,13 @@ public class ImageEntity {
     @Column(name = "updated_date", nullable = true)
     private Date updatedDate;
     
-    @Lob
-    private byte[] data;
-    
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_entity_id", unique = true)
-    private ProductEntity productEntity;
+    @JoinColumn(name = "users_entity_id", unique = true)
+    private UsersEntity usersEntity;
     
-    public ImageEntity(String fileName, String fileType, byte[] data) {
+    public AvatarEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ImageEntity that = (ImageEntity) o;
-
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
     }
 }

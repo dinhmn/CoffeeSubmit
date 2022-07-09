@@ -32,13 +32,6 @@ public class SaleOrderDTO extends BaseDTO {
         saleOrderDTO.setId(saleOrderEntity.getId());
         saleOrderDTO.setCode(saleOrderEntity.getCode());
         saleOrderDTO.setTotal(saleOrderEntity.getTotal());
-        saleOrderDTO.setCustomerName(saleOrderEntity.getCustomerName());
-        saleOrderDTO.setCustomerPhone(saleOrderEntity.getCustomerPhone());
-        saleOrderDTO.setCustomerEmail(saleOrderEntity.getCustomerEmail());
-        saleOrderDTO.setCustomerAddress(saleOrderEntity.getCustomerAddress());
-        saleOrderDTO.setCustomerMessage(saleOrderEntity.getCustomerMessage());
-        saleOrderDTO.setSeo(saleOrderEntity.getSeo());
-        saleOrderDTO.setDelivery(saleOrderEntity.getDelivery());
         saleOrderDTO.setCreatedBy(saleOrderEntity.getCreatedBy());
         saleOrderDTO.setCreatedDate(saleOrderEntity.getCreatedDate());
         saleOrderDTO.setUpdatedBy(saleOrderEntity.getUpdatedBy());

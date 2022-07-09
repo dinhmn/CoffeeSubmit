@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.implement;
+package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.ProductImagesEntity;
@@ -23,8 +23,6 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     
     @Autowired
     private final ProductImageRepository productImageRepository;
-    private MultipartFile[] files;
-    private ProductEntity productEntity;
     
     public boolean isEmptyUploadFile(MultipartFile[] images) {
         if (images == null || images.length <= 0)
@@ -77,17 +75,18 @@ public class ProductImagesServiceImpl implements ProductImagesService {
      * @param files         is not NUll
      * @param productEntity is not NUll
      * @return list product images
-     * @throws Exception    not fold
+     * @throws Exception not fould
      */
     @Override
     public List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception {
         List<ProductImagesEntity> pr = new ArrayList<>();
         List<ProductImagesEntity> productImagesEntityList = new ArrayList<>();
         List<ProductImagesEntity> getAllProductImagesEntity = productImageRepository.findAll();
-        getAllProductImagesEntity.stream()
-                .filter(p -> p.getProductEntity().getId().equals(productEntity.getId()))
-                .map(productImagesEntityList::add)
-                .toList();
+        getAllProductImagesEntity.forEach(p -> {
+            if (p.getProductEntity().getId().equals(productEntity.getId())) {
+                productImagesEntityList.add(p);
+            }
+        });
         if (productImagesEntityList.size() == files.length) {
             for (int i = 0; i < files.length; i++) {
                 String fileName = cleanPath(Objects.requireNonNull(files[i].getOriginalFilename()));

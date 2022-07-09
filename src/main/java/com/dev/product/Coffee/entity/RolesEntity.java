@@ -20,7 +20,7 @@ public class RolesEntity extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_users_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private List<UsersEntity> users = new ArrayList<UsersEntity>();
+    private List<UsersEntity> users = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

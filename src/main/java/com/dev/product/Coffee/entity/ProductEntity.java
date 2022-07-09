@@ -38,17 +38,13 @@ public class ProductEntity extends BaseEntity{
     @ToString.Exclude
     private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY, mappedBy = "productImg")
+    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "productEntity")
     @ToString.Exclude
-    private List<ImageEntity> imageEntity = new ArrayList<>();
+    private ImageEntity imageEntity;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productCmt")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productEntity")
     @ToString.Exclude
-    private List<ReviewsEntity> reviewsEntities = new ArrayList<>();
-
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
-    @ToString.Exclude
-    private List<SaleOrderProductsEntity> saleOrderProductsEntities = new ArrayList<>();
+    private SaleOrderProductsEntity saleOrderProductsEntities;
 
     public static ProductEntity from(ProductDTO productDTO){
         ProductEntity productEntity = new ProductEntity();

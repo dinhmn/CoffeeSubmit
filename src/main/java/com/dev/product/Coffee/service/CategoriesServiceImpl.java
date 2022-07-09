@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.implement;
+package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ProductEntity;

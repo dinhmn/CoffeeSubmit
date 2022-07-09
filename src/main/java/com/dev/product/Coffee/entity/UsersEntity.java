@@ -24,16 +24,24 @@ public class UsersEntity extends BaseEntity {
     private boolean enabled;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
-    private List<RolesEntity> roles = new ArrayList<RolesEntity>();
+    private List<RolesEntity> roles = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
     @ToString.Exclude
-    private List<ProfileEntity> profile = new ArrayList<>();
+    private ProfileEntity profile;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
+    @ToString.Exclude
+    private AvatarEntity avatarEntity;
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
     private List<SaleOrderEntity> saleOrder = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usersEntity")
+    @ToString.Exclude
+    private List<PasswordResetEntity> passwordReset = new ArrayList<>();
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

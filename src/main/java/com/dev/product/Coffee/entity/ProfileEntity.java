@@ -14,14 +14,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class ProfileEntity extends BaseEntity {
 
-    private String firstName;
-    private String lastName;
+    private String name;
+    private String age;
     private String address;
-    private String city;
-    private String nation;
     private String phoneNumber;
-    private String fileNameAvatar;
-    private String fileTypeAvatar;
 
     @Lob
     private byte[] data;
@@ -31,7 +27,11 @@ public class ProfileEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private UsersEntity user;
-
+    
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "users_entity_id", unique = true)
+    private UsersEntity usersEntity;
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

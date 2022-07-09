@@ -27,7 +27,11 @@ public class SaleOrderProductsEntity extends BaseEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductEntity product;
-
+    
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_entity_id", unique = true)
+    private ProductEntity productEntity;
+    
     public static SaleOrderProductsEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
         SaleOrderProductsEntity saleOrderEntity = new SaleOrderProductsEntity();
         saleOrderEntity.setId(saleOrderProductsDTO.getId());

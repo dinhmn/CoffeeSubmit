@@ -1,4 +1,4 @@
-package com.dev.product.Coffee.implement;
+package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.ImageEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
                     file.getContentType(),
                     file.getBytes()
             );
-            imageEntity.setProductImg(productEntity);
+            imageEntity.setProductEntity(productEntity);
             imageEntity.setCreatedDate(new Date());
             return imageRepository.save(imageEntity);
         } catch (Exception e) {
@@ -63,7 +63,7 @@ public class ImageServiceImpl implements ImageService {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
             for (ImageEntity img : imageEntityList) {
-                if (Objects.equals(img.getProductImg().getId(), productEntity.getId())) {
+                if (Objects.equals(img.getProductEntity().getId(), productEntity.getId())) {
                     img.setFileName(fileName);
                     img.setFileType(file.getContentType());
                     img.setData(file.getBytes());
@@ -83,7 +83,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             List<ImageEntity> imageEntityList = imageRepository.findAll();
             Optional<ImageEntity> imageEntity = imageEntityList.stream()
-                    .filter(e -> e.getProductImg().getId().equals(productId))
+                    .filter(e -> e.getProductEntity().getId().equals(productId))
                     .findFirst();
             imageEntity.ifPresent(imageRepository::delete);
            

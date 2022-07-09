@@ -13,15 +13,15 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Table(name = "tbl_reviews")
 public class ReviewsEntity extends BaseEntity {
-
-    private String comment;
+    
     private String name;
     private String email;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "product_id")
-    private ProductEntity productCmt;
-
+    private String comment;
+    
+    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
+    @JoinColumn(name = "article_entity_id", nullable = false, unique = true)
+    private ArticleEntity articleEntity;
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

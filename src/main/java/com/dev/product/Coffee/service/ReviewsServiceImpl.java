@@ -1,8 +1,7 @@
-package com.dev.product.Coffee.implement;
+package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.ReviewsEntity;
 import com.dev.product.Coffee.repository.ReviewsRepository;
-import com.dev.product.Coffee.service.ReviewsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
