@@ -17,22 +17,25 @@ public class ReviewsServiceImpl implements ReviewsService {
     @Autowired
     private final ReviewsRepository reviewsRepository;
 
-
-
     @Override
-    public ReviewsEntity createReviews(ReviewsEntity reviewsEntity) {
+    public ReviewsEntity insert(ReviewsEntity reviewsEntity) {
         reviewsEntity.setCreatedDate(new Date());
         reviewsRepository.save(reviewsEntity);
         return reviewsEntity;
     }
-
+    
     @Override
-    public List<ReviewsEntity> getAllReviews() {
+    public List<ReviewsEntity> insertMultiple(List<ReviewsEntity> reviewsEntityList) {
+        return null;
+    }
+    
+    @Override
+    public List<ReviewsEntity> selectAll() {
         return reviewsRepository.findAll();
     }
-
+    
     @Override
-    public ReviewsEntity getReviewsById(Long id) {
+    public ReviewsEntity selectByPrimaryKey(Long id) {
         Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
         ReviewsEntity reviewsEntity = null;
         if (reviewsEntityOptional.isPresent()){
@@ -42,7 +45,7 @@ public class ReviewsServiceImpl implements ReviewsService {
     }
 
     @Override
-    public boolean deleteReviews(Long id) {
+    public boolean deleteByPrimaryKey(Long id) {
         Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
         ReviewsEntity reviewsEntity = null;
         if (reviewsEntityOptional.isPresent()){
@@ -54,7 +57,7 @@ public class ReviewsServiceImpl implements ReviewsService {
     }
 
     @Override
-    public ReviewsEntity updateReviewsById(Long id, ReviewsEntity reviewsEntity) {
+    public ReviewsEntity updateByPrimaryKey(Long id, ReviewsEntity reviewsEntity) {
         Optional<ReviewsEntity> reviewsEntityOptional = reviewsRepository.findById(id);
         ReviewsEntity reviews = null;
         if (reviewsEntityOptional.isPresent()){

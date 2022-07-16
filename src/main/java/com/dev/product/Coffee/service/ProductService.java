@@ -11,9 +11,8 @@ public interface ProductService {
 
     ProductEntity insert(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception;
     ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity);
-//    ProductEntity createProduct(ProductEntity product, MultipartFile productAvatar, MultipartFile[] productPictures) throws IOException;
+    
     List<ProductEntity> selectAll();
-
     ProductEntity selectProductById(Long id);
 
     boolean deleteProductById(Long id);

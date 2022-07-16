@@ -17,35 +17,39 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/r1")
 public class ReviewsController {
-
+    
     @Autowired
     private final ReviewsService reviewsService;
-
+    
     @PostMapping("/reviews")
-    public ResponseEntity<ReviewsEntity> createReviews(@RequestBody ReviewsEntity reviewsEntity){
-        return ResponseEntity.ok(reviewsService.createReviews(reviewsEntity));
+    public ResponseEntity<ReviewsEntity> createReviews(@RequestBody ReviewsEntity reviewsEntity) {
+        return ResponseEntity.ok(reviewsService.insert(reviewsEntity));
     }
+    
     @GetMapping("/reviews")
-    public ResponseEntity<List<ReviewsEntity>> getAllReviews(){
-        return ResponseEntity.ok(reviewsService.getAllReviews());
+    public ResponseEntity<List<ReviewsEntity>> getAllReviews() {
+        return ResponseEntity.ok(reviewsService.selectAll());
     }
+    
     @DeleteMapping("/reviews/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteReviews(@PathVariable Long id){
+    public ResponseEntity<Map<String, Boolean>> deleteReviews(@PathVariable Long id) {
         boolean deleted = false;
-        deleted = reviewsService.deleteReviews(id);
-        Map<String , Boolean> response = new HashMap<>();
+        deleted = reviewsService.deleteByPrimaryKey(id);
+        Map<String, Boolean> response = new HashMap<>();
         response.put("Deleted", deleted);
         return ResponseEntity.ok(response);
     }
+    
     @GetMapping("/reviews/{id}")
-    public ResponseEntity<ReviewsEntity> getReviewsId(@PathVariable Long id){
-        ReviewsEntity reviewsEntity = reviewsService.getReviewsById(id);
+    public ResponseEntity<ReviewsEntity> getReviewsId(@PathVariable Long id) {
+        ReviewsEntity reviewsEntity = reviewsService.selectByPrimaryKey(id);
         return ResponseEntity.ok(reviewsEntity);
     }
+    
     @PutMapping("/reviews/{id}")
     public ResponseEntity<ReviewsEntity> updateReviewsById(@PathVariable Long id,
-                                                           @RequestBody ReviewsEntity reviewsEntity){
-        ReviewsEntity reviews = reviewsService.updateReviewsById(id, reviewsEntity);
+                                                           @RequestBody ReviewsEntity reviewsEntity) {
+        ReviewsEntity reviews = reviewsService.updateByPrimaryKey(id, reviewsEntity);
         return ResponseEntity.ok(reviews);
     }
 }

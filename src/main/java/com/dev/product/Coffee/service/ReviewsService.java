@@ -6,9 +6,12 @@ import java.util.List;
 
 public interface ReviewsService {
 
-    ReviewsEntity createReviews(ReviewsEntity reviewsEntity);
-    List<ReviewsEntity> getAllReviews();
-    ReviewsEntity getReviewsById(Long id);
-    boolean deleteReviews(Long id);
-    ReviewsEntity updateReviewsById(Long id, ReviewsEntity reviewsEntity);
+    ReviewsEntity insert(ReviewsEntity reviewsEntity);
+    List<ReviewsEntity> insertMultiple(List<ReviewsEntity> reviewsEntityList);
+    List<ReviewsEntity> selectAll();
+    
+    ReviewsEntity selectByPrimaryKey(Long id);
+    
+    boolean deleteByPrimaryKey(Long id);
+    ReviewsEntity updateByPrimaryKey(Long id, ReviewsEntity reviewsEntity);
 }

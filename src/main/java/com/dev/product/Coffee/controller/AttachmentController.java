@@ -38,7 +38,8 @@ public class AttachmentController {
         String downloadURI = "";
         ProductEntity product = productService.selectProductById(id);
         ImageEntity imageEntity = imageService.insert(file, product);
-        List<ProductImagesEntity> productImagesEntity = productImagesService.insertMultiple(files, product);
+        List<ProductImagesEntity> productImagesEntity;
+        productImagesEntity = productImagesService.insertMultiple(files, product);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(imageEntity.getId())
