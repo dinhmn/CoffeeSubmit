@@ -24,7 +24,7 @@ public class ProfileEntity extends BaseEntity {
 
     private String birthday;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UsersEntity user;
     

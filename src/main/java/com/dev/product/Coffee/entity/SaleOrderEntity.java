@@ -21,7 +21,7 @@ public class SaleOrderEntity extends BaseEntity {
     private BigDecimal total;
     private Boolean status;
     
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private UsersEntity user;
     

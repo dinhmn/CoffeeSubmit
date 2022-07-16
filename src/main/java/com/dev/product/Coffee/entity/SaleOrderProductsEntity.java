@@ -20,11 +20,11 @@ public class SaleOrderProductsEntity extends BaseEntity {
     private Long quantity;
     private BigDecimal price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "saleOrder_id")
     private SaleOrderEntity saleOrder;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
     

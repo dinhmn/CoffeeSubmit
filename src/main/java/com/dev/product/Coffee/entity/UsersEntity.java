@@ -4,9 +4,7 @@ import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tbl_users")
@@ -22,9 +20,9 @@ public class UsersEntity extends BaseEntity {
     private String email;
     @Column(name = "enable", nullable = false)
     private boolean enabled;
-
+    
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
-    private List<RolesEntity> roles = new ArrayList<>();
+    private Set<RolesEntity> roles = new HashSet<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
     @ToString.Exclude

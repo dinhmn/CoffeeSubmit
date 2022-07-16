@@ -22,14 +22,14 @@ import java.util.List;
 @CrossOrigin("*")
 @RestController
 public class AttachmentController {
-
+    
     @Autowired
     private ProductService productService;
     @Autowired
     private ImageService imageService;
     @Autowired
     private ProductImagesService productImagesService;
-
+    
     @PostMapping("/upload")
     public ResponseData uploadFile(@RequestParam("file") MultipartFile file,
                                    @RequestParam("files") MultipartFile[] files,
@@ -66,7 +66,7 @@ public class AttachmentController {
                 file.getContentType(),
                 file.getSize());
     }
-
+    
     @GetMapping("/download/{id}")
     public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String id) throws Exception {
         ImageEntity imageEntity = imageService.selectImageById(id);

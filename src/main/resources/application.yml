@@ -1,13 +1,23 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/javawebcoffee
-    username: root
-    password: 2019605688
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/db_coffee
+#    username: root
+#    password: 2019605688
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: password
   jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show-sql: true
     hibernate:
       ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL81Dialect
   servlet:
     multipart:
       enabled: true

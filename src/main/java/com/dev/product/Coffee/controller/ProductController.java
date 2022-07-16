@@ -85,10 +85,11 @@ public class ProductController {
     @GetMapping("/product")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductEntity> productEntities = productService.selectAll();
+
         List<ProductDTO> productDTOList = productEntities.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }
-    
+
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         ProductEntity productEntity = productService.selectProductById(id);

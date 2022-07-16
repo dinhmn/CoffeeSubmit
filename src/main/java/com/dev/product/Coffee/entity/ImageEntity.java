@@ -39,9 +39,14 @@ public class ImageEntity {
     @Lob
     private byte[] data;
     
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_entity_id", unique = true)
+//    @OneToOne(orphanRemoval = true)
+//    @JoinColumn(name = "product_entity_id")
+//    private ProductEntity productEntity;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_entity_id")
     private ProductEntity productEntity;
+    
     
     public ImageEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;

@@ -38,11 +38,14 @@ public class ProductEntity extends BaseEntity{
     @ToString.Exclude
     private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
-    private ImageEntity imageEntity;
+    private List<ImageEntity> imageEntity;
+//
+//    @OneToOne(mappedBy = "productEntity")
+//    private ImageEntity imageEntity;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productEntity")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
     private SaleOrderProductsEntity saleOrderProductsEntities;
 
@@ -60,6 +63,7 @@ public class ProductEntity extends BaseEntity{
         productEntity.setUpdatedBy(productDTO.getUpdatedBy());
         productEntity.setCreatedBy(productDTO.getCreatedBy());
         productEntity.setUpdatedDate(productDTO.getUpdatedDate());
+//        productEntity.setImageEntity(ImageEntity.from(productDTO.getImageDTO()));
         return productEntity;
     }
 

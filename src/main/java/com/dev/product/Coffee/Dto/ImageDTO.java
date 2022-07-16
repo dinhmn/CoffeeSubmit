@@ -21,7 +21,9 @@ public class ImageDTO {
     private Integer updatedBy;
     private Date createdDate;
     private Date updatedDate;
-    public static ImageDTO from(ImageEntity imageEntity){
+    
+    public static ImageDTO
+    from(ImageEntity imageEntity){
         ImageDTO img = new ImageDTO();
         img.setFileName(imageEntity.getFileName());
         img.setDownloadURL(imageEntity.getId());

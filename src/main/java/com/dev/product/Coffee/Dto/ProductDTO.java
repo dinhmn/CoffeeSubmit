@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,7 @@ public class ProductDTO extends BaseDTO {
     private Long quantity;
     private String seo;
     private Long categoryId;
-    private ImageDTO imageDTOList;
+    private List<ImageDTO> imageDTOList = new ArrayList<>();
     private List<ProductImagesDTO> productImagesDTOS = new ArrayList<>();
     private List<ReviewsDTO> reviewsDTOS = new ArrayList<>();
 
@@ -44,7 +45,8 @@ public class ProductDTO extends BaseDTO {
         productDTO.setCreatedBy(product.getCreatedBy());
         productDTO.setUpdatedDate(product.getUpdatedDate());
         productDTO.setCategoryId(product.getCategoriesEntity().getId());
-        productDTO.setImageDTOList(ImageDTO.from(product.getImageEntity()));
+        productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
+//        productDTO.setImageDTO(ImageDTO.from(product.getImageEntity()));
         productDTO.setProductImagesDTOS(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
         return productDTO;
     }
@@ -64,7 +66,8 @@ public class ProductDTO extends BaseDTO {
         productDTO.setUpdatedBy(product.getUpdatedBy());
         productDTO.setCreatedBy(product.getCreatedBy());
         productDTO.setUpdatedDate(product.getUpdatedDate());
-        productDTO.setImageDTOList(ImageDTO.from(product.getImageEntity()));
+        productDTO.setImageDTOList(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
+//        productDTO.setImageDTO(ImageDTO.from(product.getImageEntity()));
         productDTO.setProductImagesDTOS(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
 
         return productDTO;
