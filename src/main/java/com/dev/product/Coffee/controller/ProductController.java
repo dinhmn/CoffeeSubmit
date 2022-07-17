@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -85,11 +86,23 @@ public class ProductController {
     @GetMapping("/product")
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
         List<ProductEntity> productEntities = productService.selectAll();
-
+        
         List<ProductDTO> productDTOList = productEntities.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }
-
+    
+    @GetMapping("/product?pageNo={pageNo}&pageSize={pageSize}&sortBy={sortBy}")
+    public ResponseEntity<List<ProductDTO>> getAllProductsByPrice(
+            @RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
+            @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
+            @RequestParam(defaultValue = "id", value = "sortBy") String sortBy
+    ) {
+        List<ProductEntity> productEntityList = productService.selectProductByPrice(sortBy, pageNo, pageSize);
+        List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
+        
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+    
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
         ProductEntity productEntity = productService.selectProductById(id);
@@ -109,7 +122,7 @@ public class ProductController {
             ObjectMapper objectMapper = new ObjectMapper();
             // convert String -> Object
             ProductDTO productDTO = objectMapper.readValue(product, ProductDTO.class);
-    
+            
             productEntity = productService.update(id, ProductEntity.from(productDTO));
             if (!file.isEmpty()) {
                 imageService.delete(file, productEntity.getId());

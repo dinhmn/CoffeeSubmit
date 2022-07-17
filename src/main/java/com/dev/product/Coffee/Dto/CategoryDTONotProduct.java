@@ -6,25 +6,20 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO extends com.dev.product.Coffee.dto.BaseDTO {
+public class CategoryDTONotProduct extends BaseDTO{
+    
     private String categoriesName;
     private String title;
     private String seo;
     private String description;
-
-    private List<ProductDTO> productDTOList = new ArrayList<>();
-
-    public static CategoryDTO from(CategoriesEntity category) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-
+    
+    public static CategoryDTONotProduct fromToDTO(CategoriesEntity category) {
+        CategoryDTONotProduct categoryDTO = new CategoryDTONotProduct();
+        
         categoryDTO.setId(category.getId());
         categoryDTO.setCategoriesName(category.getCategoriesName());
         categoryDTO.setDescription(category.getDescription());
@@ -35,9 +30,6 @@ public class CategoryDTO extends com.dev.product.Coffee.dto.BaseDTO {
         categoryDTO.setUpdatedBy(category.getUpdatedBy());
         categoryDTO.setUpdatedDate(category.getUpdatedDate());
         categoryDTO.setStatus(category.getStatus());
-        categoryDTO.setProductDTOList(category.getProductEntities().stream().map(ProductDTO::from).collect(Collectors.toList()));
         return categoryDTO;
     }
-    
-    
 }

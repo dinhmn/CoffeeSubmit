@@ -1,41 +1,31 @@
 package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.CategoriesEntity;
-import com.dev.product.Coffee.entity.ImageEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.repository.ImageRepository;
 import com.dev.product.Coffee.repository.ProductRepository;
-import com.dev.product.Coffee.service.ImageService;
-import com.dev.product.Coffee.service.ProductImagesService;
-import com.dev.product.Coffee.service.ProductService;
+
 import com.github.slugify.Slugify;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.io.File;
-import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@RequiredArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
     
-    public String UPLOAD_FOLDER_ROOT = "D:/apiImage/";
-    
     @Autowired
-    private final ProductRepository productRepository;
-    @Autowired
-    private final ImageRepository imageRepository;
-
-    
-    public ProductServiceImpl(ProductRepository productRepository, ImageRepository imageRepository) {
-        this.productRepository = productRepository;
-        this.imageRepository = imageRepository;
-    }
+    private final ProductRepository repository;
     
     
     @Override
@@ -45,7 +35,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCreatedDate(new Date());
         product.setSeo(new Slugify().slugify(product.getTitle()));
         
-        productRepository.save(product);
+        repository.save(product);
         return product;
     }
     
@@ -54,32 +44,54 @@ public class ProductServiceImpl implements ProductService {
         productEntity.setCreatedDate(new Date());
         productEntity.setSeo(new Slugify().slugify(productEntity.getTitle()));
         productEntity.setCategoriesEntity(categoriesEntity);
-        productRepository.save(productEntity);
+        repository.save(productEntity);
         return productEntity;
     }
     
     @Override
     public List<ProductEntity> selectAll() {
-        return productRepository.findAll();
+        return repository.findAll();
     }
     
     @Override
     public ProductEntity selectProductById(Long id) {
-        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
-        ProductEntity productEntity = null;
-        if (productEntityOptional.isPresent()) {
-            productEntity = productEntityOptional.get();
-        }
-        return productEntity;
+        Optional<ProductEntity> productEntityOptional = repository.findById(id);
+        return productEntityOptional.orElse(null);
+    }
+    
+    @Override
+    public List<ProductEntity> selectProductByPrice(String price, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(price).ascending());
+    
+        Page<ProductEntity> pageResult = repository.findAll(paging);
+    
+        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
+    }
+    
+    @Override
+    public List<ProductEntity> selectProductByProductName(String productName, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(productName));
+        
+        Page<ProductEntity> pageResult = repository.findAll(paging);
+        
+        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
+    }
+    
+    @Override
+    public List<ProductEntity> selectProductByBaseDate(LocalDateTime baseDate, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(String.valueOf(baseDate)));
+    
+        Page<ProductEntity> pageResult = repository.findAll(paging);
+    
+        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
     }
     
     @Override
     public boolean deleteProductById(Long id) {
-        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
-        ProductEntity productEntity = null;
+        Optional<ProductEntity> productEntityOptional = repository.findById(id);
         if (productEntityOptional.isPresent()) {
-            productEntity = productEntityOptional.get();
-            productRepository.delete(productEntity);
+            ProductEntity productEntity = productEntityOptional.get();
+            repository.delete(productEntity);
             return true;
         }
         
@@ -88,7 +100,7 @@ public class ProductServiceImpl implements ProductService {
     
     @Override
     public ProductEntity update(Long id, ProductEntity product) {
-        Optional<ProductEntity> productEntityOptional = productRepository.findById(id);
+        Optional<ProductEntity> productEntityOptional = repository.findById(id);
         ProductEntity productEntity = null;
         if (productEntityOptional.isPresent()) {
             productEntity = productEntityOptional.get();
@@ -105,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setUpdatedDate(new Date());
             productEntity.setStatus(product.getStatus());
             productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
-            productRepository.save(productEntity);
+            repository.save(productEntity);
         }
         
         return productEntity;
