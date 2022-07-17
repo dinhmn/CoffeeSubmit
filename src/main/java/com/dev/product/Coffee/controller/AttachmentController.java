@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.controller;
 
-import com.dev.product.Coffee.Response.ResponseData;
+import com.dev.product.Coffee.response.ResponseData;
 import com.dev.product.Coffee.entity.ImageEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.ProductImagesEntity;

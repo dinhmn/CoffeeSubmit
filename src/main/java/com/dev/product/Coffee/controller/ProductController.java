@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.controller;
 
-import com.dev.product.Coffee.Response.ResponseData;
+import com.dev.product.Coffee.response.ResponseData;
 import com.dev.product.Coffee.dto.ProductDTO;
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ImageEntity;
@@ -10,7 +10,6 @@ import com.dev.product.Coffee.service.CategoriesService;
 import com.dev.product.Coffee.service.ImageService;
 import com.dev.product.Coffee.service.ProductImagesService;
 import com.dev.product.Coffee.service.ProductService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,22 +83,27 @@ public class ProductController {
     }
     
     @GetMapping("/product")
-    public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        List<ProductEntity> productEntities = productService.selectAll();
-        
-        List<ProductDTO> productDTOList = productEntities.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
-        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
-    }
-    
-    @GetMapping("/product?pageNo={pageNo}&pageSize={pageSize}&sortBy={sortBy}")
     public ResponseEntity<List<ProductDTO>> getAllProductsByPrice(
             @RequestParam(defaultValue = "0", value = "pageNo") Integer pageNo,
             @RequestParam(defaultValue = "10", value = "pageSize") Integer pageSize,
-            @RequestParam(defaultValue = "id", value = "sortBy") String sortBy
+            @RequestParam(defaultValue = "id", value = "sortBy") String sortBy,
+            @RequestParam(defaultValue = "true", value = "sort") Boolean sort
     ) {
-        List<ProductEntity> productEntityList = productService.selectProductByPrice(sortBy, pageNo, pageSize);
+        List<ProductEntity> productEntityList = sort ?
+                productService.selectProductByPagingAndSortingWithASC(sortBy, pageNo, pageSize) :
+                productService.selectProductByPagingAndSortingWithDESC(sortBy, pageNo, pageSize);
         List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
         
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+    
+    @GetMapping("/product/search?min={min}&max={max}")
+    public ResponseEntity<List<ProductDTO>> getAllProductsByPrice(
+            @RequestParam(defaultValue = "0", value = "min") BigDecimal min,
+            @RequestParam(value = "max") BigDecimal max
+    ) {
+        List<ProductEntity> productEntityList = productService.selectProdcutByPriceRange(min, max);
+        List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }
     

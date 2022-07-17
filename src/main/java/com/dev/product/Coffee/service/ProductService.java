@@ -4,6 +4,7 @@ import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -14,10 +15,9 @@ public interface ProductService {
     
     List<ProductEntity> selectAll();
     ProductEntity selectProductById(Long id);
-    List<ProductEntity> selectProductByPrice(String price, Integer pageNo, Integer pageSize);
-    List<ProductEntity> selectProductByProductName(String productName, Integer pageNo, Integer pageSize);
-    List<ProductEntity> selectProductByBaseDate(LocalDateTime baseDate, Integer pageNo, Integer pageSize);
-    
+    List<ProductEntity> selectProdcutByPriceRange(BigDecimal min, BigDecimal max);
+    List<ProductEntity> selectProductByPagingAndSortingWithASC(String sortBy, Integer pageNo, Integer pageSize);
+    List<ProductEntity> selectProductByPagingAndSortingWithDESC(String sortBy, Integer pageNo, Integer pageSize);
 
     boolean deleteProductById(Long id);
     ProductEntity update(Long id, ProductEntity product);

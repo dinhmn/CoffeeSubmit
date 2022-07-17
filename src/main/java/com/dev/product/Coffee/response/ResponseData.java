@@ -1,6 +1,5 @@
-package com.dev.product.Coffee.Response;
+package com.dev.product.Coffee.response;
 
-import com.dev.product.Coffee.entity.ImageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

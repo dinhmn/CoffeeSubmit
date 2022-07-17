@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,17 +60,13 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public List<ProductEntity> selectProductByPrice(String price, Integer pageNo, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(price).ascending());
-    
-        Page<ProductEntity> pageResult = repository.findAll(paging);
-    
-        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
+    public List<ProductEntity> selectProdcutByPriceRange(BigDecimal min, BigDecimal max) {
+        return repository.selectByProductByPriceRange(min, max);
     }
     
     @Override
-    public List<ProductEntity> selectProductByProductName(String productName, Integer pageNo, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(productName));
+    public List<ProductEntity> selectProductByPagingAndSortingWithASC(String sortBy, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
         
         Page<ProductEntity> pageResult = repository.findAll(paging);
         
@@ -78,11 +74,11 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public List<ProductEntity> selectProductByBaseDate(LocalDateTime baseDate, Integer pageNo, Integer pageSize) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(String.valueOf(baseDate)));
-    
+    public List<ProductEntity> selectProductByPagingAndSortingWithDESC(String sortBy, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        
         Page<ProductEntity> pageResult = repository.findAll(paging);
-    
+        
         return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
     }
     
