@@ -60,8 +60,18 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public List<ProductEntity> selectProdcutByPriceRange(BigDecimal min, BigDecimal max) {
+    public List<ProductEntity> selectProdcutByPriceRange(long min, long max) {
         return repository.selectByProductByPriceRange(min, max);
+    }
+    
+    @Override
+    public List<ProductEntity> selectProdcutByTitle(String title, Sort sort) {
+        return repository.selectProductByTitle(title);
+    }
+    
+    @Override
+    public List<ProductEntity> selectProductBySeoOfCategory(String seo) {
+        return repository.selectProductBySeoOfCategory(seo);
     }
     
     @Override

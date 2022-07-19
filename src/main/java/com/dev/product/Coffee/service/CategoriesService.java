@@ -9,7 +9,6 @@ public interface CategoriesService {
     CategoriesEntity createCategories(CategoriesEntity categories);
 
     List<CategoriesEntity> getAllCategories();
-
     boolean deleteCategories(Long id);
 
     CategoriesEntity getCategories(Long id);

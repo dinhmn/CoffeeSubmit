@@ -18,7 +18,6 @@ public class CommonProductServiceImplTest {
     private ProductService productService;
     
     
-    @Sql(SQL_BASE_PATH + "PagingAndSortPrice.sql")
     @DisplayName("Unit test sort by price")
     @Test
     void sort_OK1() {

@@ -13,6 +13,7 @@ import com.dev.product.Coffee.service.ProductService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -97,12 +98,22 @@ public class ProductController {
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }
     
-    @GetMapping("/product/search?min={min}&max={max}")
-    public ResponseEntity<List<ProductDTO>> getAllProductsByPrice(
-            @RequestParam(defaultValue = "0", value = "min") BigDecimal min,
-            @RequestParam(value = "max") BigDecimal max
-    ) {
-        List<ProductEntity> productEntityList = productService.selectProdcutByPriceRange(min, max);
+    @GetMapping("/product/search")
+    public ResponseEntity<List<ProductDTO>> getAllProductsByTitle(@RequestParam(value = "title") String title) {
+        List<ProductEntity> productEntityList = productService.selectProdcutByTitle(title, Sort.by("price"));
+        List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+    @GetMapping("/product/{seo}")
+    public ResponseEntity<List<ProductDTO>> getAllProductsBySeoOfCategory(@PathVariable String seo) {
+        List<ProductEntity> productEntityList = productService.selectProductBySeoOfCategory(seo);
+        List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
+        return new ResponseEntity<>(productDTOList, HttpStatus.OK);
+    }
+    
+    @GetMapping("/product/min={min}&max={max}")
+    public ResponseEntity<List<ProductDTO>> getAllProductsByPriceMinMax(@RequestParam(value = "min") String min, @RequestParam(value = "max") String max) {
+        List<ProductEntity> productEntityList = productService.selectProdcutByPriceRange(Long.parseLong(min), Long.parseLong(max));
         List<ProductDTO> productDTOList = productEntityList.stream().map(ProductDTO::fromTo).collect(Collectors.toList());
         return new ResponseEntity<>(productDTOList, HttpStatus.OK);
     }

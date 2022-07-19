@@ -30,14 +30,6 @@ public class CategoriesController {
         return ResponseEntity.ok(categoriesService.createCategories(categories));
     }
 
-//    @GetMapping("/category")
-//    public ResponseEntity<Iterable<CategoriesEntity>> getAllCategory() {
-//        List<ProductEntity> productEntities = productService.getAllProducts();
-//        List<CategoriesEntity> categoriesEntities = categoriesService.getAllCategories();
-//
-//        return new ResponseEntity<>(categoriesEntities, HttpStatus.OK);
-//    }
-
     @GetMapping("/category")
     public ResponseEntity<List<CategoryDTO>> getAllCategory() {
         List<CategoriesEntity> categoriesEntities = categoriesService.getAllCategories();
