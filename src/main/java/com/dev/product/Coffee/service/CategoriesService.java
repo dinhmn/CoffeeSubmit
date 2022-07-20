@@ -6,13 +6,15 @@ import com.dev.product.Coffee.entity.CategoriesEntity;
 import java.util.List;
 
 public interface CategoriesService {
-    CategoriesEntity createCategories(CategoriesEntity categories);
+    CategoriesEntity insert(CategoriesEntity categories);
 
-    List<CategoriesEntity> getAllCategories();
-    boolean deleteCategories(Long id);
+    List<CategoriesEntity> selectAll();
+    List<CategoriesEntity> selectCategoryByPagingAndSortingWithASC(String sortBy, Integer pageNo, Integer pageSize);
+    List<CategoriesEntity> selectCategoryByPagingAndSortingWithDESC(String sortBy, Integer pageNo, Integer pageSize);
+    boolean deleteByPrimaryKey(Long id);
 
-    CategoriesEntity getCategories(Long id);
-    CategoriesEntity updateCategories(Long id, CategoriesEntity categories);
+    CategoriesEntity selectByPrimaryKey(Long id);
+    CategoriesEntity updateByPrimaryKey(Long id, CategoriesEntity categories);
     CategoriesEntity addProductToCategory(Long categoryId, Long productId);
     CategoriesEntity removeProductToCategory(Long categoryId, Long productId);
 

@@ -16,29 +16,31 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/c1")
 public class ContactController {
-
+    
     @Autowired
     private ContactService contactService;
-
+    
     @PostMapping("/contact")
     public ResponseEntity<ContactEntity> createContact(@RequestBody ContactEntity contact) {
         return ResponseEntity.ok(contactService.createContact(contact));
     }
+    
     @GetMapping("/contact")
-    public ResponseEntity<List<ContactEntity>> getAllContact(){
+    public ResponseEntity<List<ContactEntity>> getAllContact() {
         return ResponseEntity.ok(contactService.getAllContact());
     }
-
+    
     @DeleteMapping("/contact/{id}")
-    public ResponseEntity<Map<String, Boolean>> deleteContact(@PathVariable Long id){
-        boolean deteted = false;
-        deteted = contactService.deleteContact(id);
+    public ResponseEntity<Map<String, Boolean>> deleteContact(@PathVariable Long id) {
+        boolean deleted = false;
+        deleted = contactService.deleteContact(id);
         Map<String, Boolean> response = new HashMap<>();
-        response.put("Deleted", deteted);
+        response.put("Deleted", deleted);
         return ResponseEntity.ok(response);
     }
+    
     @GetMapping("/contact/{id}")
-    public ResponseEntity<ContactEntity> getContactById(@PathVariable Long id){
+    public ResponseEntity<ContactEntity> getContactById(@PathVariable Long id) {
         ContactEntity contact = contactService.getContactById(id);
         return ResponseEntity.ok(contact);
     }

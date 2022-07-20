@@ -19,6 +19,4 @@ public class ArticleEntity extends BaseEntity{
     private String title;
     private String description;
     
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "articleEntity")
-    private ReviewsEntity reviewsEntity;
 }

@@ -41,9 +41,10 @@ public class ProductEntity extends BaseEntity{
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
     private List<ImageEntity> imageEntity;
-//
-//    @OneToOne(mappedBy = "productEntity")
-//    private ImageEntity imageEntity;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    @ToString.Exclude
+    private List<ReviewsEntity> reviewsEntityList;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude

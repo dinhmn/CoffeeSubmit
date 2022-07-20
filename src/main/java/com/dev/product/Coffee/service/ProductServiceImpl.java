@@ -68,7 +68,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> selectProdcutByTitle(String title, Sort sort) {
         return repository.selectProductByTitle(title);
     }
-    
+
     @Override
     public List<ProductEntity> selectProductBySeoOfCategory(String seo) {
         return repository.selectProductBySeoOfCategory(seo);

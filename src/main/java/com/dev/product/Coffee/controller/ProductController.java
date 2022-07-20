@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -60,7 +59,7 @@ public class ProductController {
             
             // get Id from input
             Long id = productDTO.getCategoryId();
-            CategoriesEntity categoriesEntity = categoriesService.getCategories(id);
+            CategoriesEntity categoriesEntity = categoriesService.selectByPrimaryKey(id);
             
             // insert product, file image
             ProductEntity productEntity = productService.insert(ProductEntity.from(productDTO), file, categoriesEntity);

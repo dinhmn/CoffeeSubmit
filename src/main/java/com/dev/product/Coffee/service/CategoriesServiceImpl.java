@@ -5,55 +5,74 @@ import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.exception.ProductIsAlrealdyAssignedException;
 import com.dev.product.Coffee.repository.CategoriesRepository;
 import com.dev.product.Coffee.repository.ProductRepository;
-import com.dev.product.Coffee.service.CategoriesService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 import com.github.slugify.Slugify;
 
+@RequiredArgsConstructor
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
 
     @Autowired
-    private final CategoriesRepository categoriesRepository;
+    private final CategoriesRepository repository;
     @Autowired
-    private ProductRepository productRepository;
-
-    public CategoriesServiceImpl(CategoriesRepository categoriesRepository) {
-        this.categoriesRepository = categoriesRepository;
-    }
+    private final ProductRepository productRepository;
 
     @Override
-    public CategoriesEntity createCategories(CategoriesEntity categories) {
+    public CategoriesEntity insert(CategoriesEntity categories) {
         categories.setCreatedDate(new Date());
         categories.setSeo(new Slugify().slugify(categories.getTitle()));
-        categoriesRepository.save(categories);
+        repository.save(categories);
         return categories;
     }
 
-
     @Override
-    public List<CategoriesEntity> getAllCategories() {
-        return categoriesRepository.findAll();
+    public List<CategoriesEntity> selectAll() {
+        return repository.findAll();
     }
-
+    
     @Override
-    public boolean deleteCategories(Long id) {
-        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+    public List<CategoriesEntity> selectCategoryByPagingAndSortingWithASC(String sortBy, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).ascending());
+        
+        Page<CategoriesEntity> pageResult = repository.findAll(paging);
+        
+        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
+    }
+    
+    @Override
+    public List<CategoriesEntity> selectCategoryByPagingAndSortingWithDESC(String sortBy, Integer pageNo, Integer pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+    
+        Page<CategoriesEntity> pageResult = repository.findAll(paging);
+    
+        return pageResult.hasContent() ? pageResult.getContent() : new ArrayList<>();
+    }
+    
+    
+    @Override
+    public boolean deleteByPrimaryKey(Long id) {
+        Optional<CategoriesEntity> categoriesEntityOptional = repository.findById(id);
         CategoriesEntity categoriesEntity;
         if (categoriesEntityOptional.isPresent()) {
             categoriesEntity = categoriesEntityOptional.get();
-            categoriesRepository.delete(categoriesEntity);
+            repository.delete(categoriesEntity);
             return true;
         }
         return false;
     }
 
     @Override
-    public CategoriesEntity getCategories(Long id) {
-        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+    public CategoriesEntity selectByPrimaryKey(Long id) {
+        Optional<CategoriesEntity> categoriesEntityOptional = repository.findById(id);
         CategoriesEntity categoriesEntity = null;
         if (categoriesEntityOptional.isPresent()) {
             categoriesEntity = categoriesEntityOptional.get();
@@ -62,8 +81,8 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public CategoriesEntity updateCategories(Long id, CategoriesEntity categories) {
-        Optional<CategoriesEntity> categoriesEntityOptional = categoriesRepository.findById(id);
+    public CategoriesEntity updateByPrimaryKey(Long id, CategoriesEntity categories) {
+        Optional<CategoriesEntity> categoriesEntityOptional = repository.findById(id);
         CategoriesEntity categoriesEntity = null;
         if (categoriesEntityOptional.isPresent()) {
             categoriesEntity = categoriesEntityOptional.get();
@@ -76,13 +95,13 @@ public class CategoriesServiceImpl implements CategoriesService {
             categoriesEntity.setCreatedDate(new Date());
         }
 
-        categoriesRepository.save(categories);
+        repository.save(categories);
         return categories;
     }
 
     @Override
     public CategoriesEntity addProductToCategory(Long categoryId, Long productId) {
-        CategoriesEntity categoriesEntity = categoriesRepository.getById(categoryId);
+        CategoriesEntity categoriesEntity = repository.getById(categoryId);
         ProductEntity productEntity = productRepository.getById(productId);
 
         if (Objects.nonNull(productEntity.getCategoriesEntity())) {
@@ -95,7 +114,7 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public CategoriesEntity removeProductToCategory(Long categoryId, Long productId) {
-        CategoriesEntity categoriesEntity = categoriesRepository.getById(categoryId);
+        CategoriesEntity categoriesEntity = repository.getById(categoryId);
         ProductEntity productEntity = productRepository.getById(productId);
         categoriesEntity.remove(productEntity);
         return categoriesEntity;

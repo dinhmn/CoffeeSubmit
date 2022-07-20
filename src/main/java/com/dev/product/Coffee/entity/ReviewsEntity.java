@@ -18,9 +18,9 @@ public class ReviewsEntity extends BaseEntity {
     private String email;
     private String comment;
     
-    @OneToOne(cascade = CascadeType.ALL, optional = false, orphanRemoval = true)
-    @JoinColumn(name = "article_entity_id", nullable = false, unique = true)
-    private ArticleEntity articleEntity;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "product_id")
+    private ProductEntity productEntity;
     
     @Override
     public boolean equals(Object o) {
