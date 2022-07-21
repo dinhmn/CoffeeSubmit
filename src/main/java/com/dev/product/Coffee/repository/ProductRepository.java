@@ -18,6 +18,9 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     @Query("select p from products p where p.title like %:title%")
     List<ProductEntity> selectProductByTitle(@Param("title") String title);
     
+    @Query("select p from products p where p.seo =:seo")
+    List<ProductEntity> selectProductBySeo(@Param("seo") String seo);
+    
     // Select get all product by seo
     @Query("from products p join p.categoriesEntity c where c.seo =:seo")
     List<ProductEntity> selectProductBySeoOfCategory(@Param("seo") String seo);

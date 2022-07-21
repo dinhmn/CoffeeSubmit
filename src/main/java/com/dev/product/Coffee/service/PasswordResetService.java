@@ -1,14 +1,14 @@
 package com.dev.product.Coffee.service;
 
-import com.dev.product.Coffee.entity.ArticleEntity;
+import com.dev.product.Coffee.entity.PasswordResetEntity;
 
 import java.util.List;
 
 public interface PasswordResetService {
-    ArticleEntity insert(ArticleEntity articleEntity);
-    List<ArticleEntity> selectAll();
-    ArticleEntity selectById(Long id);
+    PasswordResetEntity insert(PasswordResetEntity articleEntity);
+    List<PasswordResetEntity> selectAll();
+    PasswordResetEntity selectByPrimaryKey(Long id);
     boolean delete(Long id);
-    ArticleEntity update(Long id, ArticleEntity articleEntity);
+    PasswordResetEntity update(Long id, PasswordResetEntity articleEntity);
     
 }

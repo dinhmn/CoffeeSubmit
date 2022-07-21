@@ -1,5 +1,6 @@
 package com.dev.product.Coffee.service;
 
+import com.dev.product.Coffee.Utils.CommonUtils;
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
 import org.springframework.data.domain.Sort;
@@ -21,6 +22,8 @@ public interface ProductService {
     List<ProductEntity> selectProductBySeoOfCategory(String seo);
     List<ProductEntity> selectProductByPagingAndSortingWithASC(String sortBy, Integer pageNo, Integer pageSize);
     List<ProductEntity> selectProductByPagingAndSortingWithDESC(String sortBy, Integer pageNo, Integer pageSize);
+    
+    List<ProductEntity> search();
 
     boolean deleteProductById(Long id);
     ProductEntity update(Long id, ProductEntity product);
