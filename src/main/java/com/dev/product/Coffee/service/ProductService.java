@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductEntity insert(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception;
-    ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity);
+    ProductEntity insert(ProductEntity product, CategoriesEntity categoriesEntity) throws Exception;
+//    ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity);
     
     List<ProductEntity> selectAll();
     ProductEntity selectProductById(Long id);

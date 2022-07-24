@@ -24,4 +24,51 @@ public class CommonProductServiceImplTest {
     
     }
     
+    @Test
+    void insert() {
+    }
+    
+    @Test
+    void testInsert() {
+    }
+    
+    @Test
+    void selectAll() {
+    }
+    
+    @Test
+    void selectProductById() {
+    }
+    
+    @Test
+    void selectProdcutByPriceRange() {
+    }
+    
+    @Test
+    void selectProdcutByTitle() {
+    }
+    
+    @Test
+    void selectProductBySeoOfCategory() {
+    }
+    
+    @Test
+    void selectProductByPagingAndSortingWithASC() {
+    }
+    
+    @Test
+    void selectProductByPagingAndSortingWithDESC() {
+    }
+    
+    @Test
+    void search() {
+    }
+    
+    @Test
+    void deleteProductById() {
+    }
+    
+    @Test
+    void update() {
+    }
 }

@@ -14,11 +14,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import javax.transaction.Transactional;
+import java.util.*;
 
 @RequiredArgsConstructor
 @Service
@@ -26,10 +23,11 @@ public class ProductServiceImpl implements ProductService {
     
     @Autowired
     private final ProductRepository repository;
-    
+    private Long id;
+    private ProductEntity product;
     
     @Override
-    public ProductEntity insert(ProductEntity product, MultipartFile productAvatar, CategoriesEntity categoriesEntity) throws Exception {
+    public ProductEntity insert(ProductEntity product, CategoriesEntity categoriesEntity) throws Exception {
         
         product.setCategoriesEntity(categoriesEntity);
         product.setCreatedDate(new Date());
@@ -39,14 +37,14 @@ public class ProductServiceImpl implements ProductService {
         return product;
     }
     
-    @Override
-    public ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
-        productEntity.setCreatedDate(new Date());
-        productEntity.setSeo(new Slugify().slugify(productEntity.getTitle()));
-        productEntity.setCategoriesEntity(categoriesEntity);
-        repository.save(productEntity);
-        return productEntity;
-    }
+//    @Override
+//    public ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity) {
+//        productEntity.setCreatedDate(new Date());
+//        productEntity.setSeo(new Slugify().slugify(productEntity.getTitle()));
+//        productEntity.setCategoriesEntity(categoriesEntity);
+//        repository.save(productEntity);
+//        return productEntity;
+//    }
     
     @Override
     public List<ProductEntity> selectAll() {
@@ -68,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductEntity> selectProdcutByTitle(String title, Sort sort) {
         return repository.selectProductByTitle(title);
     }
-
+    
     @Override
     public List<ProductEntity> selectProductBySeoOfCategory(String seo) {
         return repository.selectProductBySeoOfCategory(seo);
@@ -93,6 +91,11 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
+    public List<ProductEntity> search() {
+        return null;
+    }
+    
+    @Override
     public boolean deleteProductById(Long id) {
         Optional<ProductEntity> productEntityOptional = repository.findById(id);
         if (productEntityOptional.isPresent()) {
@@ -103,7 +106,7 @@ public class ProductServiceImpl implements ProductService {
         
         return false;
     }
-    
+
     @Override
     public ProductEntity update(Long id, ProductEntity product) {
         Optional<ProductEntity> productEntityOptional = repository.findById(id);
@@ -125,7 +128,22 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
             repository.save(productEntity);
         }
-        
         return productEntity;
     }
+/*    productEntity = productEntityOptional.get();
+            productEntity.setTitle(Objects.nonNull(product.getTitle()) ? product.getTitle() : productEntity.getTitle());
+            productEntity.setDetailsDescription(Objects.nonNull(product.getDetailsDescription()) ? product.getDetailsDescription() : productEntity.getDetailsDescription());
+            productEntity.setSeo(Objects.nonNull(product.getSeo()) ? product.getSeo() : productEntity.getTitle());
+            productEntity.setCreatedDate(product.getCreatedDate());
+            productEntity.setPrice(Objects.nonNull(product.getPrice()) ? product.getPrice() : productEntity.getPrice());
+            productEntity.setPriceSale(Objects.nonNull(product.getPriceSale()) ? product.getPriceSale() : productEntity.getPriceSale());
+            productEntity.setQuantity(Objects.nonNull(product.getQuantity()) ? product.getQuantity() : productEntity.getQuantity());
+            productEntity.setShortDescription(Objects.nonNull(product.getShortDescription()) ? product.getShortDescription() : productEntity.getShortDescription());
+            productEntity.setCreatedBy(product.getCreatedBy());
+            productEntity.setUpdatedBy(product.getUpdatedBy());
+            productEntity.setUpdatedDate(new Date());
+            productEntity.setStatus(Objects.nonNull(product.getStatus()) ? product.getStatus() : productEntity.getStatus());
+            productEntity.setCategoriesEntity(Objects.nonNull(productEntity.getCategoriesEntity()) ? productEntity.getCategoriesEntity() : productEntity.getCategoriesEntity());
+            repository.save(productEntity);*/
+
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +29,9 @@ public class ImageServiceImpl implements ImageService {
     private ProductRepository productRepository;
     
     @Override
+    @Transactional
     public ImageEntity insert(MultipartFile file, ProductEntity productEntity) throws Exception {
+        System.out.println(file);
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             if (fileName.contains("..")) {
@@ -41,6 +44,7 @@ public class ImageServiceImpl implements ImageService {
             );
             imageEntity.setProductEntity(productEntity);
             imageEntity.setCreatedDate(new Date());
+            
             return imageRepository.save(imageEntity);
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
@@ -63,12 +67,15 @@ public class ImageServiceImpl implements ImageService {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
             for (ImageEntity img : imageEntityList) {
-                if (Objects.equals(img.getProductEntity().getId(), productEntity.getId())) {
+                if (!Objects.equals(img.getProductEntity().getId(), productEntity.getId())) {
+                    img.setId(String.valueOf(imageEntityList.size() + 1));
                     img.setFileName(fileName);
                     img.setFileType(file.getContentType());
                     img.setData(file.getBytes());
                     img.setUpdatedDate(new Date());
+                    img.setProductEntity(productEntity);
                     imageEntity = img;
+                    break;
                 }
             }
             return imageRepository.save(imageEntity);
@@ -86,7 +93,7 @@ public class ImageServiceImpl implements ImageService {
                     .filter(e -> e.getProductEntity().getId().equals(productId))
                     .findFirst();
             imageEntity.ifPresent(imageRepository::delete);
-           
+            
         } catch (Exception e) {
             throw new Exception("Could not delete file: " + fileName);
         }

@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(name = "tbl_image_avt")
+@Table(name = "tbl_product_image")
 public class ImageEntity {
 
     @Id
@@ -37,15 +37,14 @@ public class ImageEntity {
     private Date updatedDate;
     
     @Lob
+    @Basic(fetch=FetchType.LAZY, optional=true)
     private byte[] data;
     
-//    @OneToOne(orphanRemoval = true)
-//    @JoinColumn(name = "product_entity_id")
-//    private ProductEntity productEntity;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_entity_id")
     private ProductEntity productEntity;
+
     
     
     public ImageEntity(String fileName, String fileType, byte[] data) {

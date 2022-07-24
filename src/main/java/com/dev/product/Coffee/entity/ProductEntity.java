@@ -18,8 +18,8 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(name = "tbl_products")
-public class ProductEntity extends BaseEntity{
-
+public class ProductEntity extends BaseEntity {
+    
     private String title;
     @Column(name = "price", precision = 13, scale = 2, nullable = false)
     private BigDecimal price;
@@ -27,30 +27,30 @@ public class ProductEntity extends BaseEntity{
     private BigDecimal priceSale;
     private String shortDescription;
     private String detailsDescription;
-
+    
     private Long quantity;
     private String seo;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private CategoriesEntity categoriesEntity;
-
+    
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
     private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
-    private List<ImageEntity> imageEntity;
+    private List<ImageEntity> imageEntity = new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
-    private List<ReviewsEntity> reviewsEntityList;
-
+    private List<ReviewsEntity> reviewsEntityList = new ArrayList<>();
+    
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
     private SaleOrderProductsEntity saleOrderProductsEntities;
-
-    public static ProductEntity from(ProductDTO productDTO){
+    
+    public static ProductEntity from(ProductDTO productDTO) {
         ProductEntity productEntity = new ProductEntity();
         productEntity.setId(productDTO.getId());
         productEntity.setTitle(productDTO.getTitle());
@@ -67,16 +67,16 @@ public class ProductEntity extends BaseEntity{
 //        productEntity.setImageEntity(ImageEntity.from(productDTO.getImageDTO()));
         return productEntity;
     }
-
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         ProductEntity that = (ProductEntity) o;
-
+        
         return Objects.equals(getId(), that.getId());
     }
-
+    
     @Override
     public int hashCode() {
         return 335418294;
