@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.IOException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -118,13 +115,19 @@ public class AdminProductController {
             // convert String -> Object
             ProductDTO productDTO = objectMapper.readValue(product, ProductDTO.class);
             
-            productEntity = productService.update(id, ProductEntity.from(productDTO));
             if (!file.isEmpty()) {
-                imageService.delete(file, productEntity.getId());
-                imageService.update(file, productEntity);
+                Optional<ImageEntity> imageEntity = imageService.selectAll().stream()
+                        .filter(e -> e.getProductEntity().getId().equals(productDTO.getId()))
+                        .findFirst();
+                if (imageEntity.isPresent()) {
+                    imageService.update(file, imageEntity.get(), id);
+                } else {
+                    imageService.insert(file, productEntity);
+                }
             }
             
             productImagesEntity.set(productImagesService.update(files, productEntity));
+            productEntity = productService.update(id, ProductEntity.from(productDTO));
         } catch (Exception err) {
             out.println("Error: " + err);
         }

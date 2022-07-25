@@ -45,8 +45,6 @@ public class ImageEntity {
     @JoinColumn(name = "product_entity_id")
     private ProductEntity productEntity;
 
-    
-    
     public ImageEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;
         this.fileType = fileType;

@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.cleanPath;
 
@@ -79,10 +80,11 @@ public class ProductImagesServiceImpl implements ProductImagesService {
      */
     @Override
     public List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception {
-        List<ProductImagesEntity> pr = new ArrayList<>();
+        List<ProductImagesEntity> actualProductImagesEntity = new ArrayList<>();
         List<ProductImagesEntity> productImagesEntityList = new ArrayList<>();
-        List<ProductImagesEntity> getAllProductImagesEntity = productImageRepository.findAll();
-        getAllProductImagesEntity.forEach(p -> {
+        List<ProductImagesEntity> beforeProductImagesEntityList = productImageRepository.findAll();
+
+        beforeProductImagesEntityList.forEach(p -> {
             if (p.getProductEntity().getId().equals(productEntity.getId())) {
                 productImagesEntityList.add(p);
             }
@@ -98,20 +100,19 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                     productImagesEntityList.get(i).setFileType(files[i].getContentType());
                     productImagesEntityList.get(i).setData(files[i].getBytes());
                     productImagesEntityList.get(i).setUpdatedDate(new Date());
-                    pr.add(productImagesEntityList.get(i));
-                    productImageRepository.save(productImagesEntityList.get(i));
+                    actualProductImagesEntity.add(productImagesEntityList.get(i));
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + files[i]);
                 }
             }
         } else {
-            getAllProductImagesEntity.forEach(p -> {
-                if (p.getProductEntity().getId().equals(productEntity.getId())) {
-                    productImageRepository.delete(p);
-                }
-            });
-            for (MultipartFile file :
-                    files) {
+//            beforeProductImagesEntityList.forEach(p -> {
+//                if (p.getProductEntity().getId().equals(productEntity.getId())) {
+//                    productImageRepository.delete(p);
+//                }
+//            });
+            productImageRepository.deleteAllByProductEntity(productEntity.getId());
+            for (MultipartFile file : files) {
                 String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
                 try {
                     if (fileName.contains("..")) {
@@ -125,14 +126,12 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                             null
                     );
                     productImagesEntity.setProductEntity(productEntity);
-                    pr.add(productImagesEntity);
-                    productImageRepository.save(productImagesEntity);
+                    actualProductImagesEntity.add(productImagesEntity);
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + file);
                 }
             }
         }
-        return productImageRepository.saveAll(pr);
+        return productImageRepository.saveAll(actualProductImagesEntity);
     }
-    
 }

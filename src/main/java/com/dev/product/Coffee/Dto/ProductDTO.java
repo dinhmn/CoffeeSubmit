@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,7 +30,8 @@ public class ProductDTO extends BaseDTO {
     private List<ImageDTO> images = new ArrayList<>();
     private List<ProductImagesDTO> imagesList = new ArrayList<>();
     private List<ReviewsDTO> reviews = new ArrayList<>();
-
+    
+    @Transactional
     public static ProductDTO from(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 
@@ -52,7 +54,8 @@ public class ProductDTO extends BaseDTO {
         productDTO.setReviews(product.getReviewsEntityList().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
         return productDTO;
     }
-
+    
+    @Transactional
     public static ProductDTO fromTo(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 
