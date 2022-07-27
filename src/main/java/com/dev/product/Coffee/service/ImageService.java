@@ -11,7 +11,7 @@ public interface ImageService {
     List<ImageEntity> selectAll();
     ImageEntity selectImageById(String id) throws Exception;
 
-    ImageEntity update(MultipartFile file, ImageEntity productId, Long productEntity) throws Exception;
+    ImageEntity update(MultipartFile file, ImageEntity productId, ProductEntity productEntity) throws Exception;
 
     void delete(MultipartFile file, Long productId) throws Exception;
 }

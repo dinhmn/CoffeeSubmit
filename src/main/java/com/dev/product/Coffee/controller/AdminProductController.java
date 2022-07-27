@@ -115,19 +115,19 @@ public class AdminProductController {
             // convert String -> Object
             ProductDTO productDTO = objectMapper.readValue(product, ProductDTO.class);
             
+            productEntity = productService.update(id, ProductEntity.from(productDTO));
             if (!file.isEmpty()) {
                 Optional<ImageEntity> imageEntity = imageService.selectAll().stream()
                         .filter(e -> e.getProductEntity().getId().equals(productDTO.getId()))
                         .findFirst();
                 if (imageEntity.isPresent()) {
-                    imageService.update(file, imageEntity.get(), id);
+                    imageService.update(file, imageEntity.get(), productEntity);
                 } else {
                     imageService.insert(file, productEntity);
                 }
             }
             
             productImagesEntity.set(productImagesService.update(files, productEntity));
-            productEntity = productService.update(id, ProductEntity.from(productDTO));
         } catch (Exception err) {
             out.println("Error: " + err);
         }

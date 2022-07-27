@@ -56,7 +56,7 @@ public class AttachmentController {
                                          @PathVariable Long id) throws Exception {
         String downloadURI = "";
         ProductEntity productEntity = productService.selectProductById(id);
-        ImageEntity imageEntity = imageService.update(file, null, productEntity.getId());
+        ImageEntity imageEntity = imageService.update(file, null, productEntity);
         List<ProductImagesEntity> productImagesEntity = productImagesService.update(files, productEntity);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")

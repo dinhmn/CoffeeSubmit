@@ -100,18 +100,20 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                     productImagesEntityList.get(i).setFileType(files[i].getContentType());
                     productImagesEntityList.get(i).setData(files[i].getBytes());
                     productImagesEntityList.get(i).setUpdatedDate(new Date());
+                    productImagesEntityList.get(i).setProductEntity(productEntity);
                     actualProductImagesEntity.add(productImagesEntityList.get(i));
+                    productImageRepository.saveAll(actualProductImagesEntity);
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + files[i]);
                 }
             }
         } else {
-//            beforeProductImagesEntityList.forEach(p -> {
-//                if (p.getProductEntity().getId().equals(productEntity.getId())) {
-//                    productImageRepository.delete(p);
-//                }
-//            });
-            productImageRepository.deleteAllByProductEntity(productEntity.getId());
+            beforeProductImagesEntityList.forEach(p -> {
+                if (p.getProductEntity().getId().equals(productEntity.getId())) {
+                    productImageRepository.delete(p);
+                }
+            });
+//            productImageRepository.deleteAllByProductEntity(productEntity.getId());
             for (MultipartFile file : files) {
                 String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
                 try {
@@ -127,11 +129,12 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                     );
                     productImagesEntity.setProductEntity(productEntity);
                     actualProductImagesEntity.add(productImagesEntity);
+                    productImageRepository.saveAll(actualProductImagesEntity);
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + file);
                 }
             }
         }
-        return productImageRepository.saveAll(actualProductImagesEntity);
+        return actualProductImagesEntity;
     }
 }
