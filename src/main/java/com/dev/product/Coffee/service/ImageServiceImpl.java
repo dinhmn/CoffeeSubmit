@@ -10,8 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -30,9 +28,7 @@ public class ImageServiceImpl implements ImageService {
     private static EntityManager entityManager;
     
     @Override
-    @Transactional
     public ImageEntity insert(MultipartFile file, ProductEntity productEntity) throws Exception {
-        System.out.println(file);
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             if (fileName.contains("..")) {
@@ -67,15 +63,11 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageEntity update(MultipartFile file, ImageEntity imageEntity, ProductEntity productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
-//        List<String> imageIdListInDb = repository.findByProductIdList();
-        List<ImageEntity> imageEntityList = repository.findAll();
         try {
             if (fileName.contains("..")) {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
-            
             Optional<ImageEntity> imageUpdate = repository.findByProductId(productEntity.getId());
-//            Optional<ImageEntity> imageUpdate = imageEntityList.stream().filter(e -> e.getProductEntity().getId().equals(productEntity.getId())).findFirst();
             if (imageUpdate.isPresent()) {
                 ImageEntity image = imageUpdate.get();
                 image.setFileName(fileName);
@@ -105,22 +97,5 @@ public class ImageServiceImpl implements ImageService {
             throw new Exception("Could not delete file: " + fileName);
         }
     }
-    
-    private ImageEntity toImageEntity(String fileName, MultipartFile file, ProductEntity product) {
-        Optional<ImageEntity> imageEntity = repository.findByProductId(product.getId());
-        try {
-            if (imageEntity.isPresent()) {
-                ImageEntity image = imageEntity.get();
-                image.setProductEntity(product);
-                image.setFileName(fileName);
-                image.setFileType(file.getContentType());
-                image.setData(file.getBytes());
-                image.setUpdatedDate(new Date());
-                return image;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
 }

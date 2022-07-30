@@ -6,14 +6,31 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
+/**
+ * @author DinhMN
+ */
 public interface ProductImagesService {
-
-    public boolean isEmptyUploadFile(MultipartFile[] images);
-    public boolean isEmptyUploadFile(MultipartFile image);
-    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity
-    ) throws Exception;
-
+    
+    /**
+     * @param files
+     * @param productEntity
+     * @return
+     * @throws Exception
+     */
+    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    
+    /**
+     * @param id ImagePK
+     * @return Images
+     */
     ProductImagesEntity selectImageById(Long id) throws Exception;
-
-    List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    
+    /**
+     * @param files         is not NUll
+     * @param productEntity is not NUll
+     * @return list of images of product
+     * @throws Exception not fould
+     */
+    List<ProductImagesEntity> updateByPrimaryKey(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    
 }

@@ -8,10 +8,10 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity(name = "productImages")
 @Table(name = "tbl_product_images")
 public class ProductImagesEntity {
@@ -50,18 +50,4 @@ public class ProductImagesEntity {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private ProductEntity productEntity;
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        ProductImagesEntity that = (ProductImagesEntity) o;
-
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
 }

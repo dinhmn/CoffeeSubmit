@@ -6,10 +6,12 @@ import com.dev.product.Coffee.repository.ProductImageRepository;
 import com.dev.product.Coffee.repository.ProductRepository;
 import com.dev.product.Coffee.service.ProductImagesService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -18,42 +20,27 @@ import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.cleanPath;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class ProductImagesServiceImpl implements ProductImagesService {
     
     @Autowired
     private final ProductImageRepository productImageRepository;
     
-    public boolean isEmptyUploadFile(MultipartFile[] images) {
-        if (images == null || images.length <= 0)
-            return true;
-        
-        return images.length == 1 && Objects.requireNonNull(images[0].getOriginalFilename()).isEmpty();
-    }
-    
-    public boolean isEmptyUploadFile(MultipartFile image) {
-        return !(image != null && !Objects.requireNonNull(image.getOriginalFilename()).isEmpty());
-    }
-    
     @Override
-    public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception {
+    public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity)
+            throws Exception {
         List<ProductImagesEntity> multipleImage = new ArrayList<>();
+        
         for (MultipartFile file : files) {
             String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             try {
                 if (fileName.contains("..")) {
                     throw new Exception(String.format("Filename contains invalid path sequence %s", fileName));
                 }
-                ProductImagesEntity productImagesEntity = new ProductImagesEntity(
-                        fileName,
-                        file.getContentType(),
-                        file.getBytes(),
-                        new Date(),
-                        null
-                );
-                productImagesEntity.setCreatedDate(new Date());
-                productImagesEntity.setProductEntity(productEntity);
+                
+                ProductImagesEntity productImagesEntity = toProductImagesEntity(fileName, file, productEntity);
+                
                 multipleImage.add(productImagesEntity);
                 productImageRepository.save(productImagesEntity);
             } catch (Exception e) {
@@ -69,15 +56,10 @@ public class ProductImagesServiceImpl implements ProductImagesService {
         return productImageRepository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
-    
-    /**
-     * @param files         is not NUll
-     * @param productEntity is not NUll
-     * @return list product images
-     * @throws Exception not fould
-     */
+
     @Override
-    public List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception {
+    public List<ProductImagesEntity> updateByPrimaryKey(MultipartFile[] files, ProductEntity productEntity)
+            throws Exception {
         List<ProductImagesEntity> beforeProductImagesEntityList = productImageRepository.selectByForeignKey(productEntity.getId());
         List<ProductImagesEntity> actualProductImagesEntityList = new ArrayList<>();
         
@@ -107,14 +89,9 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                     if (fileName.contains("..")) {
                         throw new Exception("Filename contains invalid path sequence " + fileName);
                     }
-                    ProductImagesEntity productImagesEntity = new ProductImagesEntity(
-                            fileName,
-                            file.getContentType(),
-                            file.getBytes(),
-                            new Date(),
-                            null
-                    );
-                    productImagesEntity.setProductEntity(productEntity);
+                    ProductImagesEntity productImagesEntity = toProductImagesEntity(fileName, file, productEntity);
+                    
+                    // add images into list
                     actualProductImagesEntityList.add(productImagesEntity);
                     productImageRepository.save(productImagesEntity);
                 } catch (Exception e) {
@@ -124,4 +101,31 @@ public class ProductImagesServiceImpl implements ProductImagesService {
         }
         return actualProductImagesEntityList;
     }
+    
+    
+    /**
+     * @param fileName      String
+     * @param file          MultipartFile
+     * @param productEntity Entity
+     * @return ProductImages
+     * @throws IOException when data is null or empty
+     */
+    public ProductImagesEntity toProductImagesEntity(String fileName, MultipartFile file, ProductEntity productEntity) throws IOException {
+        return ProductImagesEntity
+                .builder()
+                .fileName(fileName)
+                .fileType(file.getContentType())
+                .data(file.getBytes())
+                .createdDate(new Date())
+                .productEntity(productEntity)
+                .build();
+    }
+    
+    public boolean isEmptyUploadFile(MultipartFile[] images) {
+        if (images == null || images.length <= 0)
+            return true;
+        
+        return images.length == 1 && Objects.requireNonNull(images[0].getOriginalFilename()).isEmpty();
+    }
+
 }

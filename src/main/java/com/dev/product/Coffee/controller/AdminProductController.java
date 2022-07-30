@@ -128,7 +128,7 @@ public class AdminProductController {
                 }
             }
             
-            productImagesEntity.set(productImagesService.update(files, productEntity));
+            productImagesEntity.set(productImagesService.updateByPrimaryKey(files, productEntity));
         } catch (Exception err) {
             out.println("Error: " + err);
         }
