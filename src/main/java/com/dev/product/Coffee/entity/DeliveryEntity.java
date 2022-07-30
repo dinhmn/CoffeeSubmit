@@ -7,6 +7,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Getter
 @Setter

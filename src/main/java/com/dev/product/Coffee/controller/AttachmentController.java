@@ -42,7 +42,7 @@ public class AttachmentController {
         productImagesEntity = productImagesService.insertMultiple(files, product);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
-                .path(imageEntity.getId())
+                .path(String.valueOf(imageEntity.getId()))
                 .toUriString();
         return new ResponseData(imageEntity.getFileName(),
                 downloadURI,
@@ -60,7 +60,7 @@ public class AttachmentController {
         List<ProductImagesEntity> productImagesEntity = productImagesService.update(files, productEntity);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
-                .path(imageEntity.getId())
+                .path(String.valueOf(imageEntity.getId()))
                 .toUriString();
         return new ResponseData(imageEntity.getFileName(),
                 downloadURI,
@@ -69,7 +69,7 @@ public class AttachmentController {
     }
     
     @GetMapping("/download/{id}")
-    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable String id) throws Exception {
+    public ResponseEntity<ByteArrayResource> downloadFile(@PathVariable("id") Long id) throws Exception {
         ImageEntity imageEntity = imageService.selectImageById(id);
         return ResponseEntity.ok()
                 .contentType(MediaType.parseMediaType(imageEntity.getFileType()))

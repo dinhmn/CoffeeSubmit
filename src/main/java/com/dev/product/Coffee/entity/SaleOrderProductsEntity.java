@@ -8,6 +8,10 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Table(name = "tbl_saleorder_products")
 @Getter

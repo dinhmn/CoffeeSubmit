@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Objects;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Getter
 @Setter

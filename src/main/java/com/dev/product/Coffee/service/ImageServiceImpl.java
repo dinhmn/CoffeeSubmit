@@ -9,13 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import static org.springframework.util.StringUtils.cleanPath;
 
@@ -25,6 +26,8 @@ public class ImageServiceImpl implements ImageService {
     
     @Autowired
     private final ImageRepository repository;
+    
+    private static EntityManager entityManager;
     
     @Override
     @Transactional
@@ -55,7 +58,8 @@ public class ImageServiceImpl implements ImageService {
     }
     
     @Override
-    public ImageEntity selectImageById(String id) throws Exception {
+    public ImageEntity selectImageById(Long id) throws Exception {
+
         return repository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
@@ -63,19 +67,25 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageEntity update(MultipartFile file, ImageEntity imageEntity, ProductEntity productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
+//        List<String> imageIdListInDb = repository.findByProductIdList();
         List<ImageEntity> imageEntityList = repository.findAll();
-        
         try {
             if (fileName.contains("..")) {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
-            ImageEntity imageUpdate = toImageEntity(imageEntity, fileName, file, productEntity);
-            for (ImageEntity image : imageEntityList) {
-                if (image.getProductEntity().getId().equals(imageUpdate.getProductEntity().getId())){
-                    return repository.save(imageUpdate);
-                }
+            
+            Optional<ImageEntity> imageUpdate = repository.findByProductId(productEntity.getId());
+//            Optional<ImageEntity> imageUpdate = imageEntityList.stream().filter(e -> e.getProductEntity().getId().equals(productEntity.getId())).findFirst();
+            if (imageUpdate.isPresent()) {
+                ImageEntity image = imageUpdate.get();
+                image.setFileName(fileName);
+                image.setFileType(file.getContentType());
+                image.setData(file.getBytes());
+                image.setUpdatedDate(new Date());
+                image.setProductEntity(productEntity);
+                repository.save(image);
             }
-            return null;
+            return imageUpdate.get();
         } catch (Exception e) {
             throw new Exception("Could not save File: " + fileName);
         }
@@ -96,14 +106,18 @@ public class ImageServiceImpl implements ImageService {
         }
     }
     
-    private ImageEntity toImageEntity(ImageEntity imageEntity, String fileName, MultipartFile file, ProductEntity product) {
+    private ImageEntity toImageEntity(String fileName, MultipartFile file, ProductEntity product) {
+        Optional<ImageEntity> imageEntity = repository.findByProductId(product.getId());
         try {
-            imageEntity.setProductEntity(product);
-            imageEntity.setFileName(fileName);
-            imageEntity.setFileType(file.getContentType());
-            imageEntity.setData(file.getBytes());
-            imageEntity.setUpdatedDate(new Date());
-            return imageEntity;
+            if (imageEntity.isPresent()) {
+                ImageEntity image = imageEntity.get();
+                image.setProductEntity(product);
+                image.setFileName(fileName);
+                image.setFileType(file.getContentType());
+                image.setData(file.getBytes());
+                image.setUpdatedDate(new Date());
+                return image;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

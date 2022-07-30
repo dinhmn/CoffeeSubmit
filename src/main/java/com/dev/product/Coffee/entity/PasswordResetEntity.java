@@ -7,6 +7,10 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Getter
 @Setter
@@ -20,6 +24,7 @@ public class PasswordResetEntity extends BaseEntity {
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "users_entity_id", unique = true)
+    @ToString.Exclude
     private UsersEntity usersEntity;
     
 }

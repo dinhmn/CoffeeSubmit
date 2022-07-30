@@ -3,14 +3,14 @@ package com.dev.product.Coffee.entity;
 import com.dev.product.Coffee.dto.ProductDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+
+/**
+ * @author DinhMN
+ */
 
 @Entity(name = "products")
 @Getter
@@ -38,7 +38,7 @@ public class ProductEntity extends BaseEntity {
     @ToString.Exclude
     private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productEntity")
     @ToString.Exclude
     private List<ImageEntity> imageEntity = new ArrayList<>();
     

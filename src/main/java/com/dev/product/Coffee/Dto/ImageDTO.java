@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import java.util.Date;
 
+/**
+ * @author DinhMN
+ */
+
 @EqualsAndHashCode()
 @Data
 @NoArgsConstructor
@@ -26,7 +30,7 @@ public class ImageDTO {
     from(ImageEntity imageEntity){
         ImageDTO img = new ImageDTO();
         img.setFileName(imageEntity.getFileName());
-        img.setDownloadURL(imageEntity.getId());
+        img.setDownloadURL(String.valueOf(imageEntity.getId()));
         img.setFileType(imageEntity.getFileType());
         img.setCreatedBy(imageEntity.getCreatedBy());
         img.setUpdatedBy(img.getUpdatedBy());

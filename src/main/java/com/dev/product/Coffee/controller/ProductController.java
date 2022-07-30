@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@CrossOrigin("http://localhost:3000/")
+@CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/p1")

@@ -39,8 +39,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     @Override
     public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception {
         List<ProductImagesEntity> multipleImage = new ArrayList<>();
-        for (MultipartFile file :
-                files) {
+        for (MultipartFile file : files) {
             String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
             try {
                 if (fileName.contains("..")) {
@@ -65,9 +64,8 @@ public class ProductImagesServiceImpl implements ProductImagesService {
         return productImageRepository.saveAll(multipleImage);
     }
     
-    
     @Override
-    public ProductImagesEntity selectImageById(String id) throws Exception {
+    public ProductImagesEntity selectImageById(Long id) throws Exception {
         return productImageRepository.findById(id)
                 .orElseThrow(() -> new Exception("File not found with id: " + id));
     }
@@ -80,40 +78,29 @@ public class ProductImagesServiceImpl implements ProductImagesService {
      */
     @Override
     public List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception {
-        List<ProductImagesEntity> actualProductImagesEntity = new ArrayList<>();
-        List<ProductImagesEntity> productImagesEntityList = new ArrayList<>();
-        List<ProductImagesEntity> beforeProductImagesEntityList = productImageRepository.findAll();
-
-        beforeProductImagesEntityList.forEach(p -> {
-            if (p.getProductEntity().getId().equals(productEntity.getId())) {
-                productImagesEntityList.add(p);
-            }
-        });
-        if (productImagesEntityList.size() == files.length) {
+        List<ProductImagesEntity> beforeProductImagesEntityList = productImageRepository.selectByForeignKey(productEntity.getId());
+        List<ProductImagesEntity> actualProductImagesEntityList = new ArrayList<>();
+        
+        if (beforeProductImagesEntityList.size() == files.length) {
             for (int i = 0; i < files.length; i++) {
                 String fileName = cleanPath(Objects.requireNonNull(files[i].getOriginalFilename()));
                 try {
                     if (fileName.contains("..")) {
                         throw new Exception("Filename contains invalid path sequence " + fileName);
                     }
-                    productImagesEntityList.get(i).setFileName(fileName);
-                    productImagesEntityList.get(i).setFileType(files[i].getContentType());
-                    productImagesEntityList.get(i).setData(files[i].getBytes());
-                    productImagesEntityList.get(i).setUpdatedDate(new Date());
-                    productImagesEntityList.get(i).setProductEntity(productEntity);
-                    actualProductImagesEntity.add(productImagesEntityList.get(i));
-                    productImageRepository.saveAll(actualProductImagesEntity);
+                    beforeProductImagesEntityList.get(i).setFileName(fileName);
+                    beforeProductImagesEntityList.get(i).setFileType(files[i].getContentType());
+                    beforeProductImagesEntityList.get(i).setData(files[i].getBytes());
+                    beforeProductImagesEntityList.get(i).setUpdatedDate(new Date());
+                    beforeProductImagesEntityList.get(i).setProductEntity(productEntity);
+                    actualProductImagesEntityList.add(beforeProductImagesEntityList.get(i));
+                    productImageRepository.save(beforeProductImagesEntityList.get(i));
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + files[i]);
                 }
             }
         } else {
-            beforeProductImagesEntityList.forEach(p -> {
-                if (p.getProductEntity().getId().equals(productEntity.getId())) {
-                    productImageRepository.delete(p);
-                }
-            });
-//            productImageRepository.deleteAllByProductEntity(productEntity.getId());
+            productImageRepository.deleteAll(beforeProductImagesEntityList);
             for (MultipartFile file : files) {
                 String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
                 try {
@@ -128,13 +115,13 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                             null
                     );
                     productImagesEntity.setProductEntity(productEntity);
-                    actualProductImagesEntity.add(productImagesEntity);
-                    productImageRepository.saveAll(actualProductImagesEntity);
+                    actualProductImagesEntityList.add(productImagesEntity);
+                    productImageRepository.save(productImagesEntity);
                 } catch (Exception e) {
                     throw new Exception("Could not save file: " + file);
                 }
             }
         }
-        return actualProductImagesEntity;
+        return actualProductImagesEntityList;
     }
 }

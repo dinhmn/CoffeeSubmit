@@ -13,7 +13,7 @@ public interface ProductImagesService {
     List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity
     ) throws Exception;
 
-    ProductImagesEntity selectImageById(String id) throws Exception;
+    ProductImagesEntity selectImageById(Long id) throws Exception;
 
     List<ProductImagesEntity> update(MultipartFile[] files, ProductEntity productEntity) throws Exception;
 }

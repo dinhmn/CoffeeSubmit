@@ -6,6 +6,10 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.Objects;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Getter
 @Setter

@@ -9,6 +9,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import java.util.Date;
 
+/**
+ * @author DinhMN
+ */
+
 @EqualsAndHashCode()
 @Data
 @NoArgsConstructor
@@ -17,7 +21,7 @@ public class ProductImagesDTO {
 
     private String fileName;
     private String fileType;
-    private String id;
+    private Long id;
     private Date createdDate;
     private Date updatedDate;
     private Integer createdBy;

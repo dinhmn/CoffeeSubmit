@@ -68,7 +68,7 @@ public class AdminProductController {
             // create downloadURI
             downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/download/")
-                    .path(productImage.get().get(0).getId())
+                    .path(String.valueOf(productImage.get().get(0).getId()))
                     .toUriString();
         } catch (IOException err) {
             out.println("Error: " + err);
@@ -121,7 +121,8 @@ public class AdminProductController {
                         .filter(e -> e.getProductEntity().getId().equals(productDTO.getId()))
                         .findFirst();
                 if (imageEntity.isPresent()) {
-                    imageService.update(file, imageEntity.get(), productEntity);
+                    ImageEntity img = imageService.update(file, imageEntity.get(), productEntity);
+                    out.println(img);
                 } else {
                     imageService.insert(file, productEntity);
                 }

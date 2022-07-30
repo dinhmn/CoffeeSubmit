@@ -2,6 +2,7 @@ package com.dev.product.Coffee.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,7 +18,8 @@ public class ProductImagesEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    @Column(name = "id")
+    private Long id;
 
     private String fileName;
     private String fileType;

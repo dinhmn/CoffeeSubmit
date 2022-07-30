@@ -6,6 +6,10 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.util.*;
 
+/**
+ * @author DinhMN
+ */
+
 @Entity
 @Table(name = "tbl_users")
 @Getter
