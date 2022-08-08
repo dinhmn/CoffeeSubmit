@@ -10,11 +10,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author DinhMN
+ */
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO extends com.dev.product.Coffee.dto.BaseDTO {
+public class CategoryDTO extends BaseDTO {
     private String categoriesName;
     private String title;
     private String seo;

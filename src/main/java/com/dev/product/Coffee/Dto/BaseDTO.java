@@ -5,6 +5,10 @@ import lombok.*;
 import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
+/**
+ * @author DinhMN
+ */
+
 @MappedSuperclass
 @Getter
 @Setter

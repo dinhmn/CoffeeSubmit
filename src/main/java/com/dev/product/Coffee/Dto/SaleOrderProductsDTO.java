@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+/**
+ * @author DinhMN
+ */
+
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
