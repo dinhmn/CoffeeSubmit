@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.entity;
 
-import com.dev.product.Coffee.dto.SaleOrderProductsDTO;
+import com.dev.product.Coffee.dto.CartProductDTO;
 import lombok.*;
 import org.hibernate.Hibernate;
 
@@ -36,16 +36,16 @@ public class SaleOrderProductsEntity extends BaseEntity {
     @JoinColumn(name = "product_entity_id", unique = true)
     private ProductEntity productEntity;
     
-    public static SaleOrderProductsEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
+    public static SaleOrderProductsEntity from(CartProductDTO cartProductDTO) {
         SaleOrderProductsEntity saleOrderEntity = new SaleOrderProductsEntity();
-        saleOrderEntity.setId(saleOrderProductsDTO.getId());
-        saleOrderEntity.setTitle(saleOrderProductsDTO.getTitle());
-        saleOrderEntity.setPrice(saleOrderProductsDTO.getPrice());
-        saleOrderEntity.setQuantity(saleOrderProductsDTO.getQuantity());
-        saleOrderEntity.setCreatedDate(saleOrderProductsDTO.getCreatedDate());
-        saleOrderEntity.setCreatedBy(saleOrderProductsDTO.getCreatedBy());
-        saleOrderEntity.setUpdatedDate(saleOrderProductsDTO.getUpdatedDate());
-        saleOrderEntity.setUpdatedBy(saleOrderProductsDTO.getUpdatedBy());
+        saleOrderEntity.setId(cartProductDTO.getId());
+        saleOrderEntity.setTitle(cartProductDTO.getTitle());
+        saleOrderEntity.setPrice(cartProductDTO.getPrice());
+        saleOrderEntity.setQuantity(cartProductDTO.getQuantity());
+        saleOrderEntity.setCreatedDate(cartProductDTO.getCreatedDate());
+        saleOrderEntity.setCreatedBy(cartProductDTO.getCreatedBy());
+        saleOrderEntity.setUpdatedDate(cartProductDTO.getUpdatedDate());
+        saleOrderEntity.setUpdatedBy(cartProductDTO.getUpdatedBy());
 
         return saleOrderEntity;
     }
