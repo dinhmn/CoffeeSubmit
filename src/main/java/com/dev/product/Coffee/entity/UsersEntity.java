@@ -22,11 +22,9 @@ public class UsersEntity extends BaseEntity {
     private String password;
     private String confirm;
     private String email;
-    @Column(name = "enable", nullable = false)
-    private boolean enabled;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
-    private Set<RolesEntity> roles = new HashSet<>();
+    private Collection<RolesEntity> roles = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
     @ToString.Exclude

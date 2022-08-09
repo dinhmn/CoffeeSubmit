@@ -38,7 +38,7 @@ public class ProductEntity extends BaseEntity {
     @ToString.Exclude
     private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
     private List<ImageEntity> imageEntity = new ArrayList<>();
     

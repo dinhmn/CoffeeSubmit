@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RolesRepository extends JpaRepository<RolesEntity, Long> {
+    
+    RolesEntity selectByName(String name);
 }
