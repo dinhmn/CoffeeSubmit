@@ -1,13 +1,18 @@
 package com.dev.product.Coffee.repository;
 
 import com.dev.product.Coffee.entity.UsersEntity;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public interface UserRepository extends CrudRepository<UsersEntity, Long> {
+/**
+ * @author DinhMN
+ */
+@Repository
+public interface UserRepository extends JpaRepository<UsersEntity, Long> {
     
     List<UsersEntity> findByEmail(String email);
     
-    UsersEntity selectByUsername(String userName);
+    UsersEntity findByUsername(String userName);
 }

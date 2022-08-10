@@ -6,11 +6,10 @@ import com.dev.product.Coffee.repository.RolesRepository;
 import com.dev.product.Coffee.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import javax.transaction.Transactional;
 
 /**
  * @author DinhMN
@@ -26,26 +25,30 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UsersEntity insert(UsersEntity user) {
+        log.info("Saving new user {} to the database", user.getUsername());
         return userRepository.save(user);
     }
     
     @Override
     public RolesEntity insert(RolesEntity role) {
+        log.info("Saving new role {} to the database", role.getName());
         return rolesRepository.save(role);
     }
     
     @Override
     public void insertRoleToUser(String userName, String roleName) {
-    
+        UsersEntity user = userRepository.findByUsername(userName);
+        RolesEntity role = rolesRepository.findByName(roleName);
+        user.getRoles().add(role);
     }
     
     @Override
     public UsersEntity selectByUserName(String userName) {
-        return null;
+        return userRepository.findByUsername(userName);
     }
     
     @Override
     public List<UsersEntity> selectAll() {
-        return null;
+        return userRepository.findAll();
     }
 }
