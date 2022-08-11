@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import javax.transaction.Transactional;
 
 /**
@@ -44,7 +45,11 @@ public class UserServiceImpl implements UserService {
     
     @Override
     public UsersEntity selectByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+        UsersEntity users = userRepository.findByUsername(userName);
+        if (Objects.isNull(users)) {
+            return null;
+        }
+        return users;
     }
     
     @Override
