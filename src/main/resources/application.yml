@@ -30,8 +30,8 @@ spring:
       max-file-size: 300MB
       max-request-size: 3000MB
 # security
-  security:
-    user:
-      name: admin
-      password: admin123
-      roles: admin
+#  security:
+#    user:
+#      name: admin
+#      password: admin123
+#      roles: admin

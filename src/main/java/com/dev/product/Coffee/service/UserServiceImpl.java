@@ -6,8 +6,11 @@ import com.dev.product.Coffee.repository.RolesRepository;
 import com.dev.product.Coffee.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.transaction.Transactional;
@@ -27,6 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public UsersEntity insert(UsersEntity user) {
         log.info("Saving new user {} to the database", user.getUsername());
+        RolesEntity userRole = rolesRepository.findByName("USERS");
+        user.setRoles(Collections.singleton(userRole));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
     
@@ -44,10 +50,10 @@ public class UserServiceImpl implements UserService {
     }
     
     @Override
-    public UsersEntity selectByUserName(String userName) {
+    public UsersEntity selectByUserName(String userName) throws UsernameNotFoundException {
         UsersEntity users = userRepository.findByUsername(userName);
         if (Objects.isNull(users)) {
-            return null;
+            throw new UsernameNotFoundException(userName);
         }
         return users;
     }

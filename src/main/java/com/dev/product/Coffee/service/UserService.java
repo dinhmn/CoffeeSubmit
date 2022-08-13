@@ -2,6 +2,7 @@ package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.RolesEntity;
 import com.dev.product.Coffee.entity.UsersEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public interface UserService {
      * @param userName nameOfUserEntity
      * @return UserEntity
      */
-    UsersEntity selectByUserName(String userName);
+    UsersEntity selectByUserName(String userName) throws UsernameNotFoundException;
     
     /**
      * @return list of user
