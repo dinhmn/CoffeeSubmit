@@ -31,7 +31,6 @@ public class ProductDTO extends BaseDTO {
     private List<ProductImagesDTO> imagesList = new ArrayList<>();
     private List<ReviewsDTO> reviews = new ArrayList<>();
     
-    @Transactional
     public static ProductDTO from(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 
@@ -55,7 +54,6 @@ public class ProductDTO extends BaseDTO {
         return productDTO;
     }
     
-    @Transactional
     public static ProductDTO fromTo(ProductEntity product) {
         ProductDTO productDTO = new ProductDTO();
 

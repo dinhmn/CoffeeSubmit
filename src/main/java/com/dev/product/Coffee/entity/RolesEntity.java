@@ -22,17 +22,17 @@ public class RolesEntity extends BaseEntity {
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "tbl_users_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<UsersEntity> users = new HashSet<>();
-
+    private Collection<UsersEntity> users = new ArrayList<>();
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         RolesEntity that = (RolesEntity) o;
-
+        
         return Objects.equals(getId(), that.getId());
     }
-
+    
     @Override
     public int hashCode() {
         return 622155445;

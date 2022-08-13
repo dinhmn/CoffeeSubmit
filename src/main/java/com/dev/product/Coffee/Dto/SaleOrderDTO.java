@@ -26,7 +26,7 @@ public class SaleOrderDTO extends BaseDTO {
     private String seo;
     private String delivery;
     private List<SaleOrderProductsDTO> saleOrderProductsDTOList = new ArrayList<>();
-
+    
     public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity) {
         SaleOrderDTO saleOrderDTO = new SaleOrderDTO();
         saleOrderDTO.setId(saleOrderEntity.getId());
@@ -37,7 +37,7 @@ public class SaleOrderDTO extends BaseDTO {
         saleOrderDTO.setUpdatedBy(saleOrderEntity.getUpdatedBy());
         saleOrderDTO.setUpdatedDate(saleOrderEntity.getUpdatedDate());
         saleOrderDTO.setSaleOrderProductsDTOList(saleOrderEntity.getSaleOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
-
+        
         return saleOrderDTO;
     }
 }

@@ -10,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 
 import javax.persistence.EntityManager;
-import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -24,8 +23,6 @@ public class ImageServiceImpl implements ImageService {
     
     @Autowired
     private final ImageRepository repository;
-    
-    private static EntityManager entityManager;
     
     @Override
     public ImageEntity insert(MultipartFile file, ProductEntity productEntity) throws Exception {
