@@ -5,6 +5,7 @@ import com.dev.product.Coffee.entity.RolesEntity;
 import com.dev.product.Coffee.entity.UsersEntity;
 import com.dev.product.Coffee.mapper.UserMapper;
 import com.dev.product.Coffee.service.UserService;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -56,4 +57,17 @@ public class UserController {
                         .toUriString());
         return ResponseEntity.created(uri).body(userService.insertRole(role));
     }
+    
+    @PostMapping("/role/addtouser")
+    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
+        userService.insertRoleToUser(form.getUsername(), form.getRoleName());
+        return ResponseEntity.ok().build();
+    }
+    
+}
+
+@Data
+class RoleToUserForm {
+    private String username;
+    private String roleName;
 }
