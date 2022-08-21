@@ -47,7 +47,7 @@ public class UserMapper {
         userDTO.setRoleDTOS(
                 user.getRoles()
                         .stream()
-                        .map(RoleDTO::from)
+                        .map(RoleMapper::toDTO)
                         .collect(Collectors.toList())
         );
         return userDTO;

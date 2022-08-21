@@ -16,6 +16,7 @@ import java.util.*;
 @Setter
 @ToString
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class RolesEntity extends BaseEntity {
     private String name;
     private String desc;

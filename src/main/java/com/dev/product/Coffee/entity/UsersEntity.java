@@ -22,6 +22,7 @@ public class UsersEntity extends BaseEntity {
     private boolean enabled;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users")
+    @ToString.Exclude
     private Collection<RolesEntity> roles = new ArrayList<>();
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
