@@ -40,9 +40,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
             throw new UsernameNotFoundException("User not found in the database");
         }
         Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        usersEntity.getRoles().forEach(role -> {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
-        });
+        usersEntity.getRoles().forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getName())));
         return new User(usersEntity.getUsername(), usersEntity.getPassword(), authorities);
     }
     

@@ -1,6 +1,7 @@
 package com.dev.product.Coffee.config;
 
 import com.dev.product.Coffee.filter.AuthenticationCustomFilter;
+import com.dev.product.Coffee.filter.AuthorizationCustomFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 /**
@@ -33,13 +37,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+        AuthenticationCustomFilter authenticationCustomFilter = new AuthenticationCustomFilter(authenticationManagerBean());
+        authenticationCustomFilter.setFilterProcessesUrl("/api/login");
+        http.csrf().disable()
                 .sessionManagement().sessionCreationPolicy(STATELESS)
                 .and()
-                .authorizeRequests().anyRequest().permitAll()
+                .authorizeRequests().antMatchers("/api/login/**").permitAll()
                 .and()
-                .addFilter(new AuthenticationCustomFilter(authenticationManagerBean()));
+                .authorizeRequests().antMatchers(GET, "/api/user/**").hasAuthority("USER")
+                .and()
+                .authorizeRequests().antMatchers(POST, "/api/user/save/**").hasAuthority("ADMIN")
+                .and()
+                .authorizeRequests().anyRequest().authenticated()
+                .and()
+                .addFilter(authenticationCustomFilter)
+                .addFilterBefore(new AuthorizationCustomFilter(), UsernamePasswordAuthenticationFilter.class);
+        
     }
     
     @Bean

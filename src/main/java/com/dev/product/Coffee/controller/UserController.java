@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/admin/api")
+@RequestMapping("/api")
 public class UserController {
     
     @Autowired
