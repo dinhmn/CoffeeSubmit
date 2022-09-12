@@ -19,7 +19,7 @@ public class UsersEntity extends BaseEntity {
     private String password;
     private String confirm;
     private String email;
-    private boolean enabled;
+    private boolean isEnable;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "users")
     @ToString.Exclude

@@ -25,16 +25,12 @@ public class SaleOrderProductsEntity extends BaseEntity {
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "saleOrder_id")
+    @JoinColumn(name = "sale_order_id")
     private SaleOrderEntity saleOrder;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private ProductEntity product;
-    
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_entity_id", unique = true)
-    private ProductEntity productEntity;
     
     public static SaleOrderProductsEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
         SaleOrderProductsEntity saleOrderEntity = new SaleOrderProductsEntity();

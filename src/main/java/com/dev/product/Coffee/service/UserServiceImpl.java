@@ -20,6 +20,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author DinhMN
@@ -64,8 +65,13 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     
     @Override
-    public UsersEntity selectByUsername(String username) {
+    public Optional<UsersEntity> selectByUsername(String username) {
         return userRepository.findByUsername(username);
+    }
+    
+    @Override
+    public Optional<UsersEntity> selectByUserId(Long userId) {
+        return userRepository.findById(userId);
     }
     
     @Override

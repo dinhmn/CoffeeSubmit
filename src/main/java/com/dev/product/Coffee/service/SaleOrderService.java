@@ -1,8 +1,11 @@
 package com.dev.product.Coffee.service;
 
+import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.UsersEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SaleOrderService {
     

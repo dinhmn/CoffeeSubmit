@@ -26,7 +26,22 @@ public class UserMapper {
     
     public UsersEntity toEntity(UserDTO userDTO) {
         UsersEntity user = new UsersEntity();
-        
+        user.setId(userDTO.getId());
+        user.setCreatedDate(userDTO.getCreatedDate());
+        user.setCreatedBy(userDTO.getCreatedBy());
+        user.setStatus(userDTO.getStatus());
+        user.setUpdatedDate(userDTO.getUpdatedDate());
+        user.setUpdatedBy(userDTO.getUpdatedBy());
+        user.setUsername(userDTO.getUsername());
+        user.setPassword(userDTO.getPassword());
+        user.setEmail(userDTO.getEmail());
+        user.setConfirm(userDTO.getConfirm());
+        user.setEnable(userDTO.getIsStatus());
+        user.setRoles(
+                userDTO.getRoleDTOS().stream()
+                        .map(RoleMapper::toEntity)
+                        .collect(Collectors.toList())
+        );
         return user;
     }
     
@@ -45,8 +60,7 @@ public class UserMapper {
         userDTO.setConfirm(user.getConfirm());
         userDTO.setIsStatus(user.getStatus());
         userDTO.setRoleDTOS(
-                user.getRoles()
-                        .stream()
+                user.getRoles().stream()
                         .map(RoleMapper::toDTO)
                         .collect(Collectors.toList())
         );

@@ -25,9 +25,15 @@ public class RoleMapper {
         return INSTANCE;
     }
     
-    public RolesEntity toEntity(RoleDTO roleDTO) {
+    public static RolesEntity toEntity(RoleDTO roleDTO) {
         RolesEntity role = new RolesEntity();
-        
+        role.setId(roleDTO.getId());
+        role.setCreatedDate(roleDTO.getCreatedDate());
+        role.setCreatedBy(roleDTO.getCreatedBy());
+        role.setStatus(roleDTO.getStatus());
+        role.setUpdatedDate(roleDTO.getUpdatedDate());
+        role.setUpdatedBy(roleDTO.getUpdatedBy());
+        role.setName(roleDTO.getName());
         return role;
     }
     

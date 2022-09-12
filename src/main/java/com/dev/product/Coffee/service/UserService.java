@@ -4,6 +4,7 @@ import com.dev.product.Coffee.entity.RolesEntity;
 import com.dev.product.Coffee.entity.UsersEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author DinhMN
@@ -16,7 +17,8 @@ public interface UserService {
     
     void insertRoleToUser(String username, String roleName);
     
-    UsersEntity selectByUsername(String username);
+    Optional<UsersEntity> selectByUsername(String username);
+    Optional<UsersEntity> selectByUserId(Long userId);
     
     List<UsersEntity> selectAll();
     
