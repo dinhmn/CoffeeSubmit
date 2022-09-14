@@ -52,9 +52,9 @@ public class ProductServiceImpl implements ProductService {
     }
     
     @Override
-    public ProductEntity selectProductById(Long id) {
+    public Optional<ProductEntity> selectProductById(Long id) {
         Optional<ProductEntity> productEntityOptional = repository.findById(id);
-        return productEntityOptional.orElse(null);
+        return Optional.ofNullable(productEntityOptional.orElse(null));
     }
     
     @Override

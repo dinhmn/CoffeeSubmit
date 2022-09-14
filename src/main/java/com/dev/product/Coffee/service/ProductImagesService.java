@@ -5,6 +5,7 @@ import com.dev.product.Coffee.entity.ProductImagesEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author DinhMN
@@ -17,7 +18,7 @@ public interface ProductImagesService {
      * @return
      * @throws Exception
      */
-    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, Optional<ProductEntity> productEntity) throws Exception;
     
     /**
      * @param id ImagePK

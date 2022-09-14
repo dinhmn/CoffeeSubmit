@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
     
     @Override
-    public Optional<UsersEntity> selectByUsername(String username) {
+    public UsersEntity selectByUsername(String username) {
         return userRepository.findByUsername(username);
     }
     

@@ -91,13 +91,13 @@ public class UserController {
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refresh_token);
                 String username = decodedJWT.getSubject();
-                Optional<UsersEntity> user = userService.selectByUsername(username);
+                UsersEntity user = userService.selectByUsername(username);
                 String access_token = JWT.create()
-                        .withSubject(user.get().getUsername())
+                        .withSubject(user.getUsername())
                         .withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("roles",
-                                user.get().getRoles().stream()
+                                user.getRoles().stream()
                                         .map(RolesEntity::getName)
                                         .collect(Collectors.toList())
                         )

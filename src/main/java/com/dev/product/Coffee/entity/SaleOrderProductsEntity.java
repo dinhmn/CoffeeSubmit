@@ -27,10 +27,11 @@ public class SaleOrderProductsEntity extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "sale_order_id")
     private SaleOrderEntity saleOrder;
-
-    @ManyToOne
+    
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(name = "product_id")
-    private ProductEntity product;
+    private ProductEntity productEntity;
+    
     
     public static SaleOrderProductsEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
         SaleOrderProductsEntity saleOrderEntity = new SaleOrderProductsEntity();

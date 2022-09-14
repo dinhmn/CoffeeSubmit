@@ -61,7 +61,8 @@ public class AdminProductController {
             CategoriesEntity categoriesEntity = categoriesService.selectByPrimaryKey(id);
             
             // insert product, file image
-            ProductEntity productEntity = productService.insert(ProductEntity.from(productDTO), categoriesEntity);
+            Optional<ProductEntity> productEntity =
+                    Optional.ofNullable(productService.insert(ProductEntity.from(productDTO), categoriesEntity));
             productImage.set(Collections.singletonList(imageService.insert(file, productEntity)));
             productImagesList.set(productImagesService.insertMultiple(files, productEntity));
             
@@ -97,8 +98,8 @@ public class AdminProductController {
     
     @GetMapping("/product/{id}")
     public ResponseEntity<ProductDTO> getProductById(@PathVariable Long id) {
-        ProductEntity productEntity = productService.selectProductById(id);
-        return new ResponseEntity<>(ProductDTO.from(productEntity), HttpStatus.OK);
+        Optional<ProductEntity> productEntity = productService.selectProductById(id);
+        return new ResponseEntity<>(ProductDTO.from(productEntity.get()), HttpStatus.OK);
     }
     
     @PutMapping("/product/{id}")
@@ -107,7 +108,7 @@ public class AdminProductController {
                                                         @RequestParam("file") MultipartFile file,
                                                         @RequestParam("files") MultipartFile[] files) {
         // pre-variables
-        ProductEntity productEntity = null;
+        Optional<ProductEntity> productEntity = null;
         AtomicReference<List<ProductImagesEntity>> productImagesEntity = new AtomicReference<>(Collections.emptyList());
         
         try {
@@ -115,26 +116,26 @@ public class AdminProductController {
             // convert String -> Object
             ProductDTO productDTO = objectMapper.readValue(product, ProductDTO.class);
             
-            productEntity = productService.update(id, ProductEntity.from(productDTO));
+            productEntity = Optional.ofNullable(productService.update(id, ProductEntity.from(productDTO)));
             if (!file.isEmpty()) {
                 Optional<ImageEntity> imageEntity = imageService.selectAll().stream()
                         .filter(e -> e.getProductEntity().getId().equals(productDTO.getId()))
                         .findFirst();
                 if (imageEntity.isPresent()) {
-                    ImageEntity img = imageService.update(file, imageEntity.get(), productEntity);
+                    ImageEntity img = imageService.update(file, imageEntity.get(), productEntity.get());
                     out.println(img);
                 } else {
                     imageService.insert(file, productEntity);
                 }
             }
             
-            productImagesEntity.set(productImagesService.updateByPrimaryKey(files, productEntity));
+            productImagesEntity.set(productImagesService.updateByPrimaryKey(files, productEntity.get()));
         } catch (Exception err) {
             out.println("Error: " + err);
         }
         
         assert productEntity != null;
-        return new ResponseEntity<>(ProductDTO.from(productEntity), HttpStatus.OK);
+        return new ResponseEntity<>(ProductDTO.from(productEntity.get()), HttpStatus.OK);
     }
     
     @DeleteMapping("/product/{id}")

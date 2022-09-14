@@ -36,7 +36,7 @@ public class UserMapper {
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
         user.setConfirm(userDTO.getConfirm());
-        user.setEnable(userDTO.getIsStatus());
+        user.setEnabled(userDTO.getIsStatus());
         user.setRoles(
                 userDTO.getRoleDTOS().stream()
                         .map(RoleMapper::toEntity)

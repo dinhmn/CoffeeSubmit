@@ -3,20 +3,13 @@ package com.dev.product.Coffee.service;
 import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.ProductImagesEntity;
 import com.dev.product.Coffee.repository.ProductImageRepository;
-import com.dev.product.Coffee.repository.ProductRepository;
-import com.dev.product.Coffee.service.ProductImagesService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+import java.util.*;
 
 import static org.springframework.util.StringUtils.cleanPath;
 
@@ -28,7 +21,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
     private final ProductImageRepository productImageRepository;
     
     @Override
-    public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity)
+    public List<ProductImagesEntity> insertMultiple(MultipartFile[] files, Optional<ProductEntity> productEntity)
             throws Exception {
         List<ProductImagesEntity> multipleImage = new ArrayList<>();
         

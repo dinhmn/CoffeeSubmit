@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin("*")
@@ -36,7 +37,7 @@ public class AttachmentController {
                                    @RequestParam("id") Long id
     ) throws Exception {
         String downloadURI = "";
-        ProductEntity product = productService.selectProductById(id);
+        Optional<ProductEntity> product = productService.selectProductById(id);
         ImageEntity imageEntity = imageService.insert(file, product);
         List<ProductImagesEntity> productImagesEntity;
         productImagesEntity = productImagesService.insertMultiple(files, product);
@@ -49,15 +50,16 @@ public class AttachmentController {
                 file.getContentType(),
                 file.getSize());
     }
-
+    
     @PutMapping("/upload/{id}")
     public ResponseData updateUploadFile(@RequestParam("file") MultipartFile file,
                                          @RequestParam("files") MultipartFile[] files,
                                          @PathVariable Long id) throws Exception {
         String downloadURI = "";
-        ProductEntity productEntity = productService.selectProductById(id);
-        ImageEntity imageEntity = imageService.update(file, null, productEntity);
-        List<ProductImagesEntity> productImagesEntity = productImagesService.updateByPrimaryKey(files, productEntity);
+        Optional<ProductEntity> productEntity = productService.selectProductById(id);
+        ImageEntity imageEntity = imageService.update(file, null, productEntity.get());
+        List<ProductImagesEntity> productImagesEntity =
+                productImagesService.updateByPrimaryKey(files, productEntity.get());
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(String.valueOf(imageEntity.getId()))

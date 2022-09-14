@@ -17,7 +17,7 @@ public interface UserService {
     
     void insertRoleToUser(String username, String roleName);
     
-    Optional<UsersEntity> selectByUsername(String username);
+    UsersEntity selectByUsername(String username);
     Optional<UsersEntity> selectByUserId(Long userId);
     
     List<UsersEntity> selectAll();

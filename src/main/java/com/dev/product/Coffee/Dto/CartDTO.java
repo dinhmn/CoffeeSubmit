@@ -15,8 +15,11 @@ import java.util.List;
 @AllArgsConstructor
 public class CartDTO extends BaseDTO {
     
+    private Long productId;
+    
     private BigDecimal totalPrice = BigDecimal.ZERO;
     
     private List<CartItemsDTO> cartItemList = new ArrayList<>();
+    
     
 }

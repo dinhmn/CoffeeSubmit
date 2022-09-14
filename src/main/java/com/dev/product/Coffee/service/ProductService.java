@@ -17,7 +17,7 @@ public interface ProductService {
 //    ProductEntity insert(ProductEntity productEntity, CategoriesEntity categoriesEntity);
     
     List<ProductEntity> selectAll();
-    ProductEntity selectProductById(Long id);
+    Optional<ProductEntity> selectProductById(Long id);
     List<ProductEntity> selectProdcutByPriceRange(long min, long max);
     List<ProductEntity> selectProdcutByTitle(String title, Sort sort);
     List<ProductEntity> selectProductBySeoOfCategory(String seo);

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -25,7 +24,7 @@ public class ImageServiceImpl implements ImageService {
     private final ImageRepository repository;
     
     @Override
-    public ImageEntity insert(MultipartFile file, ProductEntity productEntity) throws Exception {
+    public ImageEntity insert(MultipartFile file, Optional<ProductEntity> productEntity) throws Exception {
         String fileName = cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         try {
             if (fileName.contains("..")) {
@@ -36,7 +35,7 @@ public class ImageServiceImpl implements ImageService {
                     file.getContentType(),
                     file.getBytes()
             );
-            imageEntity.setProductEntity(productEntity);
+            imageEntity.setProductEntity(productEntity.get());
             imageEntity.setCreatedDate(new Date());
             
             return repository.save(imageEntity);
