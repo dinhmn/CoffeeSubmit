@@ -1,5 +1,6 @@
 package com.dev.product.Coffee.service;
 
+import com.dev.product.Coffee.dto.SaleOrderDTO;
 import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.SaleOrderEntity;
 import com.dev.product.Coffee.entity.UsersEntity;
@@ -12,7 +13,7 @@ public interface SaleOrderService {
     List<SaleOrderEntity> selectAll();
     SaleOrderEntity selectByPrimaryKey(Long id);
     
-    SaleOrderEntity insert(SaleOrderEntity saleOrderEntity);
+    SaleOrderEntity insert(SaleOrderDTO saleOrder, Long userId);
     
     boolean delete(Long id);
     

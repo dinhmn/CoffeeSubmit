@@ -13,10 +13,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class CartItemsDTO extends BaseDTO{
     
-    private Long productId;
+    private Long id;
     private String productName;
+    private BigDecimal productPrice;
+    private String pathImage;
     private Long quantity;
-    private BigDecimal price;
-    private String categoryName;
     
 }

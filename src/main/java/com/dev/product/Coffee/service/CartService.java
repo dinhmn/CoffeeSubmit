@@ -1,10 +1,9 @@
 package com.dev.product.Coffee.service;
 
-import com.dev.product.Coffee.dto.CartDTO;
 import com.dev.product.Coffee.dto.ProductDTO;
 import com.dev.product.Coffee.dto.SaleOrderDTO;
 import com.dev.product.Coffee.dto.UserDTO;
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.SaleOrderEntity;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,12 +13,12 @@ import java.util.Optional;
  */
 public interface CartService {
     
-    CartDTO insert(Long userId, Long productId,  SaleOrderDTO saleOrderDTO);
+    SaleOrderEntity insert(Long userId, Long productId, SaleOrderDTO saleOrderDTO);
     
-    List<CartDTO> find(Long userId);
+    /*List<CartDTO> find(Long userId);
     Optional<CartDTO> find(UserDTO user, ProductDTO product);
     
-    CartDTO update(Long userId, CartDTO cartDTO);
+    CartDTO update(Long userId, CartDTO cartDTO);*/
     
     void delete(Long userId, Long cartId);
     

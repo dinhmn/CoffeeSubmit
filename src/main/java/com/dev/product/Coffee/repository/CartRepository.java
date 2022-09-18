@@ -1,17 +1,8 @@
 package com.dev.product.Coffee.repository;
 
-import com.dev.product.Coffee.dto.CartDTO;
-import com.dev.product.Coffee.dto.UserDTO;
-import com.dev.product.Coffee.entity.ProductEntity;
 import com.dev.product.Coffee.entity.SaleOrderEntity;
-import com.dev.product.Coffee.entity.UsersEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface CartRepository extends JpaRepository<SaleOrderEntity, Long> {

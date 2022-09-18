@@ -49,7 +49,7 @@ public class SaleOrderEntity extends BaseEntity {
         SaleOrderEntity saleOrderEntity = new SaleOrderEntity();
         saleOrderEntity.setId(saleOrderDTO.getId());
         saleOrderEntity.setCode(saleOrderDTO.getCode());
-        saleOrderEntity.setTotal(saleOrderDTO.getTotal());
+        saleOrderEntity.setTotal(saleOrderDTO.getTotalPrice());
         saleOrderEntity.setCreatedBy(saleOrderDTO.getCreatedBy());
         saleOrderEntity.setCreatedDate(saleOrderDTO.getCreatedDate());
         saleOrderEntity.setUpdatedBy(saleOrderDTO.getUpdatedBy());
