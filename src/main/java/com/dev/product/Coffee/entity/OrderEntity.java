@@ -15,12 +15,12 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "tbl_saleorder")
+@Table(name = "tbl_order")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class SaleOrderEntity extends BaseEntity {
+public class OrderEntity extends BaseEntity {
     private String code;
     private BigDecimal total;
     private Boolean isStatus;
@@ -29,9 +29,9 @@ public class SaleOrderEntity extends BaseEntity {
     @JoinColumn(name = "user_id")
     private UsersEntity user;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "saleOrder")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "order")
     @ToString.Exclude
-    private List<SaleOrderProductsEntity> saleOrderProducts = new ArrayList<>();
+    private List<OrderProductsEntity> orderProducts = new ArrayList<>();
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "saleOrder")
     @ToString.Exclude
@@ -45,24 +45,24 @@ public class SaleOrderEntity extends BaseEntity {
     @JoinColumn(name = "customer_entity_id", unique = true)
     private CustomerEntity customerEntity;
     
-    public static SaleOrderEntity from(SaleOrderDTO saleOrderDTO) {
-        SaleOrderEntity saleOrderEntity = new SaleOrderEntity();
-        saleOrderEntity.setId(saleOrderDTO.getId());
-        saleOrderEntity.setCode(saleOrderDTO.getCode());
-        saleOrderEntity.setTotal(saleOrderDTO.getTotalPrice());
-        saleOrderEntity.setCreatedBy(saleOrderDTO.getCreatedBy());
-        saleOrderEntity.setCreatedDate(saleOrderDTO.getCreatedDate());
-        saleOrderEntity.setUpdatedBy(saleOrderDTO.getUpdatedBy());
-        saleOrderEntity.setUpdatedDate(saleOrderDTO.getUpdatedDate());
+    public static OrderEntity from(SaleOrderDTO saleOrderDTO) {
+        OrderEntity orderEntity = new OrderEntity();
+        orderEntity.setId(saleOrderDTO.getId());
+        orderEntity.setCode(saleOrderDTO.getCode());
+        orderEntity.setTotal(saleOrderDTO.getTotalPrice());
+        orderEntity.setCreatedBy(saleOrderDTO.getCreatedBy());
+        orderEntity.setCreatedDate(saleOrderDTO.getCreatedDate());
+        orderEntity.setUpdatedBy(saleOrderDTO.getUpdatedBy());
+        orderEntity.setUpdatedDate(saleOrderDTO.getUpdatedDate());
 
-        return saleOrderEntity;
+        return orderEntity;
     }
     
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleOrderEntity that = (SaleOrderEntity) o;
+        OrderEntity that = (OrderEntity) o;
         
         return Objects.equals(getId(), that.getId());
     }

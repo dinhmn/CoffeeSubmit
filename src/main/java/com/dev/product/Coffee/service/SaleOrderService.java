@@ -1,22 +1,19 @@
 package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.dto.SaleOrderDTO;
-import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.SaleOrderEntity;
-import com.dev.product.Coffee.entity.UsersEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface SaleOrderService {
     
-    List<SaleOrderEntity> selectAll();
-    SaleOrderEntity selectByPrimaryKey(Long id);
+    List<OrderEntity> selectAll();
+    OrderEntity selectByPrimaryKey(Long id);
     
-    SaleOrderEntity insert(SaleOrderDTO saleOrder, Long userId);
+    OrderEntity insert(SaleOrderDTO saleOrder, Long userId);
     
     boolean delete(Long id);
     
-    SaleOrderEntity update(Long id, SaleOrderEntity saleOrderEntity);
+    OrderEntity update(Long id, OrderEntity orderEntity);
     
 }

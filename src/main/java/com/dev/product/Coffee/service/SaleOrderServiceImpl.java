@@ -2,15 +2,12 @@ package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.dto.*;
 import com.dev.product.Coffee.entity.*;
-import com.dev.product.Coffee.mapper.CartItemMapper;
 import com.dev.product.Coffee.mapper.SaleOrderProductsMapper;
-import com.dev.product.Coffee.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -24,33 +21,33 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     private UserService userService;
     
     @Override
-    public List<SaleOrderEntity> selectAll() {
+    public List<OrderEntity> selectAll() {
         return null;
     }
     
     @Override
-    public SaleOrderEntity selectByPrimaryKey(Long id) {
+    public OrderEntity selectByPrimaryKey(Long id) {
         return null;
     }
     
     @Override
-    public SaleOrderEntity insert(SaleOrderDTO saleOrderDTO, Long userId) {
-        SaleOrderEntity saleOrderEntity = new SaleOrderEntity();
+    public OrderEntity insert(SaleOrderDTO saleOrderDTO, Long userId) {
+        OrderEntity orderEntity = new OrderEntity();
         Optional<UsersEntity> user = userService.selectByUserId(userId);
-        List<SaleOrderProductsEntity> saleOrderProductsEntityList =
+        List<OrderProductsEntity> orderProductsEntityList =
                 saleOrderDTO.getSaleOrderProductsDTOList().stream()
                         .map(saleOrderProductsDTO -> SaleOrderProductsMapper.getInstance().toEntity(saleOrderProductsDTO))
                         .collect(Collectors.toList());
-        user.ifPresent(saleOrderEntity::setUser);
-        saleOrderEntity.setPaymentEntity(toPaymentEntity(saleOrderDTO.getPaymentDTO()));
-        saleOrderEntity.setDeliveryEntity(toDeliveryEntity(saleOrderDTO.getDeliveryDTO()));
-        saleOrderEntity.setCustomerEntity(toCustomerEntity(saleOrderDTO.getCustomerDTO()));
-        saleOrderEntity.setSaleOrderProducts(saleOrderProductsEntityList);
-        saleOrderEntity.setCode(String.valueOf(System.currentTimeMillis()));
-        saleOrderEntity.setTotal(totalProductPrice(saleOrderDTO.getCartItemsDTOList()));
-        saleOrderEntity.setIsStatus(saleOrderDTO.getIsStatus());
-        saleOrderEntity.setCreatedDate(new Date());
-        return saleOrderEntity;
+        user.ifPresent(orderEntity::setUser);
+        orderEntity.setPaymentEntity(toPaymentEntity(saleOrderDTO.getPaymentDTO()));
+        orderEntity.setDeliveryEntity(toDeliveryEntity(saleOrderDTO.getDeliveryDTO()));
+        orderEntity.setCustomerEntity(toCustomerEntity(saleOrderDTO.getCustomerDTO()));
+        orderEntity.setOrderProducts(orderProductsEntityList);
+        orderEntity.setCode(String.valueOf(System.currentTimeMillis()));
+        orderEntity.setTotal(totalProductPrice(saleOrderDTO.getCartItemsDTOList()));
+        orderEntity.setIsStatus(saleOrderDTO.getIsStatus());
+        orderEntity.setCreatedDate(new Date());
+        return orderEntity;
     }
     
     @Override
@@ -59,7 +56,7 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     }
     
     @Override
-    public SaleOrderEntity update(Long id, SaleOrderEntity saleOrderEntity) {
+    public OrderEntity update(Long id, OrderEntity orderEntity) {
         return null;
     }
     

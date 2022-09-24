@@ -1,18 +1,15 @@
 package com.dev.product.Coffee.service;
 
-import com.dev.product.Coffee.dto.ProductDTO;
 import com.dev.product.Coffee.dto.SaleOrderDTO;
-import com.dev.product.Coffee.dto.UserDTO;
 import com.dev.product.Coffee.entity.CustomerEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 import com.dev.product.Coffee.entity.UsersEntity;
 import com.dev.product.Coffee.repository.CartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -30,11 +27,11 @@ public class CartServiceImpl implements CartService {
     private CartRepository repository;
     
     @Override
-    public SaleOrderEntity insert(Long userId, Long productId, SaleOrderDTO saleOrderDTO) {
+    public OrderEntity insert(Long userId, Long productId, SaleOrderDTO saleOrderDTO) {
         Optional<UsersEntity> usersEntity = userService.selectByUserId(userId);
         Optional<ProductEntity> productEntity = productService.selectProductById(productId);
         CustomerEntity customerEntity = new CustomerEntity();
-        SaleOrderEntity saleOrder = new SaleOrderEntity();
+        OrderEntity saleOrder = new OrderEntity();
         if (usersEntity.isPresent()) {
             saleOrder.setUser(usersEntity.get());
             

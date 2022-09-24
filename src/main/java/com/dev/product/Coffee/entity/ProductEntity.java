@@ -48,7 +48,7 @@ public class ProductEntity extends BaseEntity {
     
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
     @ToString.Exclude
-    private SaleOrderProductsEntity saleOrderProductsEntities;
+    private OrderProductsEntity saleOrderProductsEntities;
     
     public static ProductEntity from(ProductDTO productDTO) {
         ProductEntity productEntity = new ProductEntity();

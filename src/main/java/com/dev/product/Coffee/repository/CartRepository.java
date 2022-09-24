@@ -1,11 +1,11 @@
 package com.dev.product.Coffee.repository;
 
-import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CartRepository extends JpaRepository<SaleOrderEntity, Long> {
+public interface CartRepository extends JpaRepository<OrderEntity, Long> {
     
 /*    @Query("FROM SaleOrderEntity so left join SaleOrderProductsEntity sop on so.id = sop.saleOrder.id " +
             "left join PaymentEntity pe on so.id = pe.saleOrder.id " +

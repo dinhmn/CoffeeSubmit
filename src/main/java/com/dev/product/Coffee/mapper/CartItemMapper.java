@@ -3,8 +3,7 @@ package com.dev.product.Coffee.mapper;
 
 import com.dev.product.Coffee.dto.CartItemsDTO;
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.SaleOrderEntity;
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.OrderProductsEntity;
 import com.dev.product.Coffee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -31,8 +30,8 @@ public class CartItemMapper {
         return INSTANCE;
     }
     
-    public SaleOrderProductsEntity toEntity(CartItemsDTO items) {
-        SaleOrderProductsEntity productsEntity = new SaleOrderProductsEntity();
+    public OrderProductsEntity toEntity(CartItemsDTO items) {
+        OrderProductsEntity productsEntity = new OrderProductsEntity();
         Optional<ProductEntity> product = productService.selectProductById(items.getId());
         productsEntity.setTitle(items.getProductName());
         productsEntity.setPrice(items.getProductPrice());
@@ -46,7 +45,7 @@ public class CartItemMapper {
         return productsEntity;
     }
     
-    public CartItemsDTO toDTO(SaleOrderProductsEntity productsEntity) {
+    public CartItemsDTO toDTO(OrderProductsEntity productsEntity) {
         CartItemsDTO cartItemsDTO = new CartItemsDTO();
         cartItemsDTO.setId(productsEntity.getId());
         cartItemsDTO.setProductName(productsEntity.getTitle());

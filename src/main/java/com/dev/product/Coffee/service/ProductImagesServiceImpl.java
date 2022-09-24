@@ -32,7 +32,7 @@ public class ProductImagesServiceImpl implements ProductImagesService {
                     throw new Exception(String.format("Filename contains invalid path sequence %s", fileName));
                 }
                 
-                ProductImagesEntity productImagesEntity = toProductImagesEntity(fileName, file, productEntity);
+                ProductImagesEntity productImagesEntity = toProductImagesEntity(fileName, file, productEntity.get());
                 
                 multipleImage.add(productImagesEntity);
                 productImageRepository.save(productImagesEntity);

@@ -1,13 +1,11 @@
 package com.dev.product.Coffee.mapper;
 
 import com.dev.product.Coffee.dto.SaleOrderProductsDTO;
-import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.OrderProductsEntity;
 import com.dev.product.Coffee.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * Switch between DTO <-> Domain model.
@@ -29,8 +27,8 @@ public class SaleOrderProductsMapper {
         return INSTANCE;
     }
     
-    public SaleOrderProductsEntity toEntity(SaleOrderProductsDTO items) {
-        SaleOrderProductsEntity product = new SaleOrderProductsEntity();
+    public OrderProductsEntity toEntity(SaleOrderProductsDTO items) {
+        OrderProductsEntity product = new OrderProductsEntity();
         product.setTitle(items.getTitle());
         product.setPrice(items.getPrice());
         product.setQuantity(items.getQuantity());
@@ -43,17 +41,17 @@ public class SaleOrderProductsMapper {
         return product;
     }
     
-    public SaleOrderProductsDTO toDTO(SaleOrderProductsEntity saleOrderProductsEntity) {
+    public SaleOrderProductsDTO toDTO(OrderProductsEntity orderProductsEntity) {
         SaleOrderProductsDTO productsDTO = new SaleOrderProductsDTO();
-        productsDTO.setTitle(saleOrderProductsEntity.getTitle());
-        productsDTO.setQuantity(saleOrderProductsEntity.getQuantity());
-        productsDTO.setPrice(saleOrderProductsEntity.getPrice());
-        productsDTO.setId(saleOrderProductsEntity.getId());
-        productsDTO.setCreatedBy(saleOrderProductsEntity.getCreatedBy());
-        productsDTO.setCreatedDate(saleOrderProductsEntity.getCreatedDate());
-        productsDTO.setUpdatedBy(saleOrderProductsEntity.getUpdatedBy());
-        productsDTO.setUpdatedDate(saleOrderProductsEntity.getUpdatedDate());
-        productsDTO.setStatus(saleOrderProductsEntity.getStatus());
+        productsDTO.setTitle(orderProductsEntity.getTitle());
+        productsDTO.setQuantity(orderProductsEntity.getQuantity());
+        productsDTO.setPrice(orderProductsEntity.getPrice());
+        productsDTO.setId(orderProductsEntity.getId());
+        productsDTO.setCreatedBy(orderProductsEntity.getCreatedBy());
+        productsDTO.setCreatedDate(orderProductsEntity.getCreatedDate());
+        productsDTO.setUpdatedBy(orderProductsEntity.getUpdatedBy());
+        productsDTO.setUpdatedDate(orderProductsEntity.getUpdatedDate());
+        productsDTO.setStatus(orderProductsEntity.getStatus());
         
         return productsDTO;
     }

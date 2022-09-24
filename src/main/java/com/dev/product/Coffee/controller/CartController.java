@@ -1,8 +1,7 @@
 package com.dev.product.Coffee.controller;
 
 import com.dev.product.Coffee.dto.SaleOrderDTO;
-import com.dev.product.Coffee.entity.SaleOrderEntity;
-import com.dev.product.Coffee.service.CartService;
+import com.dev.product.Coffee.entity.OrderEntity;
 import com.dev.product.Coffee.service.CustomerService;
 import com.dev.product.Coffee.service.ProductService;
 import com.dev.product.Coffee.service.SaleOrderService;
@@ -43,7 +42,7 @@ public class CartController {
         if (userId == 0) {
             return null;
         }
-        SaleOrderEntity saleOrderEntity = saleOrderService.insert(saleOrderDTO, userId);
+        OrderEntity orderEntity = saleOrderService.insert(saleOrderDTO, userId);
         
         return new ResponseEntity<>(saleOrderDTO, HttpStatus.OK);
     }

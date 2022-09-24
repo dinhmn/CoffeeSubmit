@@ -1,8 +1,6 @@
 package com.dev.product.Coffee.dto;
 
-import com.dev.product.Coffee.entity.DeliveryEntity;
-import com.dev.product.Coffee.entity.SaleOrderEntity;
-import com.dev.product.Coffee.entity.UsersEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 import com.dev.product.Coffee.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,14 +30,14 @@ public class SaleOrderDTO extends BaseDTO {
     private PaymentDTO paymentDTO;
     private List<SaleOrderProductsDTO> saleOrderProductsDTOList = new ArrayList<>();
     
-    public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity) {
+    public static SaleOrderDTO from(OrderEntity orderEntity) {
         SaleOrderDTO saleOrderDTO = new SaleOrderDTO();
-        saleOrderDTO.setTotalPrice(saleOrderEntity.getTotal());
-        saleOrderDTO.setCode(saleOrderEntity.getCode());
-        saleOrderDTO.setIsStatus(saleOrderEntity.getIsStatus());
-        saleOrderDTO.setUserDTO(UserMapper.getInstance().toDTO(saleOrderEntity.getUser()));
+        saleOrderDTO.setTotalPrice(orderEntity.getTotal());
+        saleOrderDTO.setCode(orderEntity.getCode());
+        saleOrderDTO.setIsStatus(orderEntity.getIsStatus());
+        saleOrderDTO.setUserDTO(UserMapper.getInstance().toDTO(orderEntity.getUser()));
         
-        saleOrderDTO.setSaleOrderProductsDTOList(saleOrderEntity.getSaleOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
+        saleOrderDTO.setSaleOrderProductsDTOList(orderEntity.getOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
         
         return saleOrderDTO;
     }

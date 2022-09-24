@@ -35,7 +35,7 @@ public class UsersEntity extends BaseEntity {
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
-    private List<SaleOrderEntity> saleOrder = new ArrayList<>();
+    private List<OrderEntity> saleOrder = new ArrayList<>();
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usersEntity")
     @ToString.Exclude
