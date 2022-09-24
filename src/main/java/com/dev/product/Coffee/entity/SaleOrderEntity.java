@@ -23,7 +23,7 @@ import java.util.Objects;
 public class SaleOrderEntity extends BaseEntity {
     private String code;
     private BigDecimal total;
-    private Boolean status;
+    private Boolean isStatus;
     
     @ManyToOne
     @JoinColumn(name = "user_id")

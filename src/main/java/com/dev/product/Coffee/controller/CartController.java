@@ -44,7 +44,7 @@ public class CartController {
             return null;
         }
         SaleOrderEntity saleOrderEntity = saleOrderService.insert(saleOrderDTO, userId);
-        SaleOrderDTO saleOrder = SaleOrderDTO.from(saleOrderEntity);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        
+        return new ResponseEntity<>(saleOrderDTO, HttpStatus.OK);
     }
 }

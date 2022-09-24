@@ -20,7 +20,7 @@ import javax.persistence.*;
 public class DeliveryEntity extends BaseEntity {
     
     private String delivery;
-    private Boolean status;
+    private Boolean isActive;
     
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JoinColumn(name = "sale_order_id", unique = true)

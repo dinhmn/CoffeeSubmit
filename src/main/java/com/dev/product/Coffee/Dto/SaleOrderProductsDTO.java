@@ -30,4 +30,6 @@ public class SaleOrderProductsDTO extends BaseDTO{
 
         return saleOrderProductsDTO;
     }
+    
+    
 }
