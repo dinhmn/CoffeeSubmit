@@ -1,6 +1,9 @@
 package com.dev.product.Coffee.dto;
 
+import com.dev.product.Coffee.entity.DeliveryEntity;
 import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.UsersEntity;
+import com.dev.product.Coffee.mapper.UserMapper;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SaleOrderDTO extends BaseDTO {
     private String code;
+    private Boolean isStatus;
     private BigDecimal totalPrice = BigDecimal.ZERO;
     private List<CartItemsDTO> cartItemsDTOList;
     private UserDTO userDTO;
@@ -30,20 +34,15 @@ public class SaleOrderDTO extends BaseDTO {
     
     public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity) {
         SaleOrderDTO saleOrderDTO = new SaleOrderDTO();
-        saleOrderDTO.setTotalPrice(totalProductPrice(ca));
+        saleOrderDTO.setTotalPrice(saleOrderEntity.getTotal());
+        saleOrderDTO.setCode(saleOrderEntity.getCode());
+        saleOrderDTO.setIsStatus(saleOrderEntity.getIsStatus());
+        saleOrderDTO.setUserDTO(UserMapper.getInstance().toDTO(saleOrderEntity.getUser()));
         
         saleOrderDTO.setSaleOrderProductsDTOList(saleOrderEntity.getSaleOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
         
         return saleOrderDTO;
     }
     
-    private BigDecimal totalProductPrice(List<CartItemsDTO> cartItemsDTOList) {
-        BigDecimal total = BigDecimal.ZERO;
-        for (CartItemsDTO item : cartItemsDTOList) {
-            BigDecimal price = BigDecimal.valueOf(Long.parseLong(item.getProductPrice()));
-            BigDecimal quantity = BigDecimal.valueOf(item.getQuantity());
-            total = total.add(price.multiply(quantity));
-        }
-        return total;
-    }
+    
 }

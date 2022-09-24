@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class ProductController {
     
     @Autowired
-    private final ProductService productService;
+    private ProductService productService;
     
     @GetMapping("/product")
     public ResponseEntity<List<ProductDTO>> getAllProductsByPrice(

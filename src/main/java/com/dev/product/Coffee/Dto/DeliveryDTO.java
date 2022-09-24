@@ -18,7 +18,7 @@ import org.springframework.beans.BeanUtils;
 public class DeliveryDTO extends BaseDTO{
     
     private String delivery;
-    private Boolean status;
+    private Boolean isActive;
     
     public static DeliveryDTO from(DeliveryEntity deliveryEntity) {
         DeliveryDTO deliveryDTO = new DeliveryDTO();
