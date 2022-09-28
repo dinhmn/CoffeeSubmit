@@ -3,7 +3,7 @@ package com.dev.product.Coffee.controller;
 import com.dev.product.Coffee.response.ResponseData;
 import com.dev.product.Coffee.entity.ImageEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.ProductImagesEntity;
+import com.dev.product.Coffee.entity.MultipleImageEntity;
 import com.dev.product.Coffee.service.ImageService;
 import com.dev.product.Coffee.service.ProductImagesService;
 import com.dev.product.Coffee.service.ProductService;
@@ -38,8 +38,8 @@ public class AttachmentController {
         String downloadURI = "";
         ProductEntity product = productService.selectProductById(id);
         ImageEntity imageEntity = imageService.insert(file, product);
-        List<ProductImagesEntity> productImagesEntity;
-        productImagesEntity = productImagesService.insertMultiple(files, product);
+        List<MultipleImageEntity> multipleImageEntity;
+        multipleImageEntity = productImagesService.insertMultiple(files, product);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(String.valueOf(imageEntity.getId()))
@@ -57,7 +57,7 @@ public class AttachmentController {
         String downloadURI = "";
         ProductEntity productEntity = productService.selectProductById(id);
         ImageEntity imageEntity = imageService.update(file, null, productEntity);
-        List<ProductImagesEntity> productImagesEntity = productImagesService.updateByPrimaryKey(files, productEntity);
+        List<MultipleImageEntity> multipleImageEntity = productImagesService.updateByPrimaryKey(files, productEntity);
         downloadURI = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/download/")
                 .path(String.valueOf(imageEntity.getId()))

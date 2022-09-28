@@ -1,12 +1,11 @@
 package com.dev.product.Coffee.dto;
 
-import com.dev.product.Coffee.entity.ProductImagesEntity;
+import com.dev.product.Coffee.entity.MultipleImageEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 /**
@@ -27,15 +26,15 @@ public class ProductImagesDTO {
     private Integer createdBy;
     private Integer updatedBy;
     
-    public static ProductImagesDTO from(ProductImagesEntity productImagesEntity){
+    public static ProductImagesDTO from(MultipleImageEntity multipleImageEntity){
         ProductImagesDTO img = new ProductImagesDTO();
-        img.setFileName(productImagesEntity.getFileName());
-        img.setId(productImagesEntity.getId());
-        img.setFileType(productImagesEntity.getFileType());
-        img.setCreatedBy(productImagesEntity.getCreatedBy());
-        img.setCreatedDate(productImagesEntity.getCreatedDate());
-        img.setUpdatedDate(productImagesEntity.getUpdatedDate());
-        img.setUpdatedBy(productImagesEntity.getUpdatedBy());
+        img.setFileName(multipleImageEntity.getFileName());
+        img.setId(multipleImageEntity.getId());
+        img.setFileType(multipleImageEntity.getFileType());
+        img.setCreatedBy(multipleImageEntity.getCreatedBy());
+        img.setCreatedDate(multipleImageEntity.getCreatedDate());
+        img.setUpdatedDate(multipleImageEntity.getUpdatedDate());
+        img.setUpdatedBy(multipleImageEntity.getUpdatedBy());
         return img;
     }
 }

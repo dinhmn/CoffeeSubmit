@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.service;
 
-import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +10,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SaleOrderServiceImpl implements SaleOrderService{
     @Override
-    public List<SaleOrderEntity> selectAll() {
+    public List<OrderEntity> selectAll() {
         return null;
     }
     
     @Override
-    public SaleOrderEntity selectByPrimaryKey(Long id) {
+    public OrderEntity selectByPrimaryKey(Long id) {
         return null;
     }
     
     @Override
-    public SaleOrderEntity insert(SaleOrderEntity saleOrderEntity) {
+    public OrderEntity insert(OrderEntity orderEntity) {
         return null;
     }
     
@@ -30,7 +30,7 @@ public class SaleOrderServiceImpl implements SaleOrderService{
     }
     
     @Override
-    public SaleOrderEntity update(Long id, SaleOrderEntity saleOrderEntity) {
+    public OrderEntity update(Long id, OrderEntity orderEntity) {
         return null;
     }
 }

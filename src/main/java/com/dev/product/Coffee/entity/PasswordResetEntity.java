@@ -23,8 +23,8 @@ public class PasswordResetEntity extends BaseEntity {
     private String passwordReset;
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "users_entity_id", unique = true)
+    @JoinColumn(name = "user_id", unique = true)
     @ToString.Exclude
-    private UsersEntity usersEntity;
+    private UsersEntity user;
     
 }

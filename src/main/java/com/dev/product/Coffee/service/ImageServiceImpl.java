@@ -39,7 +39,7 @@ public class ImageServiceImpl implements ImageService {
                     file.getContentType(),
                     file.getBytes()
             );
-            imageEntity.setProductEntity(productEntity);
+            imageEntity.setProduct(productEntity);
             imageEntity.setCreatedDate(new Date());
             
             return repository.save(imageEntity);
@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
                 image.setFileType(file.getContentType());
                 image.setData(file.getBytes());
                 image.setUpdatedDate(new Date());
-                image.setProductEntity(productEntity);
+                image.setProduct(productEntity);
                 repository.save(image);
             }
             return imageUpdate.get();
@@ -89,7 +89,7 @@ public class ImageServiceImpl implements ImageService {
         try {
             List<ImageEntity> imageEntityList = repository.findAll();
             Optional<ImageEntity> imageEntity = imageEntityList.stream()
-                    .filter(e -> e.getProductEntity().getId().equals(productId))
+                    .filter(e -> e.getProduct().getId().equals(productId))
                     .findFirst();
             imageEntity.ifPresent(repository::delete);
             

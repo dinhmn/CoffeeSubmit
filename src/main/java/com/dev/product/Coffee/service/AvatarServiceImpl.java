@@ -35,7 +35,7 @@ public class AvatarServiceImpl implements AvatarService {
                     file.getContentType(),
                     file.getBytes()
             );
-            avatarEntity.setUsersEntity(usersEntity);
+            avatarEntity.setUser(usersEntity);
             avatarEntity.setCreatedDate(new Date());
             return avatarRepository.save(avatarEntity);
         } catch (Exception e) {
@@ -59,7 +59,7 @@ public class AvatarServiceImpl implements AvatarService {
                 throw new Exception("Filename contains invalid path sequence" + fileName);
             }
             avatarEntity = avatarEntityList.stream()
-                    .filter(e -> e.getUsersEntity().getId().equals(usersEntity.getId()))
+                    .filter(e -> e.getUser().getId().equals(usersEntity.getId()))
                     .map(c -> toUpdateAvatarEntity(c, file, fileName))
                     .findFirst();
             return avatarEntity.orElse(null);
@@ -75,7 +75,7 @@ public class AvatarServiceImpl implements AvatarService {
             List<AvatarEntity> avatarEntityList = avatarRepository.findAll();
             Optional<AvatarEntity> imageEntity =
                     avatarEntityList.stream()
-                            .filter(e -> e.getUsersEntity().getId().equals(userId))
+                            .filter(e -> e.getUser().getId().equals(userId))
                             .findFirst();
             imageEntity.ifPresent(avatarRepository::delete);
             

@@ -1,7 +1,7 @@
 package com.dev.product.Coffee.service;
 
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.ProductImagesEntity;
+import com.dev.product.Coffee.entity.MultipleImageEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -17,13 +17,13 @@ public interface ProductImagesService {
      * @return
      * @throws Exception
      */
-    List<ProductImagesEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    List<MultipleImageEntity> insertMultiple(MultipartFile[] files, ProductEntity productEntity) throws Exception;
     
     /**
      * @param id ImagePK
      * @return Images
      */
-    ProductImagesEntity selectImageById(Long id) throws Exception;
+    MultipleImageEntity selectImageById(Long id) throws Exception;
     
     /**
      * @param files         is not NUll
@@ -31,6 +31,6 @@ public interface ProductImagesService {
      * @return list of images of product
      * @throws Exception not fould
      */
-    List<ProductImagesEntity> updateByPrimaryKey(MultipartFile[] files, ProductEntity productEntity) throws Exception;
+    List<MultipleImageEntity> updateByPrimaryKey(MultipartFile[] files, ProductEntity productEntity) throws Exception;
     
 }

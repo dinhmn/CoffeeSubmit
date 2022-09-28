@@ -13,31 +13,26 @@ import java.util.Objects;
  */
 
 @Entity
-@Table(name = "tbl_saleorder_products")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class SaleOrderProductsEntity extends BaseEntity {
+public class ProductInOrderEntity extends BaseEntity {
 
     private String title;
     private Long quantity;
     private BigDecimal price;
 
     @ManyToOne
-    @JoinColumn(name = "saleOrder_id")
-    private SaleOrderEntity saleOrder;
+    @JoinColumn(name = "order_id")
+    private OrderEntity order;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "product_id", unique = true)
     private ProductEntity product;
     
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "product_entity_id", unique = true)
-    private ProductEntity productEntity;
-    
-    public static SaleOrderProductsEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
-        SaleOrderProductsEntity saleOrderEntity = new SaleOrderProductsEntity();
+    public static ProductInOrderEntity from(SaleOrderProductsDTO saleOrderProductsDTO) {
+        ProductInOrderEntity saleOrderEntity = new ProductInOrderEntity();
         saleOrderEntity.setId(saleOrderProductsDTO.getId());
         saleOrderEntity.setTitle(saleOrderProductsDTO.getTitle());
         saleOrderEntity.setPrice(saleOrderProductsDTO.getPrice());
@@ -54,7 +49,7 @@ public class SaleOrderProductsEntity extends BaseEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        SaleOrderProductsEntity that = (SaleOrderProductsEntity) o;
+        ProductInOrderEntity that = (ProductInOrderEntity) o;
 
         return Objects.equals(getId(), that.getId());
     }

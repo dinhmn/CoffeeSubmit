@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface ImageRepository extends JpaRepository<ImageEntity, Long> {
     
-    @Query("from image i where i.productEntity.id =:productId")
+    @Query("from image i where i.product.id =:productId")
     Optional<ImageEntity> findByProductId(@Param("productId") Long productId);
     
     @Query("select i.id from image i where 1=1")

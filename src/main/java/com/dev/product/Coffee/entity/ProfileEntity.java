@@ -28,13 +28,9 @@ public class ProfileEntity extends BaseEntity {
 
     private String birthday;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UsersEntity user;
-    
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "users_entity_id", unique = true)
-    private UsersEntity usersEntity;
+    @JoinColumn(name = "user_id", unique = true)
+    private UsersEntity user;
     
     @Override
     public boolean equals(Object o) {

@@ -23,6 +23,6 @@ public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
     List<ProductEntity> selectProductBySeo(@Param("seo") String seo);
     
     // Select get all product by seo
-    @Query("from products p join p.categoriesEntity c where c.seo =:seo")
+    @Query("from products p join p.category c where c.seo =:seo")
     List<ProductEntity> selectProductBySeoOfCategory(@Param("seo") String seo);
 }

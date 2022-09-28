@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.dto;
 
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.ProductInOrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,16 +17,16 @@ public class SaleOrderProductsDTO extends BaseDTO{
     private Long quantity;
     private BigDecimal price;
 
-    public static SaleOrderProductsDTO from(SaleOrderProductsEntity saleOrderProductsEntity){
+    public static SaleOrderProductsDTO from(ProductInOrderEntity productInOrderEntity){
         SaleOrderProductsDTO saleOrderProductsDTO = new SaleOrderProductsDTO();
-        saleOrderProductsDTO.setId(saleOrderProductsEntity.getId());
-        saleOrderProductsDTO.setTitle(saleOrderProductsEntity.getTitle());
-        saleOrderProductsDTO.setPrice(saleOrderProductsEntity.getPrice());
-        saleOrderProductsDTO.setQuantity(saleOrderProductsEntity.getQuantity());
-        saleOrderProductsDTO.setCreatedDate(saleOrderProductsEntity.getCreatedDate());
-        saleOrderProductsDTO.setCreatedBy(saleOrderProductsEntity.getCreatedBy());
-        saleOrderProductsDTO.setUpdatedDate(saleOrderProductsEntity.getUpdatedDate());
-        saleOrderProductsDTO.setUpdatedBy(saleOrderProductsEntity.getUpdatedBy());
+        saleOrderProductsDTO.setId(productInOrderEntity.getId());
+        saleOrderProductsDTO.setTitle(productInOrderEntity.getTitle());
+        saleOrderProductsDTO.setPrice(productInOrderEntity.getPrice());
+        saleOrderProductsDTO.setQuantity(productInOrderEntity.getQuantity());
+        saleOrderProductsDTO.setCreatedDate(productInOrderEntity.getCreatedDate());
+        saleOrderProductsDTO.setCreatedBy(productInOrderEntity.getCreatedBy());
+        saleOrderProductsDTO.setUpdatedDate(productInOrderEntity.getUpdatedDate());
+        saleOrderProductsDTO.setUpdatedBy(productInOrderEntity.getUpdatedBy());
 
         return saleOrderProductsDTO;
     }

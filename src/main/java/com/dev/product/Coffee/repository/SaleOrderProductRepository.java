@@ -1,9 +1,9 @@
 package com.dev.product.Coffee.repository;
 
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.ProductInOrderEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SaleOrderProductRepository extends JpaRepository<SaleOrderProductsEntity, Long> {
+public interface SaleOrderProductRepository extends JpaRepository<ProductInOrderEntity, Long> {
 }

@@ -13,8 +13,8 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "productImages")
-@Table(name = "tbl_product_images")
-public class ProductImagesEntity {
+@Table(name = "tbl_multiple_image")
+public class MultipleImageEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,7 @@ public class ProductImagesEntity {
     @Column(name = "updated_date", nullable = true)
     private Date updatedDate;
     
-    public ProductImagesEntity(String fileName, String fileType, byte[] data, Date createdDate, Date updatedDate) {
+    public MultipleImageEntity(String fileName, String fileType, byte[] data, Date createdDate, Date updatedDate) {
         this.fileName = fileName;
         this.fileType = fileType;
         this.data = data;
@@ -49,5 +49,5 @@ public class ProductImagesEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private ProductEntity product;
 }

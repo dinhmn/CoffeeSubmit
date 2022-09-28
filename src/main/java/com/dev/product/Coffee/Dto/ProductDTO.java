@@ -47,8 +47,8 @@ public class ProductDTO extends BaseDTO {
         productDTO.setUpdatedBy(product.getUpdatedBy());
         productDTO.setCreatedBy(product.getCreatedBy());
         productDTO.setUpdatedDate(product.getUpdatedDate());
-        productDTO.setCategoryId(product.getCategoriesEntity().getId());
-        productDTO.setCategory(CategoryDTONotProduct.fromToDTO(product.getCategoriesEntity()));
+        productDTO.setCategoryId(product.getCategory().getId());
+        productDTO.setCategory(CategoryDTONotProduct.fromToDTO(product.getCategory()));
         productDTO.setImages(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
         productDTO.setImagesList(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
         productDTO.setReviews(product.getReviewsEntityList().stream().map(ReviewsDTO::from).collect(Collectors.toList()));
@@ -71,8 +71,8 @@ public class ProductDTO extends BaseDTO {
         productDTO.setUpdatedBy(product.getUpdatedBy());
         productDTO.setCreatedBy(product.getCreatedBy());
         productDTO.setUpdatedDate(product.getUpdatedDate());
-        productDTO.setCategoryId(product.getCategoriesEntity().getId());
-        productDTO.setCategory(CategoryDTONotProduct.fromToDTO(product.getCategoriesEntity()));
+        productDTO.setCategoryId(product.getCategory().getId());
+        productDTO.setCategory(CategoryDTONotProduct.fromToDTO(product.getCategory()));
         productDTO.setImages(product.getImageEntity().stream().map(ImageDTO::from).collect(Collectors.toList()));
         productDTO.setImagesList(product.getProductImageEntities().stream().map(ProductImagesDTO::from).collect(Collectors.toList()));
         productDTO.setReviews(product.getReviewsEntityList().stream().map(ReviewsDTO::from).collect(Collectors.toList()));

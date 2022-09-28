@@ -4,7 +4,7 @@ import com.dev.product.Coffee.dto.ProductDTO;
 import com.dev.product.Coffee.entity.CategoriesEntity;
 import com.dev.product.Coffee.entity.ImageEntity;
 import com.dev.product.Coffee.entity.ProductEntity;
-import com.dev.product.Coffee.entity.ProductImagesEntity;
+import com.dev.product.Coffee.entity.MultipleImageEntity;
 import com.dev.product.Coffee.response.ResponseData;
 import com.dev.product.Coffee.service.CategoriesService;
 import com.dev.product.Coffee.service.ImageService;
@@ -50,7 +50,7 @@ public class AdminProductController {
         ProductDTO productDTO;
         ObjectMapper objectMapper = new ObjectMapper();
         AtomicReference<List<ImageEntity>> productImage = new AtomicReference<>(Collections.emptyList());
-        AtomicReference<List<ProductImagesEntity>> productImagesList = new AtomicReference<>(Collections.emptyList());
+        AtomicReference<List<MultipleImageEntity>> productImagesList = new AtomicReference<>(Collections.emptyList());
         String downloadURI = "";
         try {
             // convert String -> Object
@@ -108,7 +108,7 @@ public class AdminProductController {
                                                         @RequestParam("files") MultipartFile[] files) {
         // pre-variables
         ProductEntity productEntity = null;
-        AtomicReference<List<ProductImagesEntity>> productImagesEntity = new AtomicReference<>(Collections.emptyList());
+        AtomicReference<List<MultipleImageEntity>> productImagesEntity = new AtomicReference<>(Collections.emptyList());
         
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -118,7 +118,7 @@ public class AdminProductController {
             productEntity = productService.update(id, ProductEntity.from(productDTO));
             if (!file.isEmpty()) {
                 Optional<ImageEntity> imageEntity = imageService.selectAll().stream()
-                        .filter(e -> e.getProductEntity().getId().equals(productDTO.getId()))
+                        .filter(e -> e.getProduct().getId().equals(productDTO.getId()))
                         .findFirst();
                 if (imageEntity.isPresent()) {
                     ImageEntity img = imageService.update(file, imageEntity.get(), productEntity);

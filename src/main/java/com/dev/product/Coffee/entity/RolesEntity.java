@@ -11,7 +11,7 @@ import java.util.*;
  */
 
 @Entity
-@Table(name = "tbl_roles")
+@Table(name = "tbl_role")
 @Getter
 @Setter
 @ToString
@@ -21,8 +21,8 @@ public class RolesEntity extends BaseEntity {
     private String desc;
     
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "tbl_users_roles", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
-    private Set<UsersEntity> users = new HashSet<>();
+    @JoinTable(name = "tbl_user_role", joinColumns = @JoinColumn(name = "role_id"), inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<UsersEntity> user = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {

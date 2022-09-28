@@ -11,7 +11,7 @@ import java.util.*;
  */
 
 @Entity
-@Table(name = "tbl_users")
+@Table(name = "tbl_user")
 @Getter
 @Setter
 @ToString
@@ -25,22 +25,22 @@ public class UsersEntity extends BaseEntity {
     @Column(name = "enable", nullable = false)
     private boolean enabled;
     
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "users")
-    private Set<RolesEntity> roles = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private List<RolesEntity> roles = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @ToString.Exclude
     private ProfileEntity profile;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "usersEntity")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "user")
     @ToString.Exclude
     private AvatarEntity avatarEntity;
     
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
-    private List<SaleOrderEntity> saleOrder = new ArrayList<>();
+    private List<OrderEntity> saleOrder = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "usersEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     @ToString.Exclude
     private List<PasswordResetEntity> passwordReset = new ArrayList<>();
     

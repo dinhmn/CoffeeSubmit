@@ -1,19 +1,19 @@
 package com.dev.product.Coffee.service;
 
-import com.dev.product.Coffee.entity.SaleOrderProductsEntity;
+import com.dev.product.Coffee.entity.ProductInOrderEntity;
 
 import java.util.List;
 
 public interface SaleOrderProductService {
     
-    List<SaleOrderProductsEntity> selectAll();
+    List<ProductInOrderEntity> selectAll();
     
-    SaleOrderProductsEntity selectByPrimaryKey(Long id);
+    ProductInOrderEntity selectByPrimaryKey(Long id);
     
-    SaleOrderProductsEntity insert(SaleOrderProductsEntity saleOrderEntity);
-    List<SaleOrderProductsEntity> insertMultiple(List<SaleOrderProductsEntity> saleOrderProductsEntityList);
+    ProductInOrderEntity insert(ProductInOrderEntity saleOrderEntity);
+    List<ProductInOrderEntity> insertMultiple(List<ProductInOrderEntity> productInOrderEntityList);
     
     boolean delete(Long id);
     
-    SaleOrderProductsEntity update(Long id, SaleOrderProductsEntity saleOrderEntity);
+    ProductInOrderEntity update(Long id, ProductInOrderEntity saleOrderEntity);
 }

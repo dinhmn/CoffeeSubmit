@@ -35,7 +35,7 @@ public class CategoryDTO extends com.dev.product.Coffee.dto.BaseDTO {
         categoryDTO.setUpdatedBy(category.getUpdatedBy());
         categoryDTO.setUpdatedDate(category.getUpdatedDate());
         categoryDTO.setStatus(category.getStatus());
-        categoryDTO.setProductDTOList(category.getProductEntities().stream().map(ProductDTO::from).collect(Collectors.toList()));
+        categoryDTO.setProductDTOList(category.getProductEntityList().stream().map(ProductDTO::from).collect(Collectors.toList()));
         return categoryDTO;
     }
     

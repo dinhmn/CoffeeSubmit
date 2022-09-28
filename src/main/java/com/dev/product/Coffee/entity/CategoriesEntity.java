@@ -4,11 +4,8 @@ package com.dev.product.Coffee.entity;
 import lombok.*;
 import org.hibernate.Hibernate;
 import com.dev.product.Coffee.dto.CategoryDTO;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -30,16 +27,16 @@ public class CategoriesEntity extends BaseEntity {
     private String seo;
     private String description;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "categoriesEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
     @ToString.Exclude
-    private List<ProductEntity> productEntities = new ArrayList<>();
+    private List<ProductEntity> productEntityList = new ArrayList<>();
 
     public void add(ProductEntity productEntity) {
-        productEntities.add(productEntity);
+        productEntityList.add(productEntity);
     }
 
     public void remove(ProductEntity productEntity) {
-        productEntities.remove(productEntity);
+        productEntityList.remove(productEntity);
     }
 
     public static CategoriesEntity from(CategoryDTO categoryDTO) {

@@ -32,23 +32,23 @@ public class ProductEntity extends BaseEntity {
     private String seo;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
-    private CategoriesEntity categoriesEntity;
+    private CategoriesEntity category;
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @ToString.Exclude
-    private List<ProductImagesEntity> productImageEntities = new ArrayList<>();
+    private List<MultipleImageEntity> productImageEntities = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @ToString.Exclude
     private List<ImageEntity> imageEntity = new ArrayList<>();
     
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @ToString.Exclude
     private List<ReviewsEntity> reviewsEntityList = new ArrayList<>();
     
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "productEntity")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "product")
     @ToString.Exclude
-    private SaleOrderProductsEntity saleOrderProductsEntities;
+    private ProductInOrderEntity productInOrder;
     
     public static ProductEntity from(ProductDTO productDTO) {
         ProductEntity productEntity = new ProductEntity();

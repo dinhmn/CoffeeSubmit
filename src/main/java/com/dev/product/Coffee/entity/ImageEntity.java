@@ -15,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Builder
 @Data
-@Table(name = "tbl_product_image")
+@Table(name = "tbl_image")
 @NoArgsConstructor
 public class ImageEntity {
     
@@ -46,7 +46,7 @@ public class ImageEntity {
     
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "product_id")
-    private ProductEntity productEntity;
+    private ProductEntity product;
     
     public ImageEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;

@@ -29,7 +29,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductEntity insert(ProductEntity product, CategoriesEntity categoriesEntity) throws Exception {
         
-        product.setCategoriesEntity(categoriesEntity);
+        product.setCategory(categoriesEntity);
         product.setCreatedDate(new Date());
         product.setSeo(new Slugify().slugify(product.getTitle()));
         
@@ -125,7 +125,7 @@ public class ProductServiceImpl implements ProductService {
             productEntity.setUpdatedBy(product.getUpdatedBy());
             productEntity.setUpdatedDate(new Date());
             productEntity.setStatus(product.getStatus());
-            productEntity.setCategoriesEntity(productEntity.getCategoriesEntity());
+            productEntity.setCategory(productEntity.getCategory());
             repository.save(productEntity);
         }
         return productEntity;

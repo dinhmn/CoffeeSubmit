@@ -44,8 +44,8 @@ public class AvatarEntity{
     private Date updatedDate;
     
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "users_entity_id", unique = true)
-    private UsersEntity usersEntity;
+    @JoinColumn(name = "users_id", unique = true)
+    private UsersEntity user;
     
     public AvatarEntity(String fileName, String fileType, byte[] data) {
         this.fileName = fileName;

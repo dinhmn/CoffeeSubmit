@@ -375,10 +375,10 @@ create table if not exists tbl_users_roles
 alter table tbl_users_roles
     owner to postgres;
 
-create table if not exists tbl_roles
+create table if not exists tbl_role
 (
     id           bigserial not null
-        constraint tbl_roles_pkey
+        constraint tbl_role_pkey
             primary key,
     created_by   integer,
     created_date timestamp,
@@ -386,8 +386,8 @@ create table if not exists tbl_roles
     updated_by   integer,
     updated_date timestamp,
     name         varchar(255),
-    "desc"       varchar(255)
+    desc      text
 );
 
-alter table tbl_roles
+alter table tbl_role
     owner to postgres;

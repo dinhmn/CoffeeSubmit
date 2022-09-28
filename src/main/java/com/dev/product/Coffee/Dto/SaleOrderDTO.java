@@ -1,6 +1,6 @@
 package com.dev.product.Coffee.dto;
 
-import com.dev.product.Coffee.entity.SaleOrderEntity;
+import com.dev.product.Coffee.entity.OrderEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,16 +27,16 @@ public class SaleOrderDTO extends BaseDTO {
     private String delivery;
     private List<SaleOrderProductsDTO> saleOrderProductsDTOList = new ArrayList<>();
 
-    public static SaleOrderDTO from(SaleOrderEntity saleOrderEntity) {
+    public static SaleOrderDTO from(OrderEntity orderEntity) {
         SaleOrderDTO saleOrderDTO = new SaleOrderDTO();
-        saleOrderDTO.setId(saleOrderEntity.getId());
-        saleOrderDTO.setCode(saleOrderEntity.getCode());
-        saleOrderDTO.setTotal(saleOrderEntity.getTotal());
-        saleOrderDTO.setCreatedBy(saleOrderEntity.getCreatedBy());
-        saleOrderDTO.setCreatedDate(saleOrderEntity.getCreatedDate());
-        saleOrderDTO.setUpdatedBy(saleOrderEntity.getUpdatedBy());
-        saleOrderDTO.setUpdatedDate(saleOrderEntity.getUpdatedDate());
-        saleOrderDTO.setSaleOrderProductsDTOList(saleOrderEntity.getSaleOrderProducts().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
+        saleOrderDTO.setId(orderEntity.getId());
+        saleOrderDTO.setCode(orderEntity.getCode());
+        saleOrderDTO.setTotal(orderEntity.getTotal());
+        saleOrderDTO.setCreatedBy(orderEntity.getCreatedBy());
+        saleOrderDTO.setCreatedDate(orderEntity.getCreatedDate());
+        saleOrderDTO.setUpdatedBy(orderEntity.getUpdatedBy());
+        saleOrderDTO.setUpdatedDate(orderEntity.getUpdatedDate());
+        saleOrderDTO.setSaleOrderProductsDTOList(orderEntity.getProductInOrderEntityList().stream().map(SaleOrderProductsDTO::from).collect(Collectors.toList()));
 
         return saleOrderDTO;
     }

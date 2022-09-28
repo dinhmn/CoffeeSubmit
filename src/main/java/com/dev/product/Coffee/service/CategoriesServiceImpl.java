@@ -104,11 +104,11 @@ public class CategoriesServiceImpl implements CategoriesService {
         CategoriesEntity categoriesEntity = repository.getById(categoryId);
         ProductEntity productEntity = productRepository.getById(productId);
 
-        if (Objects.nonNull(productEntity.getCategoriesEntity())) {
-            throw new ProductIsAlrealdyAssignedException(productId, productEntity.getCategoriesEntity().getId());
+        if (Objects.nonNull(productEntity.getCategory())) {
+            throw new ProductIsAlrealdyAssignedException(productId, productEntity.getCategory().getId());
         }
         categoriesEntity.add(productEntity);
-        productEntity.setCategoriesEntity(categoriesEntity);
+        productEntity.setCategory(categoriesEntity);
         return categoriesEntity;
     }
 
