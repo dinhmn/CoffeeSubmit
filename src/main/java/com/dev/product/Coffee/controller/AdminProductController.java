@@ -29,7 +29,7 @@ import static java.lang.System.out;
 @CrossOrigin("*")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(path = "/api/admin")
+@RequestMapping(path = "/admin/api")
 public class AdminProductController {
     
     @Autowired
