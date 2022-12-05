@@ -1,4 +1,4 @@
-create table tbl_roles
+create table tbl_role
 (
     id           bigserial not null
         constraint tbl_roles_pkey
@@ -12,6 +12,6 @@ create table tbl_roles
     "desc"       varchar(255)
 );
 
-alter table tbl_roles
+alter table tbl_role
     owner to postgres;
 

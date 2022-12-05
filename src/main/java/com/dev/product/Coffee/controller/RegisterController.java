@@ -21,14 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(path = "/api")
 public class RegisterController {
 
-  @Autowired
-  AuthenticationManager authenticationManager;
-  @Autowired
-  private JwtProvider jwtProvider;
-  @Autowired
-  private UserService userService;
 
-  @PostMapping("/login")
-  public ResponseEntity<UsersEntity> authenticateUser(@Valid @RequestBody User)
+
+//  @PostMapping("/login")
+//  public ResponseEntity<UsersEntity> authenticateUser(@Valid @RequestBody User)
 
 }
