@@ -8,6 +8,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +27,9 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 public class ProductServiceImpl implements ProductService {
+
+  @PersistenceContext
+  private EntityManager entityManager;
   
   @Autowired
   private final ProductRepository repository;
@@ -131,6 +142,21 @@ public class ProductServiceImpl implements ProductService {
       repository.save(productEntity);
     }
     return productEntity;
+  }
+
+  @Override
+  public List<ProductEntity> selectProductByQuantity(Long quantity) {
+    CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+    CriteriaQuery<ProductEntity> query = criteriaBuilder.createQuery(ProductEntity.class);
+    Root<ProductEntity> productEntityRoot = query.from(ProductEntity.class);
+
+    Path<Long> quantityDB = productEntityRoot.get("quantity");
+    Predicate firstWhere = criteriaBuilder.greaterThanOrEqualTo(quantityDB, quantity);
+
+    query.select(productEntityRoot).where(firstWhere);
+
+    TypedQuery<ProductEntity> productList = entityManager.createQuery(query);
+    return productList.getResultList();
   }
 /*    productEntity = productEntityOptional.get();
             productEntity.setTitle(Objects.nonNull(product.getTitle()) ? product.getTitle() : productEntity.getTitle());

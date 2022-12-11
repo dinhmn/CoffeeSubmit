@@ -28,4 +28,5 @@ public interface ProductService {
     boolean deleteProductById(Long id);
     ProductEntity update(Long id, ProductEntity product);
 
+  List<ProductEntity> selectProductByQuantity(Long quantity);
 }
